@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <ul>
+            <li><a href="#">Prueba Gratis</a></li>
+            <li><a href="#">Precios</a></li>
+            <li><a href="#">Nosotros</a></li>
+          </ul>
+    </header>
+
+    <div class="container">
+        <div class="image">
+            <h1>Integrando la data</h1>
+            <h2>que ayuda a los </h2><h1>profesionales de la salud</h1>
+            <img src="images/img1.avif" alt="">
+        </div>
+        <div class="login" id="loginForm">
+            <h1>Iniciar sesion</h1>
+            <form id="loginForm">
+                <input type="text" placeholder="Usuario" name="usuario" id="usuario" required>
+                <input type="password" placeholder="Contraseña" name="contrasena" id="password" required>
+                <button type="submit" class="inisesion"> Iniciar Sesion</button>
+            </form>
+    
+            <div>
+                <p>¿Aun no tienes una cuenta?</p>
+                <a href="#" class="open-button" onclick="openForm()">Registrate</a>
+            </div>
+        </div>
+    </div>
+    <div class="form-popup" id="myForm">
+        <form  class="form-container" method="POST">
+            <h1 style="color: #2149A0;">Registro</h1>
+            <div class="scroll">
+                <label for="nombres">Nombres: </label>    
+                <input type="text" id="nombres" placeholder="Nombres" name="nombres" required>
+                <label for="apellidos">Apellidos: </label>
+                <input type="text" id="apellidos" placeholder="Apellidos" name="apellidos" required>
+                <label for="curp">CURP:</label>
+                <input type="text" id="curp" placeholder="CURP" name="curp" required>
+
+                <label for="fecha_nac">Fecha de nacimiento: </label>
+                <input type="date" id="fecha_nac" name="fechanac" required>
+                
+                <label for="universidad">Universidad de egreso: </label>
+                <input type="text" id="universidad" name="universidad" placeholder="Universidad de egreso" required>
+                <label for="cedula">Cedula: </label>
+                <input type="text" id="cedula" name="cedula" placeholder="Cédula" required>
+                
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Email" required>
+                
+                <label for="contrasena">Contraseña: </label>
+                <input type="password" id="contrasena" name="pswd" placeholder="Contraseña" required>
+                <label for="repeatcontrasena">Repite tu contraseña:</label>
+                <br>
+                <input type="password" id="repeatcontrasena" name="repeatcontrasena" placeholder="Repite tu contraseña">
+                <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
+                 <button type="button" class="cancelbtn" onclick="closeForm()">Cerrar</button>
+            </div>
+        </form>
+    </div>
+
+      
+      <script>
+         document.getElementById('registrarBtn').addEventListener('click', async () => {
+            const data = {
+                nombres: document.querySelector('input[name="nombres"]').value,
+                apellidos: document.querySelector('input[name="apellidos"]').value,
+                curp: document.querySelector('input[name="curp"]').value,
+                fecha_nac: document.querySelector('input[name="fechanac"]').value,
+                universidad: document.querySelector('input[name="universidad"]').value,
+                cedula: document.querySelector('input[name="cedula"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                contrasena: document.querySelector('input[name="pswd"]').value
+            };
+            console.log('Datos a enviar:', data);
+
+            try {
+                const response = await fetch('http://localhost:3000/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la solicitudddd: ' + response.statusText);
+                }
+
+                const responseData = await response.json();
+                console.log('Respuesta del servidor:', responseData);
+
+                if (responseData.success) {
+                    window.location.href = 'verificamex.html';
+                    
+                } else {
+                    alert('Error en el registro: ' + responseData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en la solicitud');
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event){
+            event.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
+
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({usuario, password})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    window.location.href = 'dashboard.html';
+                } else{
+                    alert(data.message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:',error);
+            })
+        });
+
+
+        </script>
+    <script src="./js/script.js"></script>
+</body>
+</html>

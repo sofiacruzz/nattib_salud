@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+.body{
+    background: #E2ECF9; /* Este es el color que quieres aplicar */
+    margin: 0; /* Asegúrate de que no haya márgenes que afecten el fondo */
+    padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
+
+}
+.sidenav {
+    height: 90%; /* Full-height: remove this if you want "auto" height */
+    width: 260px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 20px; /* Stay at the top */
+    left: 20px;
+    background: rgb(150,210,207);
+    background: linear-gradient(184deg, rgba(150,210,207,1) 0%, rgba(127,206,222,1) 50%, rgba(33,73,160,1) 71%);
+    border-radius: 30px;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  .sidenav h1{
+    font-family: 'Montserrat';
+    padding: 10px;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bolder;
+    padding-bottom: 80px;
+
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 500px;
+    color: white;
+    display: block;
+    padding-top: 20px;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 290px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  .main h1{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    margin-top: 80px;
+    font-size: 40px;
+  }
+  .main form{
+    padding: 30px;
+  }
+  .main form .col-md-6, .col-12{
+    color: #2149A0;
+    font-size: 24px;
+    font-weight: 200;
+  }
+  .main form .btn-1{
+    appearance: none;
+    background-color: #2149A0;
+    border: 2px solid #2149A0;
+    border-radius: 30px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 00;
+    line-height: normal;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 200px;
+    will-change: transform;
+  }
+ 

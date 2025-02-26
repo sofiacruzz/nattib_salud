@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    font-family: 'Montserrat';
+}
+header ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #2149A0;
+}
+header li{
+  float: right;
+}
+header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-right: 70px;
+    text-decoration: none;
+    font-family: 'Montserrat';
+    font-weight: 500;
+  }
+  header li a:hover{
+    background-color: #96D2CF;
+    color: #2149A0;
+  }
+  .container{
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+
+
+  }
+  .container .image{
+    padding: 100px;
+  }
+  .container .image h1{
+    color: #2149A0;
+    font-size: 32pt;
+    margin: 0;
+    text-align: center;
+  }
+  .container .image h2{
+    color: #2149A0;
+    font-size: 32pt;
+    font-weight: 200;
+    margin: 0;
+    text-align: center;
+  }
+  .container .image img{
+    margin-top: 50px;
+    align-items: center;
+  }
+ .container .login{
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center;    /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+ }
+ .container .login h1{
+    color: #2149A0;
+ }
+ .container .login input{
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+    border: 2px solid #2149A0;
+    text-align: center;
+ }
+ input[type=text], input[type=password] {
+    width: 300px;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+  }
+  input[type=text]:focus, input[type=password]:focus {
+    background-color: #96D2CF;
+    outline: none;
+  }
+.inisesion{
+  appearance: none;
+  background-color: #2149A0;
+  border: 2px solid #2149A0;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 00;
+  line-height: normal;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 200px;
+  will-change: transform;
+}
+
+.container .login button:disabled {
+  pointer-events: none;
+}
+
+.container .login button:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.container .login button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.container .login .open-button{
+    bottom: 23px;
+    right: 28px;
+}
+.form-popup{
+  display: none;
+  position: fixed;
+  box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+
+}
+.form-container{
+  max-width: 500px;
+  max-height: 80%;
+  background-color: white;
+  border-radius: 30px;
+  margin-top: 5%;
+  margin-left: 50%;
+  padding: 20px;
+  text-align: center;
+}
+.form-container .scroll{
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center;    /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    max-height: 650px; /* Altura máxima antes de que aparezca el scroll */
+    overflow-y: auto;  /* Habilita el scroll vertical */
+    padding-right: 10px;
+    padding-top: 8em;
+  
+  }
+
+  
+  /* Full-width input fields */
+  .form-container .scroll input[type=text], .form-container input[type=password] {
+    width: 70%;
+    border-radius: 30px;
+    text-align: center;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container .scroll input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  .form-container .scroll input[type=date]{
+    background: #f1f1f1;
+    border: none;
+    border-radius: 20px;
+    width: 70%;
+    text-align: center;
+  }
+  
+  
+  /* Add a red background color to the cancel button */
+  .form-container .scroll .cancelbtn{
+    background-color: red;
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+
