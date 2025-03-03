@@ -8,8 +8,8 @@ const connection = mysql.createConnection({
   database: 'nattib_salud' // Cambia esto por el nombre de tu base de datos*/
   host:"nattib-salud-server.mysql.database.azure.com", 
   user:"qisbhtsron",
-  password:"{your_password}", 
-  database:"{your_database}", 
+  password: process.env.SECRET_KEY, 
+  database:"nattib_salud_db", 
   port:3306, 
   ssl:{ca:fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}
 });
