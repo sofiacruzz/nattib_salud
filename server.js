@@ -157,6 +157,7 @@ app.post('/login', (req, res) => {
         const pass_decrypted = CryptoJS.AES.decrypt(user.contrasena, clave).toString(CryptoJS.enc.Utf8);
         if(password == pass_decrypted){
           return res.status(200).json({success: true, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}
+            
           });
         } else{
           return res.status(401).json({success: false, message: 'correo o contraseña incorrectos'});
@@ -167,11 +168,39 @@ app.post('/login', (req, res) => {
 });
 
 // Endpoint para obtener la información del médico por correo
-app.get('/getinfo', (req, res) => {
-    const { curp } = req.body;
-    console.log('reqbody', curp);
+app.get('/pacientes/:medico_id', (req, res) => {
+    const medico_id = req.params.medico_id;
+
+    const query = 'SELECT * FROM pacientes WHERE medico_id = ?';
+    connection.query(query, [medico_id], (err, results) => {
+      if(err){
+        console.error('Error en la consulta', err.stack);
+        return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+      }
+      res.status(200).json({ success: true, pacientes: results });
+    })
 });
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+});
+
+//REGISTRO PACIENTES 
+app.post('/registrar-paciente', (req, res) => {
+  const {nombres, apellidos, fecha_nac, telefono, direccion, medico_id} = req.body;
+
+  const query = `
+        INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [nombres, apellidos, fecha_nac, telefono, direccion, medico_id];
+
+    connection.query(query, values, (err, results) => {
+        if (err) {
+            console.error('Error inserting data:', err.stack);
+            return res.status(500).json({ success: false, message: 'Error inserting data' });
+        }
+        res.status(200).json({ success: true, message: 'Paciente registrado exitosamente', id: results.insertId });
+    });
 });

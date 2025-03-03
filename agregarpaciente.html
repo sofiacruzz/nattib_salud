@@ -18,26 +18,26 @@
     </div>
     <div class="main">
         <h1>Agregar paciente</h1>
-        <form class="row g-3">
+        <form class="row g-3" id="registrarPacienteForm">
             <div class="col-md-6">
-              <label for="inputEmail4" class="form-label">Nombre:</label>
-              <input type="email" class="form-control" id="inputEmail4">
+              <label for="nombres" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="nombres" name="nombres" required>
             </div>
             <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Apellido:</label>
-              <input type="password" class="form-control" id="inputPassword4">
+              <label for="apellidos" class="form-label">Apellido:</label>
+              <input type="text" class="form-control" id="apellidos" name="apellidos" required>
             </div>
             <div class="col-md-6">
-              <label for="inputAddress" class="form-label">Fecha de nacimiento:</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+              <label for="fecha_nac" class="form-label">Fecha de nacimiento:</label>
+              <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
             </div>
             <div class="col-12">
-              <label for="inputAddress2" class="form-label">Numero de telefono</label>
-              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+              <label for="telefono" class="form-label">Numero de telefono</label>
+              <input type="text" class="form-control" id="telefono" name="telefono">
             </div>
             <div class="col-md-6">
-              <label for="inputCity" class="form-label">Direccion</label>
-              <input type="text" class="form-control" id="inputCity">
+              <label for="direccion" class="form-label">Direccion</label>
+              <input type="text" class="form-control" id="direccion" name="direccion">
             </div>
             
             <div class="col-12">
@@ -45,6 +45,40 @@
             </div>
           </form>
     </div>
-    
+    <script>
+        document.getElementById('registrarPacienteForm').addEventListener('submit', async (event) =>{
+            event.preventDefault();
+
+            const nombres = document.getElementById('nombres').value;
+            const apellidos = document.getElementById('apellidos').value;
+            const fecha_nac = document.getElementById('fecha_nac').value;
+            const telefono = document.getElementById('telefono').value;
+            const direccion = document.getElementById('direccion').value;
+
+            const medico_id = localStorage.getItem('medico_id');
+            console.log("id", medico_id);
+
+            if(!medico_id){
+                alert('No se encontro el id del medico');
+                return;
+            }
+            const response = await fetch('http://localhost:3000/registrar-paciente', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id })
+                });
+            
+            const data = await response.json();
+            if (data.success){
+                alert('Paciente registrado con exito');
+            } else {
+                alert('Error al registrar el paciente');
+            }
+
+    });
+
+    </script>
 </body>
 </html>
