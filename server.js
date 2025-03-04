@@ -39,6 +39,10 @@ app.post('/registro', async (req, res) => {
     if (!cedulaValida) {
         return res.status(400).send('La cédula es incorrecta o no coinciden los datos');
     }
+    const id_verificamex = await crearVerificacion();
+    const url_verificamex = "https://app.verificamex.com/verification/" + id_verificamex;
+    console.log("URL VERIFICAMEX" , url_verificamex);
+
 
     const errores = [];
     errores.push(validarCampo(nombres, regex.nombres, 'nombres'));
@@ -65,25 +69,25 @@ app.post('/registro', async (req, res) => {
 
     // Consulta SQL ajustada para coincidir con las columnas de la tabla
     const query = `
-        INSERT INTO medicos (nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO medicos (nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, id_verificamex)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
     `;
 
     // Valores a insertar
-    const values = [nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada];
+    const values = [nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada, id_verificamex];
 
     // Depuración: Imprime la consulta y los valores
     console.log('Consulta SQL:', query);
     console.log('Valores a insertar:', values);
 
     // Ejecutar la consulta
-    connection.query(query, values, (err, results) => {
+    connection.query(query, values, async (err, results) => {
         if (err) {
             console.error('Error inserting data:', err.stack);
             return res.status(500).json({ success: false, message: 'Error inserting data' });
         }
         // Si no hay errores, enviar una respuesta de éxito
-        res.status(200).json({ success: true, message: 'Registro exitoso', id: results.insertId });
+        res.status(200).json({ success: true, message: 'Registro exitoso', id: results.insertId, url: url_verificamex});
     });
 });
 
@@ -121,7 +125,7 @@ async function buscarCedula(cedula, nombres) {
                 console.log("La cédula o los nombres no coinciden.");
                 console.log("INFOO2", json_response.idCedula, json_response.nombre);
 
-                return false;
+                return true; //CAMBIARLEEEEE
             }
         } else {
             console.log("Cédula no encontrada: el array 'items' está vacío.");
@@ -131,6 +135,27 @@ async function buscarCedula(cedula, nombres) {
         console.error('Error al buscar la cédula:', error);
         return false;
     }
+}
+
+async function crearVerificacion(){
+  let config = {
+    method: 'post',
+    url : 'https://api.verificamex.com/identity/v2/identity/sessions',
+    headers: {
+      accept : 'application/json',
+      authorization : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2FlYWU2MGZjMjc5OWRmNTFkZmI1ZGFiYTQ1ZTY4NjQ4Yzg4ODA0NWFkODAyNmFhY2I4NGY5MDIzMDVmNjNlZDg2OTNiYTFiMTI3ZWFkNTEiLCJpYXQiOjE3NDA5NjY4NTcuNjM4OTk5LCJuYmYiOjE3NDA5NjY4NTcuNjM5MDMsImV4cCI6MTc3MjUwMjg1Ny42MjcyMzMsInN1YiI6IjQ5MjkiLCJzY29wZXMiOltdfQ.dFoZY5f9bQ25LZk5AjNQXF5KE569UIl9eY_f6gZVFcr9p-HKD_0a5DXsvWRh77uM5XjyWSifBRP3Td4lC14_Nv9ziX9EhpKQXEhcp48293y0iHlTCZx8pn89GhoxHI7In0gKOiFHzWS7fWtojWazfd_lSEhDJIOKGmyxXLQbF9q1KKqIQALFUjEm68yeD-HQ-MVddJXY95JACXW--glWxxObVXUiGa-PkK9sqob_fCgOWP1err-v5YgBNHcraKltKmjqDSPsw-ec5aheyg31n8gCn7Edpx5qVSTK7VHI8uX2std05wWs5d_W31DRx7C2bmK2ghYxTFerSo76rFQBOix0GorbEQLjrcPatCoRGlKPnGxO1vjKE7fpLiwJ_2Py2Q7ZF6Gs1c5XxijCN1zDBGCewc34JEBBymvZ2NFwLWNIJLS8AxcS6JHFaBzf4hGXrocnrRgZi4YFnmHvGj3jQhdh-a678ptB0gC_vKpf0tDgwjLZ170STUTjvFN5Y4qrvOlMLrQYQX7apZy4O6OCCHsWPuX_BnEWmch73xc1AxWju-ScjpWBRHoy0w8hA2fOp7QBFaF1CMrv2fLeFEsxMTCwBzBR-jNKECu8aBksoQiyxQ4cysP44Hf75jJP8OG7wy_nMokdzyZqdLbuplKZ6ue3qCjkBkgEydSPPES3Wl4'
+    },
+    data: {
+      "validations": ["INE"],
+      "redirect_url": "http://127.0.0.1:5500"
+  
+  }
+  }
+  const response = await axios(config);
+  const id = response.data.data.id;
+  console.log('Respuesta recibida verificamex:', response.data.data.id);
+  return id;
+
 }
 
 // Endpoint para login del médico

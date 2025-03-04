@@ -100,7 +100,9 @@
                 console.log('Respuesta del servidor:', responseData);
 
                 if (responseData.success) {
-                    window.location.href = 'verificamex.html';
+                    const url_id = responseData.url
+                    console.log(url_id)
+                    window.location.href = url_id;
                     
                 } else {
                     alert('Error en el registro: ' + responseData.message);
