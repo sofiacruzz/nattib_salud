@@ -4,7 +4,7 @@ const cors = require('cors');
 const connection = require('./db');
 const env = require('dotenv').config();
 const CryptoJS = require('crypto-js');
-const regex = require('./js/regex.js');
+const regex = require('./public/js/regex.js');
 const axios = require('axios');
 const FormData = require('form-data');
 
