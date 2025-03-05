@@ -152,7 +152,7 @@ header li a {
   }
 }
 .form-popup{
-  display: flex;
+  display: none;
   position: fixed;
   box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
   top: 0;
@@ -166,8 +166,9 @@ header li a {
 
 }
 .form-container{
-  max-width: 70%; /* Ajusta el ancho máximo */
-  width: 100%;
+  margin-left: 20rem;
+  margin-top: 3rem;
+  max-width: 50%; /* Ajusta el ancho máximo */
   max-height: 80%;
   background-color: white;
   border-radius: 30px;
@@ -203,15 +204,50 @@ header li a {
     background-color: #ddd;
     outline: none;
   }
-  .form-container .scroll input[type=date]{
+  .form-container .scroll input[type=date] {
     background: #f1f1f1;
     border: none;
     border-radius: 20px;
     width: 70%;
     height: 30px;
     text-align: center;
-  }
-  
+    padding: 5px 10px; /* Añade un poco de padding para mejor legibilidad */
+    font-family: Arial, sans-serif; /* Usa una fuente común */
+    font-size: 14px; /* Tamaño de fuente estándar */
+    color: #333; /* Color de texto */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el input */
+    outline: none; /* Elimina el borde al hacer focus */
+    -webkit-appearance: none;    appearance: none;
+}
+
+
+/* Estilo cuando el input está enfocado */
+.form-container .scroll input[type=date]:focus {
+    background: #e1e1e1; /* Cambia el color de fondo al enfocar */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Añade una sombra sutil */
+}
+
+/* Estilo para navegadores WebKit (Chrome, Safari) */
+.form-container .scroll input[type=date]::-webkit-datetime-edit {
+    color: #333; /* Color del texto */
+}
+
+.form-container .scroll input[type=date]::-webkit-calendar-picker-indicator {
+    background-color: #2149A0; /* Color del ícono del calendario */
+    border-radius: 50%; /* Hace que el ícono sea redondo */
+    padding: 5px; /* Añade espacio alrededor del ícono */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
+}
+
+/* Estilo para navegadores Firefox */
+.form-container .scroll input[type=date]::-moz-focus-inner {
+    border: none; /* Elimina el borde interno en Firefox */
+}
+
+.form-container .scroll input[type=date]::-moz-calendar-picker-indicator {
+    background-color: #2149A0; /* Color del ícono del calendario */
+    border-radius: 50%; /
+}
   
   /* Add a red background color to the cancel button */
   .form-container .scroll .cancelbtn{
