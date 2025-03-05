@@ -35,7 +35,7 @@ app.post('/registro', async (req, res) => {
         return res.status(400).send('Todos los campos son requeridos');
     }
 
-    const cedulaValida = await buscarCedula(cedula, nombres);
+    const cedulaValida = await buscarCedula(cedula, nombres, universidad);
     if (!cedulaValida) {
         return res.status(400).send('La cédula es incorrecta o no coinciden los datos');
     }
@@ -92,7 +92,7 @@ app.post('/registro', async (req, res) => {
 });
 
 // Función para buscar cédula
-async function buscarCedula(cedula, nombres) {
+async function buscarCedula(cedula, nombres, universidad) {
     try {
         let data = new FormData();
         data.append('json', JSON.stringify({
@@ -100,6 +100,7 @@ async function buscarCedula(cedula, nombres) {
             nombre: "",
             paterno: "",
             materno: "",
+            desins: "",
             idCedula: cedula
         }));
 
@@ -116,16 +117,16 @@ async function buscarCedula(cedula, nombres) {
         console.log('Respuesta recibida:', response.data.items[0]);
 
         const json_response = response.data.items[0];
-        if (json_response != "") {
-            if (cedula === json_response.idCedula && nombres === json_response.nombre) {
+        if (json_response) {
+            if (cedula.toString().toLowerCase() === json_response.idCedula.toString().toLowerCase() && 
+                nombres.toLowerCase() === json_response.nombre.toLowerCase()) {
                 console.log("La cédula y los nombres coinciden.");
                 return true;
             } else {
-               console.log("INFOO", cedula, nombres);
+                console.log("INFOO", `"${cedula}"`, `"${nombres}"`, `"${universidad}"`);
+                console.log("INFOO2", `"${json_response.idCedula}"`, `"${json_response.nombre}"`, `"${json_response.desins}"`);
                 console.log("La cédula o los nombres no coinciden.");
-                console.log("INFOO2", json_response.idCedula, json_response.nombre);
-
-                return true; //CAMBIARLEEEEE
+                return false;
             }
         } else {
             console.log("Cédula no encontrada: el array 'items' está vacío.");
