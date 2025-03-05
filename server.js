@@ -13,7 +13,9 @@ const port = process.env.PORT || 3000;
 
 
 app.use(cors({
-    origin: 'http://127.0.0.1:5500' // Permite solo este origen
+    origin: ['https://nattib-salud.azurewebsites.net', 'http://localhost:5500'], // Agrega todos los dominios permitidos
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
 }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
