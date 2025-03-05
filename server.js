@@ -4,12 +4,13 @@ const cors = require('cors');
 const connection = require('./db');
 const env = require('dotenv').config();
 const CryptoJS = require('crypto-js');
-const regex = require('./js/regex.js');
+const regex = require('./public/js/regex.js');
 const axios = require('axios');
 const FormData = require('form-data');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 
 app.use(cors({
     origin: 'http://127.0.0.1:5500' // Permite solo este origen
