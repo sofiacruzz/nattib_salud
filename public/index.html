@@ -91,7 +91,7 @@
             console.log('Datos a enviar:', data);
 
             try {
-                const response = await fetch('http://localhost:3000/registro', {
+                const response = await fetch('https://nattib-salud.azurewebsites.net/registro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -126,7 +126,7 @@
             const usuario = document.getElementById('usuario').value;
             const password = document.getElementById('password').value;
 
-            fetch('http://localhost:3000/login', {
+            fetch('https://nattib-salud.azurewebsites.net/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
