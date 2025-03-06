@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS de Pikaday -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <!-- JS de Pikaday -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 </head>
 <body>
     <header>
@@ -47,7 +51,7 @@
                 <input type="text" id="curp" placeholder="CURP" name="curp" required>
 
                 <label for="fecha_nac">Fecha de nacimiento: </label>
-                <input type="date" id="fecha_nac" name="fechanac" required>
+                <input type="text" id="fecha_nac" name="fechanac" required>
                 
                 <label for="universidad">Universidad de egreso: </label>
                 <input type="text" id="universidad" name="universidad" placeholder="Universidad de egreso" required>
@@ -62,6 +66,9 @@
                 <label for="repeatcontrasena">Repite tu contraseña:</label>
                 <br>
                 <input type="password" id="repeatcontrasena" name="repeatcontrasena" placeholder="Repite tu contraseña">
+
+                <input type="checkbox" id="terms" name="terms" value="terms">
+                 <label for="terms">Aceptar terminos y condiciones de registro</label>
                 <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
                  <button type="button" class="cancelbtn" onclick="closeForm()">Cerrar</button>
             </div>
@@ -84,7 +91,7 @@
             console.log('Datos a enviar:', data);
 
             try {
-                const response = await fetch('http://localhost:3000/registro', {
+                const response = await fetch('https://nattib-salud.azurewebsites.net/registro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -119,7 +126,7 @@
             const usuario = document.getElementById('usuario').value;
             const password = document.getElementById('password').value;
 
-            fetch('http://localhost:3000/login', {
+            fetch('https://nattib-salud.azurewebsites.net/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -144,6 +151,6 @@
 
 
         </script>
-    <script src="./js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
