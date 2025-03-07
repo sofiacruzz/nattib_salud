@@ -1,7 +1,6 @@
 // db.js
 const mysql = require('mysql2');
 const fs = require('fs');
-const env = require('dotenv').config();
 const connection = mysql.createConnection({
   /*host: 'localhost',
   user: 'root', // Cambia esto por tu usuario de MySQL
@@ -11,8 +10,8 @@ const connection = mysql.createConnection({
   user:process.env.AZURE_MYSQL_USER,
   password: process.env.AZURE_MYSQL_PASSWORD, 
   database:'nattib_salud_db', 
-  port:process.env.AZURE_MYSQL_PORT, 
-  ssl:process.env.AZURE_MYSQL_SSL
+  port:3306, 
+  ssl:{ca:fs.readFileSync('DigiCertGlobalRootCA.crt.pem')}
 });
 
 connection.connect((err) => {
