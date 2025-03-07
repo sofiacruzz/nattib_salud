@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const connection = require('./db');
 const env = require('dotenv').config();
 const CryptoJS = require('crypto-js');
@@ -12,11 +11,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 
-app.use(cors({
-    origin: ['https://nattib-salud.azurewebsites.net'], // Agrega todos los dominios permitidos
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
-}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
