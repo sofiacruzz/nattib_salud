@@ -13,9 +13,9 @@ const port = process.env.PORT || 3000;
 
 
 app.use(cors({
-    origin: ['https://nattib-salud.azurewebsites.net', 'http://localhost:5500'], // Agrega todos los dominios permitidos
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    origin: 'http://127.0.0.1:5500', // Agrega todos los dominios permitidos
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'] 
 }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -121,13 +121,13 @@ async function buscarCedula(cedula, nombres, universidad) {
 
         const json_response = response.data.items[0];
         if (json_response) {
-            if (cedula.toString().toLowerCase() === json_response.idCedula.toString().toLowerCase() && 
-                nombres.toLowerCase() === json_response.nombre.toLowerCase()) {
+            if (cedula.toString().toLowerCase() === json_response.idCedula.toLowerCase().trim() &&
+                nombres.toString().toLowerCase() === json_response.nombre.toLowerCase().trim()) {
                 console.log("La cédula y los nombres coinciden.");
                 return true;
             } else {
                 console.log("INFOO", `"${cedula}"`, `"${nombres}"`, `"${universidad}"`);
-                console.log("INFOO2", `"${json_response.idCedula}"`, `"${json_response.nombre}"`, `"${json_response.desins}"`);
+                console.log("INFOO2", `"${json_response.idCedula}"`, `"${json_response.nombre}"`);
                 console.log("La cédula o los nombres no coinciden.");
                 return false;
             }
