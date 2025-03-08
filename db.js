@@ -1,5 +1,5 @@
 // db.js
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const fs = require('fs');
 const connection = mysql.createConnection({
   /*host: 'localhost',
@@ -11,7 +11,9 @@ const connection = mysql.createConnection({
   password: process.env.AZURE_MYSQL_PASSWORD, 
   database:'nattib_salud_db', 
   port:3306, 
-  ssl:{ca:fs.readFileSync('DigiCertGlobalRootCA.crt.pem')}
+  ssl:{ca:fs.readFileSync('DigiCertGlobalRootCA.crt.pem'),
+    rejectUnauthorized: false
+  }
 });
 
 connection.connect((err) => {
