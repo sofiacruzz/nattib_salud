@@ -190,7 +190,7 @@ app.post('/login', (req, res) => {
     )
 });
 
-// Endpoint para obtener la información del médico por correo
+// Traer pacientes de medicos
 app.get('/pacientes/:medico_id', (req, res) => {
     const medico_id = req.params.medico_id;
 
@@ -203,6 +203,7 @@ app.get('/pacientes/:medico_id', (req, res) => {
       res.status(200).json({ success: true, pacientes: results });
     })
 });
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

@@ -62,7 +62,7 @@
                 alert('No se encontro el id del medico');
                 return;
             }
-            const response = await fetch('http://localhost:3000/registrar-paciente', {
+            const response = await fetch('https://nattib-salud.azurewebsites.net/registrar-paciente', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,6 +73,7 @@
             const data = await response.json();
             if (data.success){
                 alert('Paciente registrado con exito');
+                window.location.href = 'dashboard.html';
             } else {
                 alert('Error al registrar el paciente');
             }

@@ -138,10 +138,9 @@
                 if(data.success){
                     localStorage.setItem('medico_id', data.user.id);
                     console.log("medico_id", data.user.id);
-                    alert('Login exitoso');
                     window.location.href = 'dashboard.html';
                 } else{
-                    alert(data.message)
+                    alert("Ups, parece que algo esta mal");
                 }
             })
             .catch(error => {
