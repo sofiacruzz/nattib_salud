@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <!-- CSS de Pikaday -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
     <!-- JS de Pikaday -->
@@ -23,7 +23,7 @@
         <div class="image">
             <h1>Integrando la data</h1>
             <h2>que ayuda a los </h2><h1>profesionales de la salud</h1>
-            <img src="images/img1.avif" alt="">
+            <img src="../images/img1.avif" alt="">
         </div>
         <div class="login" id="loginForm">
             <h1>Iniciar sesion</h1>
@@ -75,81 +75,8 @@
         </form>
     </div>
 
-      
-      <script>
-         document.getElementById('registrarBtn').addEventListener('click', async () => {
-            const data = {
-                nombres: document.querySelector('input[name="nombres"]').value,
-                apellidos: document.querySelector('input[name="apellidos"]').value,
-                curp: document.querySelector('input[name="curp"]').value,
-                fecha_nac: document.querySelector('input[name="fechanac"]').value,
-                universidad: document.querySelector('input[name="universidad"]').value,
-                cedula: document.querySelector('input[name="cedula"]').value,
-                email: document.querySelector('input[name="email"]').value,
-                contrasena: document.querySelector('input[name="pswd"]').value
-            };
-            console.log('Datos a enviar:', data);
-
-            try {
-                const response = await fetch('https://nattib-salud.azurewebsites.net/registro', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la solicitudddd: ' + response.statusText);
-                }
-
-                const responseData = await response.json();
-                console.log('Respuesta del servidor:', responseData);
-
-                if (responseData.success) {
-                    const url_id = responseData.url
-                    console.log(url_id)
-                    window.location.href = url_id;
-                    
-                } else {
-                    alert('Error en el registro: ' + responseData.message);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error en la solicitud');
-            }
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function(event){
-            event.preventDefault();
-            
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-
-            fetch('https://nattib-salud.azurewebsites.net/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({usuario, password})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success){
-                    localStorage.setItem('medico_id', data.user.id);
-                    console.log("medico_id", data.user.id);
-                    window.location.href = 'dashboard.html';
-                } else{
-                    alert("Ups, parece que algo esta mal");
-                }
-            })
-            .catch(error => {
-                console.error('Error:',error);
-            })
-        });
-
-
-        </script>
-    <script src="js/script.js"></script>
+    <script src="../js/config.js"></script>
+      <script src="../js/index.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
