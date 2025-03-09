@@ -6,8 +6,6 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Servir archivos estáticos desde /public
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -15,6 +13,9 @@ app.use(express.json());
 // Rutas de la API
 app.use('/auth', require('./routes/auth'));
 app.use('/medico', require('./routes/medico'));
+
+// Servir archivos estáticos desde /public
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Abre directamente al index.html
 app.get('/', (req, res) => {
