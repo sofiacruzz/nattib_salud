@@ -6,21 +6,28 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 // Middleware para parsear JSON
 app.use(express.json());
 
 // Rutas de la API
-app.use('/auth', require('./routes/auth'));
-app.use('/medico', require('./routes/medico'));
+app.use('/auth', (req, res, next) => {
+    console.log('Ruta /auth alcanzada');
+    next();
+}, require('./routes/auth'));
+
+app.use('/medico', (req, res, next) => {
+    console.log('Ruta /medico alcanzada');
+    next();
+}, require('./routes/medico'));
 
 // Servir archivos estáticos desde /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Abre directamente al index.html
+// Abre directamente al index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 });
+
 // Ruta dinámica para servir archivos HTML dentro de /public/html/
 app.get('/:page', (req, res) => {
     const filePath = path.join(__dirname, 'public', 'html', req.params.page);
