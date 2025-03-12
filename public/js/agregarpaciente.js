@@ -1,3 +1,9 @@
+function formatearFecha(date) {
+    const dia = String(date.getDate()).padStart(2, '0'); // Asegura 2 dígitos para el día
+    const mes = String(date.getMonth() + 1).padStart(2, '0'); // Asegura 2 dígitos para el mes
+    const anio = date.getFullYear(); // Obtiene el año
+    return `${anio}-${mes}-${dia}`; // Retorna la fecha en formato YYYY-MM-DD
+}
 document.getElementById('registrarPacienteForm').addEventListener('submit', async (event) =>{
       event.preventDefault();
 
@@ -14,12 +20,17 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
           alert('No se encontro el id del medico');
           return;
       }
+      const fechaActual = new Date();
+      const fechaformateada = formatearFecha(fechaActual);
+      console.log('addfecha' ,fechaformateada);
+
+
       const response = await fetch(API_URL + 'medico/registrar-paciente', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id })
+          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id, fecha_registro: fechaformateada})
           });
       
       const data = await response.json();

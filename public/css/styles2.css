@@ -71,24 +71,22 @@
     border-radius: 30px;
     margin-left: 50px;
     margin-right: 50px;
-    height: 1000px;
+    height: 50em;
 }
 .main .tabla table{
     text-align: left;
     border-collapse: collapse;
     margin: 0 0 1em 0;
     margin-top: 80px;
+    width: 100%;
 }
-.main .tabla th{
+.main .tabla thead{
     padding: 20px;
     border-bottom: 1px solid #EEEEEE;
     width: 25%;
     font-weight: 300;
-}
-.main .tabla .head{
-    font-weight: bold;
-}
 
+}
 
 .main .tabla .searchbar input[type="text"]{
     padding: 8px 20px;
@@ -118,4 +116,28 @@
     border-radius: 0 10px 10px 0;
     cursor: pointer;
     transition: background-color .3s linear;
+}
+@media (max-width: 920px){
+  .main .tabla{
+    background-color: white;
+
+}
+.main .tabla thead{
+  border-bottom: 1px solid #EEEEEE;
+  width: 25%;
+  font-weight: 100;
+  font-size: 14pt;
+}
+.main.tabla td{
+  font-size: 12pt;
+}
+.main .tabla .searchbar input[type="text"] {
+  margin-left: 10px; /* Reduce el margen izquierdo */
+  width: 50%; /* Ajusta el ancho del input */
+}
+.main .tabla .searchbar .addbtn,
+.main .tabla .searchbar .buscarbtn {
+    padding: 8px; /* Reduce el padding */
+}
+
 }

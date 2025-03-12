@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
     function populateTable(pacientes) {
         const tbody = document.querySelector('#myTable tbody');
         tbody.innerHTML = ''; // Limpiar el contenido previo
@@ -33,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${paciente.nombres}</td>
                 <td>${paciente.apellidos}</td>
                 <td>${paciente.telefono}</td>
+                <td>${paciente.fecha_registro}</td>
+                <td> <Button> BOTON </Button> </td>
             `;
             tbody.appendChild(row);
         });
