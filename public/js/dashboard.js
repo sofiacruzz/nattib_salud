@@ -35,10 +35,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${paciente.apellidos}</td>
                 <td>${paciente.telefono}</td>
                 <td>${paciente.fecha_registro}</td>
-                <td> <Button> BOTON </Button> </td>
+                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> BOTON </button> </td>
             `;
             tbody.appendChild(row);
         });
+        const botones = document.querySelectorAll('.btn-redirigir');
+        botones.forEach(boton => {
+            boton.addEventListener('click', () => {
+                const pacienteId = boton.getAttribute('data-id'); // Obtener el ID del paciente
+                localStorage.setItem('paciente_id', pacienteId); // Guardar el ID en localStorage
+                console.log('ID del paciente guardado:', pacienteId);
+                redirigir(pacienteId);
+            });
+        });
+    }
+
+    function redirigir(pacienteId) {
+        window.location.href = `cardpaciente.html`;
     }
 
     fetchData();

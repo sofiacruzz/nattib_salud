@@ -56,7 +56,7 @@ async function login(event) {
             localStorage.setItem('medico_id', data.user.id);
             window.location.href = 'dashboard.html';
         } else {
-            alert("Ups, parece que algo está mallll");
+            alert("Ups, parece que algo está mal");
         }
     } catch (error) {
         console.error('Error:', error);

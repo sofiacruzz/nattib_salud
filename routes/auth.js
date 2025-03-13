@@ -2,7 +2,6 @@ const express = require('express');
 const connection = require('../db.js');
 const env = require('dotenv').config();
 const CryptoJS = require('crypto-js');
-const regex = require('../public/js/regex.js');
 const axios = require('axios');
 const FormData = require('form-data');
 const router = express.Router();

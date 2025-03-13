@@ -71,7 +71,7 @@
     border-radius: 30px;
     margin-left: 50px;
     margin-right: 50px;
-    height: 50em;
+    height: auto;
 }
 .main .tabla table{
     text-align: left;

@@ -110,5 +110,18 @@ router.post('/registrar-paciente', (req, res) => {
         res.status(200).json({ success: true, message: 'Paciente registrado exitosamente', id: results.insertId });
     });
 });
+//VER CARD PACIENTE 
+router.get('/pacientes/:medico_id/:paciente_id', (req, res)=>{
+    const paciente_id = req.params.paciente_id;
+    const medico_id = req.params.medico_id;
+const query = 'SELECT * FROM pacientes WHERE medico_id =? AND id_pacientes =?';
+connection.query(query,[medico_id,paciente_id], (err, results) =>{
+    if(err){
+        console.error('Error en la consulta', err.stack);
+        return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+      }
+      res.status(200).json({ success: true, pacientes: results });
+})
+});
 
 module.exports = router;
