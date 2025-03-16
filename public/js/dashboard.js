@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${paciente.nombres}</td>
                 <td>${paciente.apellidos}</td>
                 <td>${paciente.telefono}</td>
-                <td>${paciente.fecha_registro}</td>
-                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> BOTON </button> </td>
+                <td><button class="btn-editar" data-id="${paciente.id_pacientes}"> Editar </button></td>
+                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> Ir a ficha </button> </td>
             `;
             tbody.appendChild(row);
         });

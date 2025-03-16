@@ -1,4 +1,9 @@
-// Función para inicializar un conjunto de campos editables
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}// Función para inicializar un conjunto de campos editables
 function inicializarFormulario(guardarBtn, cancelarBtn, editarBtn, textareas) {
     // Habilitar los textarea al inicio
     textareas.forEach(textarea => {

@@ -32,36 +32,47 @@ body{
     font-size: 14pt;
     color: black;
 }
+.card_popup{
+    display: none;
+    position: fixed;
+    box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
 
-.expediente_card{
-    height: auto;
-    width: 90%;
+}
+
+.card_popup .expediente_card{
+    height: 90%;
+    width: 70%;
     background: white;
     border-radius: 30px;
-    margin-top: 2em;
-    margin-left: 2em;
-    padding: 2em;
+    margin-left: 4em;
+    padding: 1em;
    
 }
-.expediente_card h1{
+.card_popup .expediente_card h1{
     font-family: 'Montserrat';
     font-weight: 500;
     color: #2149A0;
 }
-.expediente_card .expediente_content{
+.card_popup .expediente_card .expediente_content{
     display: flex;
     flex-direction: column;
-    padding: 2em;
  
 }
-.expediente_card .expediente_content label, textarea{
+.card_popup .expediente_card .expediente_content label, textarea{
     font-family: 'Montserrat';
     font-weight: 500;
     font-size: 14pt;
     padding-top: 1em;
-    padding-bottom: 1em;
 }
-.expediente_card .expediente_content textarea{
+.card_popup .expediente_card .expediente_content textarea{
     padding: 10px;
     max-width: 100%;
     border-radius: 30px;
@@ -128,6 +139,7 @@ body{
     touch-action: manipulation;
     width: 200px;
     will-change: transform;
+    top: 1em;
 }
 
 .buttons .btn {

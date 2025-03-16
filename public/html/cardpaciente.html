@@ -22,21 +22,22 @@
             <p id="telefono"></p>
             <h2>Direccion:</h2>
             <p id="direccion"></p>  
-
+            <button class="open-button" onclick="openForm()">Crear expediente.</button>
         </div>
     </div>
-    <div class="expediente_card">
-        <h1>Crear expediente</h1>
-        <div class="expediente_content">
-            <label for="ant_patologicos_1">Antecedentes patológicos:</label>
-            <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
-            <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
-            <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
-        </div>
-        <div class="buttons">
-            <button class="btn" id="guardarBtn1">Guardar</button>
-            <button class="btn_cancelar" id="cancelarBtn1">Cancelar</button>
-            <button class="btn_editar" id="editarBtn1" style="display: none;">Editar</button>
+    <div class="card_popup" id="myForm">
+        <div class="expediente_card">
+            <h1>Crear expediente</h1>
+            <div class="expediente_content">
+                <label for="ant_patologicos_1">Antecedentes patológicos:</label>
+                <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
+                <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
+                <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
+            </div>
+            <div class="buttons">
+                <button class="btn" id="guardarBtn1">Guardar</button>
+                <button class="btn_cancelar" onclick="closeForm()">Cancelar</button>
+            </div>
         </div>
     </div>
     
