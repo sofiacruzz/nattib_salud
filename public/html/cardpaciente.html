@@ -3,23 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card p</title>
+    <title>Card</title>
+    <link rel="stylesheet" href="../css/styles5.css">
 </head>
 <body>
     <div class="card" id="info">
+        <div class="img">
+            <img src="../images/cuenta.png" alt="">
+        </div>
         <div class="cardcontent">
             <h2>Nombre del paciente: </h2>
             <p id="nombre"></p>
-            <h2>Edad</h2>
+            <h2>Edad:</h2>
             <p id="Edad"></p>
-            <h2>Fecha de nacimiento</h2>
+            <h2>Fecha de nacimiento:</h2>
             <p id="fechaNacimiento"></p>
-            <h2>Telefono</h2>
+            <h2>Telefono:</h2>
             <p id="telefono"></p>
-            <h2>Direccion</h2>
-            <p id="direccion"></p>
-            
+            <h2>Direccion:</h2>
+            <p id="direccion"></p>  
 
+        </div>
+    </div>
+    <div class="expediente_card">
+        <h1>Crear expediente</h1>
+        <div class="expediente_content">
+            <label for="ant_patologicos_1">Antecedentes patológicos:</label>
+            <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
+            <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
+            <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="guardarBtn1">Guardar</button>
+            <button class="btn_cancelar" id="cancelarBtn1">Cancelar</button>
+            <button class="btn_editar" id="editarBtn1" style="display: none;">Editar</button>
+        </div>
+    </div>
+    
+    <div class="consulta_card">
+        <h1>Consulta médica</h1>
+        <div class="consulta_content">
+            <label for="padecimiento_actual_2">Padecimiento actual:</label>
+            <textarea name="padecimiento_actual_2" id="padecimiento_actual_2" rows="10" cols="33" ></textarea>
+            <label for="exploracion_fisica_2">Exploración física:</label>
+            <textarea name="exploracion_fisica_2" id="exploracion_fisica_2" rows="10" cols="33" ></textarea>
+            <label for="diagnostico_2">Diagnóstico:</label>
+            <textarea name="diagnostico_2" id="diagnostico_2" rows="10" cols="33" ></textarea>
+            <label for="tratamiento_2">Tratamiento:</label>
+            <textarea name="tratamiento_2" id="tratamiento_2" rows="10" cols="33" ></textarea>
+            <label for="estudios_complementarios_2">Estudios complementarios:</label>
+            <textarea name="estudios_complementarios_2" id="estudios_complementarios_2" rows="10" cols="33" ></textarea>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="guardarBtn2">Guardar</button>
+            <button class="btn_cancelar" id="cancelarBtn2">Cancelar</button>
+            <button class="btn_editar" id="editarBtn2" style="display: none;">Editar</button>
         </div>
     </div>
 </body>

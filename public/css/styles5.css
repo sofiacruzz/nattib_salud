@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    background: #E2ECF9; /* Este es el color que quieres aplicar */
+    margin: 0; /* Asegúrate de que no haya márgenes que afecten el fondo */
+    padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
+}
+.card{
+    background-color: white;
+    height: auto;
+    width: 70%;
+    margin-left: 2em;
+    margin-top: 2em;
+    border-radius: 30px;
+    display: flex;
+}
+.card .img{
+    margin-top: 2em;
+    margin-left: 2em;
+}
+.card .cardcontent{
+    padding: 2em;
+}
+.card .cardcontent  h2{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16pt;
+    color: #9D9D9D;
+}
+.card .cardcontent p{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14pt;
+    color: black;
+}
+
+.expediente_card{
+    height: auto;
+    width: 90%;
+    background: white;
+    border-radius: 30px;
+    margin-top: 2em;
+    margin-left: 2em;
+    padding: 2em;
+   
+}
+.expediente_card h1{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #2149A0;
+}
+.expediente_card .expediente_content{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+ 
+}
+.expediente_card .expediente_content label, textarea{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14pt;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+.expediente_card .expediente_content textarea{
+    padding: 10px;
+    max-width: 100%;
+    border-radius: 30px;
+    border: none;
+    background: #96D2CF;
+    opacity: 30%;
+}
+  .consulta_card{
+    height: auto;
+    width: 90%;
+    background: white;
+    border-radius: 30px;
+    margin-top: 2em;
+    margin-left: 2em;
+    padding: 2em;
+  }
+  .consulta_card h1{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    color: #2149A0;
+  }
+  .consulta_card .consulta_content{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+  }
+  .consulta_card .consulta_content label,textarea{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14pt;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .consulta_card .consulta_content textarea{
+    padding: 10px;
+    max-width: 100%;
+    border-radius: 30px;
+    border: none;
+    background: #96D2CF;
+    opacity: 30%;
+  }
+  .buttons {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    align-items: center; /* Centra los botones verticalmente (opcional) */
+    gap: 2em; /* Espacio entre los botones */
+}
+
+.buttons .btn, .buttons .btn_editar, .buttons .btn_cancelar {
+    appearance: none;
+    border-radius: 30px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    line-height: normal;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 200px;
+    will-change: transform;
+}
+
+.buttons .btn {
+    background-color: #2149A0;
+    border: 2px solid #2149A0;
+    color: #FFFFFF;
+}
+
+.buttons .btn_editar {
+    background-color: white;
+    border: 2px solid #2149A0;
+    color: #2149A0;
+}
+
+.buttons .btn_cancelar {
+    background-color: white;
+    border: 2px solid #FF0000;
+    color: #FF0000;
+}

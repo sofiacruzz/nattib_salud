@@ -93,21 +93,87 @@ router.get('/pacientes/:medico_id', (req, res) => {
 
 //REGISTRO PACIENTES 
 router.post('/registrar-paciente', (req, res) => {
-  const {nombres, apellidos, fecha_nac, telefono, direccion, medico_id} = req.body;
+    const { nombres, apellidos, fecha_nac, telefono, direccion, medico_id } = req.body;
 
-  const query = `
-        INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id)
-        VALUES (?, ?, ?, ?, ?, ?)
-    `;
-
-    const values = [nombres, apellidos, fecha_nac, telefono, direccion, medico_id];
-
-    connection.query(query, values, (err, results) => {
+    // Iniciar una transacción para asegurar la atomicidad
+    connection.beginTransaction((err) => {
         if (err) {
-            console.error('Error inserting data:', err.stack);
-            return res.status(500).json({ success: false, message: 'Error inserting data' });
+            console.error('Error starting transaction:', err.stack);
+            return res.status(500).json({ success: false, message: 'Error starting transaction' });
         }
-        res.status(200).json({ success: true, message: 'Paciente registrado exitosamente', id: results.insertId });
+
+        // 1. Insertar el paciente
+        const queryPaciente = `
+            INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+        const valuesPaciente = [nombres, apellidos, fecha_nac, telefono, direccion, medico_id];
+
+        connection.query(queryPaciente, valuesPaciente, (err, resultsPaciente) => {
+            if (err) {
+                return connection.rollback(() => {
+                    console.error('Error inserting paciente:', err.stack);
+                    res.status(500).json({ success: false, message: 'Error inserting paciente' });
+                });
+            }
+
+            const id_paciente = resultsPaciente.insertId; // ID del paciente recién creado
+
+            // 2. Crear un expediente vacío para el paciente
+            const queryExpediente = `
+                INSERT INTO expediente_info (id_paciente, medico_id, antecedentes_pat, no_patologicos, fecha_registro)
+                VALUES (?, ?, '', '', CURDATE())
+            `;
+            const valuesExpediente = [id_paciente, medico_id];
+
+            connection.query(queryExpediente, valuesExpediente, (err, resultsExpediente) => {
+                if (err) {
+                    return connection.rollback(() => {
+                        console.error('Error inserting expediente:', err.stack);
+                        res.status(500).json({ success: false, message: 'Error inserting expediente' });
+                    });
+                }
+
+                const expedienteId = resultsExpediente.insertId; // ID del expediente recién creado
+
+                // 3. Crear una cita médica vacía para el paciente
+                const queryCita = `
+                    INSERT INTO consulta_ficha (id_paciente, medico_id, padecimiento, exploracion_fisica, diagnostico, tratamiento, estudios_comp, fecha_registro)
+                    VALUES (?, ?, '', '','','','',CURDATE())
+                `;
+                const valuesCita = [id_paciente, medico_id];
+
+                connection.query(queryCita, valuesCita, (err, resultsCita) => {
+                    if (err) {
+                        return connection.rollback(() => {
+                            console.error('Error inserting cita medica:', err.stack);
+                            res.status(500).json({ success: false, message: 'Error inserting cita medica' });
+                        });
+                    }
+
+                    const citaId = resultsCita.insertId; // ID de la cita médica recién creada
+
+                    // Confirmar la transacción
+                    connection.commit((err) => {
+                        if (err) {
+                            return connection.rollback(() => {
+                                console.error('Error committing transaction:', err.stack);
+                                res.status(500).json({ success: false, message: 'Error committing transaction' });
+                            });
+                        }
+
+                        // Respuesta exitosa con los IDs generados
+                        res.status(200).json({
+                            success: true,
+                            message: 'Paciente, expediente y cita médica registrados exitosamente',
+                            paciente_id: id_paciente,
+                            expediente_id: expedienteId,
+                            cita_id: citaId
+                        });
+                    });
+                });
+            });
+        });
     });
 });
 //VER CARD PACIENTE 
@@ -123,5 +189,21 @@ connection.query(query,[medico_id,paciente_id], (err, results) =>{
       res.status(200).json({ success: true, pacientes: results });
 })
 });
+//Guardar expediente paciente
+router.post('/save/expediente', (req, res)=>{
+    //poner el req body
+    const query = `
+    INSERT INTO expediente_info (antecedentes_pat, no_patologicos)`;
+
+});
+//Guardar consulta medica paciente
+router.post('/save/consulta_medica', (req, res)=>{
+    //poner el req body
+    const query = `
+    INSERT INTO expediente_info (antecedentes_pat, no_patologicos)`;
+
+});
+
+
 
 module.exports = router;
