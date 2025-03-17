@@ -35,10 +35,12 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
       
       const data = await response.json();
       if (data.success){
-        const pacienteId = data.id;
-        window.location.href = `cardpaciente.html?id=${pacienteId}`;
+        const pacienteId = data.paciente_id;
+        const expedienteId = data.expediente_id;
+        const citaId = data.cita_id; 
+        window.location.href = `cardpaciente.html?id=${pacienteId}&expId=${expedienteId}&citId=${citaId}`;
       } else {
           alert('Error al registrar el paciente');
       }
-
+      
 });
