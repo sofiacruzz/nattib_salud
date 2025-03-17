@@ -189,19 +189,33 @@ connection.query(query,[medico_id,paciente_id], (err, results) =>{
       res.status(200).json({ success: true, pacientes: results });
 })
 });
-//Guardar expediente paciente
-router.post('/save/expediente', (req, res)=>{
-    //poner el req body
-    const query = `
-    INSERT INTO expediente_info (antecedentes_pat, no_patologicos)`;
+//Actualizar expediente paciente
+router.put('/update/expediente', (req, res)=>{
+    const { ant_pat, no_pat, id_expediente } = req.body;
+    const queryExpediente = `
+    UPDATE expediente_info SET antecedentes_pat = ?, no_patologicos = ? WHERE id_expediente = ?`;
+    connection.query(queryExpediente,[ant_pat,no_pat, id_expediente], (err)=>{
+        if(err){
+            console.error('Error en la consulta', err.stack);
+            return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+        }
+        res.status(200).json({success: true});
+    })
 
 });
-//Guardar consulta medica paciente
-router.post('/save/consulta_medica', (req, res)=>{
-    //poner el req body
-    const query = `
-    INSERT INTO expediente_info (antecedentes_pat, no_patologicos)`;
-
+//Actualizar consulta medica paciente
+router.put('/update/consulta_medica', (req, res)=>{
+    const { pad, exp_fisica, diag, trat, est_comp, id_consulta } = req.body;
+    const queryCita = `
+    UPDATE consulta_ficha SET padecimiento = ?, exploracion_fisica = ?, diagnostico = ?, tratamiento = ?
+    , estudios_comp = ? WHERE id_consulta = ? `;
+    connection.query(queryCita,[pad,exp_fisica,diag,trat,est_comp, id_consulta], (err)=>{
+        if(err){
+            console.error('Error en la consulta', err.stack);
+            return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+        }
+        res.status(200).json({success: true});
+    })
 });
 
 

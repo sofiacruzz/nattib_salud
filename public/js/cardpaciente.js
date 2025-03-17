@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const medico_id = localStorage.getItem('medico_id');
     const urlParams = new URLSearchParams(window.location.search);
     const paciente_id = urlParams.get('id');
+    const cita_id = urlParams.get('citId');
+    const expediente_id = urlParams.get('expId');
 
     console.log('Medico ID:', medico_id); // Paso 2
     console.log('Paciente ID:', paciente_id); // Paso 3
