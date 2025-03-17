@@ -4,20 +4,62 @@ body{
     margin: 0; /* Asegúrate de que no haya márgenes que afecten el fondo */
     padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
 }
-.section1{
+.section1 {
     display: flex;
-    flex-direction: column;
-
+    flex-direction: row;  
+    align-items: flex-start;  
+    gap: 1rem;
+    flex-wrap: nowrap; /* Evita que los elementos se bajen */
+    width: 100%; /* Asegura que ocupe todo el ancho */
 }
-.section1 .card{
+.section1 .card {
     background-color: white;
     height: auto;
-    width: 70%;
+    width: 68%; /* Se ajusta para que la tabla tenga espacio */
+    border-radius: 30px;
     margin-left: 2em;
     margin-top: 2em;
+    display: flex;
+}
+
+.section1 .card_tabla {
+    background-color: rgb(255, 255, 255);
+    max-height: 40%;
+    height: 20rem;
+    width: 28%;    
+    min-width: 28%;  
+
+    margin-top: 2em;
+    margin-top: 1; /* Eliminar margen innecesario */
     border-radius: 30px;
     display: flex;
 }
+.section1 .table_content{
+    padding: 1em;
+    text-align: left;
+    font-family: 'Montserrat';
+    width: 100%;
+}
+.section1 .table_content table{
+    border-collapse: collapse;
+    margin: 0 0 1em 0;
+    width: 100%;
+}
+.section1 .table_content th,td{
+    border-bottom: 1px solid #ddd;
+    padding: .5em;
+}
+.section1 .table_content th{
+    color: #2149A0;
+}
+.section1 .table_content button{
+    background-color: #2149A0;
+    border-radius: 10px;
+    color: #FFFFFF;
+
+}
+
+
 .section1 .card .img{
     margin-top: 2em;
     margin-left: 2em;
@@ -96,7 +138,15 @@ body{
     background: #96D2CF;
     opacity: 30%;
 }
-  .section2 .consulta_card{
+
+.section2 {
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    margin-top: 2em; /* Ajusta el margen para posicionarlo correctamente */
+    display:block; 
+    justify-content: center; /* Centra el contenido */
+}
+
+.section2 .consulta_card{
     height: auto;
     width: 90%;
     background: white;
@@ -104,7 +154,7 @@ body{
     margin-top: 2em;
     margin-left: 2em;
     padding: 2em;
-  }
+}
   .section2 .consulta_card h1{
     font-family: 'Montserrat';
     font-weight: 500;

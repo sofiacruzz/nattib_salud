@@ -9,62 +9,79 @@
     
 </head>
 <body>
-   <div class="section1">
-        <div class="card" id="info">
-            <div class="img">
-                <img src="../images/cuenta.png" alt="">
-            </div>
-            <div class="cardcontent">
-                <h2>Nombre del paciente: </h2>
-                <p id="nombre"></p>
-                <h2>Edad:</h2>
-                <p id="Edad"></p>
-                <h2>Fecha de nacimiento:</h2>
-                <p id="fechaNacimiento"></p>
-                <h2>Telefono:</h2>
-                <p id="telefono"></p>
-                <h2>Direccion:</h2>
-                <p id="direccion"></p>  
-                <button class="open-button" onclick="openForm()">
-                    <i class="fa-solid fa-plus" style="color: white;"></i>
-                    Crear expediente</button>
-            </div>
-        </div>
-        <div class="card_tabla">
-         <div class="table">
-            <table id="table" class="display" style="width:100%">
+    <section class="section1">
+       <!-- Card con la información del paciente -->
+       <div class="card" id="info">
+          <div class="img">
+             <img src="../images/cuenta.png" alt="">
+          </div>
+          <div class="cardcontent">
+             <h2>Nombre del paciente: </h2>
+             <p id="nombre"></p>
+             <h2>Edad:</h2>
+             <p id="Edad"></p>
+             <h2>Fecha de nacimiento:</h2>
+             <p id="fechaNacimiento"></p>
+             <h2>Telefono:</h2>
+             <p id="telefono"></p>
+             <h2>Direccion:</h2>
+             <p id="direccion"></p>  
+             <button class="open-button" onclick="openForm()">
+                 <i class="fa-solid fa-plus" style="color: white;"></i>
+                 Crear expediente
+             </button>
+          </div>
+       </div>
+ 
+       <!-- Card tabla para mostrar consultas -->
+       <div class="card_tabla">
+          <div class="table_content">
+             <table>
                 <thead>
-                    <tr>
-                        <th>Fecha de consulta</th>
-                        <th>Boton</th>
-                    </tr>
+                   <tr>
+                      <th>Fecha de consulta</th>
+                      <th>Boton</th>
+                   </tr>
                 </thead>
-         </div>
-        </div>
-   </div>
-   <!---kakakakak-->
-   <div class="section2">
-    <div class="consulta_card">
-        <h1>Consulta médica</h1>
-        <div class="consulta_content">
-            <label for="padecimiento_actual_2">Padecimiento actual:</label>
-            <textarea name="padecimiento_actual_2" id="padecimiento_actual_2" rows="10" cols="33" ></textarea>
-            <label for="exploracion_fisica_2">Exploración física:</label>
-            <textarea name="exploracion_fisica_2" id="exploracion_fisica_2" rows="10" cols="33" ></textarea>
-            <label for="diagnostico_2">Diagnóstico:</label>
-            <textarea name="diagnostico_2" id="diagnostico_2" rows="10" cols="33" ></textarea>
-            <label for="tratamiento_2">Tratamiento:</label>
-            <textarea name="tratamiento_2" id="tratamiento_2" rows="10" cols="33" ></textarea>
-            <label for="estudios_complementarios_2">Estudios complementarios:</label>
-            <textarea name="estudios_complementarios_2" id="estudios_complementarios_2" rows="10" cols="33" ></textarea>
-        </div>
-        <div class="buttons">
-            <button class="btn" id="guardarBtn2">Guardar</button>
-            <button class="btn_cancelar" id="cancelarBtn2">Cancelar</button>
-            <button class="btn_editar" id="editarBtn2" style="display: none;">Editar</button>
-        </div>
-    </div>
-   </div>
+                <tbody>
+                   <!-- Aquí puedes agregar filas dinámicas de la tabla si es necesario -->
+                   <tr>
+                      <td>01/01/2025</td>
+                      <td><button><i class="fa-solid fa-eye" style="color: white;"></i>Ver expediente</button></td>
+                   </tr>
+                   <tr>
+                    <td>01/01/2025</td>
+                    <td><button><i class="fa-solid fa-eye" style="color: white;"></i>Ver expediente</button></td>
+                 </tr>
+                </tbody>
+             </table>
+          </div>
+       </div>
+    </section>
+ 
+    <!-- Segunda sección de consulta médica -->
+    <section class="section2">
+       <div class="consulta_card">
+          <h1>Consulta médica</h1>
+          <div class="consulta_content">
+             <label for="padecimiento_actual_2">Padecimiento actual:</label>
+             <textarea name="padecimiento_actual_2" id="padecimiento_actual_2" rows="10" cols="33"></textarea>
+             <label for="exploracion_fisica_2">Exploración física:</label>
+             <textarea name="exploracion_fisica_2" id="exploracion_fisica_2" rows="10" cols="33"></textarea>
+             <label for="diagnostico_2">Diagnóstico:</label>
+             <textarea name="diagnostico_2" id="diagnostico_2" rows="10" cols="33"></textarea>
+             <label for="tratamiento_2">Tratamiento:</label>
+             <textarea name="tratamiento_2" id="tratamiento_2" rows="10" cols="33"></textarea>
+             <label for="estudios_complementarios_2">Estudios complementarios:</label>
+             <textarea name="estudios_complementarios_2" id="estudios_complementarios_2" rows="10" cols="33"></textarea>
+          </div>
+          <div class="buttons">
+             <button class="btn" id="guardarBtn2">Guardar</button>
+             <button class="btn_cancelar" id="cancelarBtn2">Cancelar</button>
+             <button class="btn_editar" id="editarBtn2" style="display: none;">Editar</button>
+          </div>
+       </div>
+    </section>
     <div class="card_popup" id="myForm">
         <div class="expediente_card">
             <h1>Crear expediente</h1>
@@ -76,12 +93,10 @@
             </div>
             <div class="buttons">
                 <button class="btn" id="guardarBtn1">Guardar</button>
-                <button class="btn_cancelar" onclick="closeForm()">Cancelar</button>
+                <button class="btn_cancelar" id="cancelarBtn1" onclick="closeForm()">Cancelar</button>
             </div>
         </div>
-    </div>
-    
-</body>
+ </body>
 <script src="../js/config.js"></script>
 <script src="../js/cardpaciente.js"></script>
 </html>

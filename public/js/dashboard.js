@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${paciente.nombres}</td>
                 <td>${paciente.apellidos}</td>
                 <td>${paciente.telefono}</td>
-                <td><button class="btn-editar" data-id="${paciente.id_pacientes}"> Editar </button></td>
-                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> Ir a ficha </button> </td>
+                <td><button class="btn-editar" data-id="${paciente.id_pacientes}">  <i class="fa-solid fa-user-pen"></i> Editar </button></td>
+                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> <i class="fa-solid fa-arrow-right"></i>Ir a ficha </button> </td>
             `;
             tbody.appendChild(row);
         });
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function redirigir(pacienteId) {
-        window.location.href = `cardpaciente.html`;
+        window.location.href = `${API_URL}medico/pacientes/${medico_id}/${pacienteId}`;
     }
 
     fetchData();

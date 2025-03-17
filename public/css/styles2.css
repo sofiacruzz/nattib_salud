@@ -74,7 +74,6 @@
     height: auto;
 }
 .main .tabla table{
-    text-align: left;
     border-collapse: collapse;
     margin: 0 0 1em 0;
     margin-top: 80px;
@@ -86,6 +85,25 @@
     width: 25%;
     font-weight: 300;
 
+}
+.main .tabla td .btn-editar{
+  background-color: #96D2CF;
+  color: #2149A0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s linear;
+
+  
+}
+.main .tabla td .btn-redirigir{
+  background-color: #2149A0;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color .3s linear;
+  
 }
 
 .main .tabla .searchbar input[type="text"]{
