@@ -32,6 +32,16 @@ body{
     font-size: 14pt;
     color: black;
 }
+.card .cardcontent button{
+    height: 2em;
+    margin-left: -4px;
+    background-color: #2149A0;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color .3s linear;
+}
 .card_popup{
     display: none;
     position: fixed;
@@ -48,7 +58,7 @@ body{
 }
 
 .card_popup .expediente_card{
-    height: 90%;
+    height: 95%;
     width: 70%;
     background: white;
     border-radius: 30px;
@@ -73,7 +83,8 @@ body{
     padding-top: 1em;
 }
 .card_popup .expediente_card .expediente_content textarea{
-    padding: 10px;
+    padding: 1em;
+    margin-bottom: 1em;
     max-width: 100%;
     border-radius: 30px;
     border: none;
@@ -139,7 +150,6 @@ body{
     touch-action: manipulation;
     width: 200px;
     will-change: transform;
-    top: 1em;
 }
 
 .buttons .btn {
@@ -148,11 +158,6 @@ body{
     color: #FFFFFF;
 }
 
-.buttons .btn_editar {
-    background-color: white;
-    border: 2px solid #2149A0;
-    color: #2149A0;
-}
 
 .buttons .btn_cancelar {
     background-color: white;

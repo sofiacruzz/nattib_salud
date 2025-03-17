@@ -163,7 +163,6 @@ header li a {
   justify-content: center; /* Centra horizontalmente */
   align-items: center; /* Centra verticalmente */
   z-index: 1000; /* Asegura que esté por encima de otros elementos */
-
 }
 .form-container{
   margin-left: 20rem;
