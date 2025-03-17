@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function redirigir(pacienteId) {
-        window.location.href = `${API_URL}medico/pacientes/${medico_id}/${pacienteId}`;
+        window.location.href = `cardpaciente.html`;
     }
 
     fetchData();

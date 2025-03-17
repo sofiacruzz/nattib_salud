@@ -94,29 +94,45 @@ router.get('/pacientes/:medico_id', (req, res) => {
 //REGISTRO PACIENTES 
 router.post('/registrar-paciente', (req, res) => {
     const { nombres, apellidos, fecha_nac, telefono, direccion, medico_id } = req.body;
-
-    // Iniciar una transacción para asegurar la atomicidad
     connection.beginTransaction((err) => {
         if (err) {
             console.error('Error starting transaction:', err.stack);
             return res.status(500).json({ success: false, message: 'Error starting transaction' });
         }
-
-        // 1. Insertar el paciente
+    
         const queryPaciente = `
             INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id)
             VALUES (?, ?, ?, ?, ?, ?)
         `;
         const valuesPaciente = [nombres, apellidos, fecha_nac, telefono, direccion, medico_id];
-
+    
         connection.query(queryPaciente, valuesPaciente, (err, resultsPaciente) => {
             if (err) {
                 return connection.rollback(() => {
                     console.error('Error inserting paciente:', err.stack);
                     res.status(500).json({ success: false, message: 'Error inserting paciente' });
                 });
+            } else {
+                connection.commit((err) => {
+                    if (err) {
+                        return connection.rollback(() => {
+                            console.error('Error committing transaction:', err.stack);
+                            res.status(500).json({ success: false, message: 'Error committing transaction' });
+                        });
+                    }
+                    res.status(200).json({
+                        success: true,
+                        message: 'Paciente registrado exitosamente',
+                        paciente_id: resultsPaciente.insertId
+                    });
+                });
             }
+        });
+    });    
+ 
+});
 
+/*
             const id_paciente = resultsPaciente.insertId; // ID del paciente recién creado
 
             // 2. Crear un expediente vacío para el paciente
@@ -172,10 +188,7 @@ router.post('/registrar-paciente', (req, res) => {
                         });
                     });
                 });
-            });
-        });
-    });
-});
+            });*/
 //VER CARD PACIENTE 
 router.get('/pacientes/:medico_id/:paciente_id', (req, res)=>{
     const paciente_id = req.params.paciente_id;
@@ -189,6 +202,40 @@ connection.query(query,[medico_id,paciente_id], (err, results) =>{
       res.status(200).json({ success: true, pacientes: results });
 })
 });
+//Crear expediente paciente
+// Crear expediente paciente
+router.post('/create/expediente', (req, res) => {
+    const {id_paciente, medico_id, ant_pat, no_pat} = req.body;
+    const queryExpediente = `
+    INSERT INTO expediente_info (id_paciente, medico_id, antecedentes_pat, no_patologicos, fecha_registro) 
+    VALUES (?, ?, ?, ?, CURDATE())`;
+    
+    connection.query(queryExpediente, [id_paciente, medico_id, ant_pat, no_pat], (err) => {
+        if (err) {
+            console.error('Error en la consulta', err.stack);
+            return res.status(500).json({ success: false, message: 'ERROR EN EL SERVIDOR' });
+        }
+        res.status(200).json({ success: true });
+    });
+});
+
+// Crear consulta médica paciente
+router.post('/create/consulta_medica', (req, res) => {
+    const { id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp} = req.body;
+    const queryCita = `
+    INSERT INTO consulta_ficha (id_paciente, medico_id, padecimiento, exploracion_fisica, diagnostico, tratamiento, estudios_comp, fecha_registro) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, CURDATE())`;
+    
+    connection.query(queryCita, [id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp], (err) => {
+        if (err) {
+            console.error('Error en la consulta', err.stack);
+            return res.status(500).json({ success: false, message: 'ERROR EN EL SERVIDOR' });
+        }
+        res.status(200).json({ success: true });
+    });
+});
+
+
 //Actualizar expediente paciente
 router.put('/update/expediente', (req, res)=>{
     const { ant_pat, no_pat, id_expediente } = req.body;
