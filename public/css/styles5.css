@@ -4,7 +4,12 @@ body{
     margin: 0; /* Asegúrate de que no haya márgenes que afecten el fondo */
     padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
 }
-.card{
+.section1{
+    display: flex;
+    flex-direction: column;
+
+}
+.section1 .card{
     background-color: white;
     height: auto;
     width: 70%;
@@ -13,26 +18,26 @@ body{
     border-radius: 30px;
     display: flex;
 }
-.card .img{
+.section1 .card .img{
     margin-top: 2em;
     margin-left: 2em;
 }
-.card .cardcontent{
+.section1 .card .cardcontent{
     padding: 2em;
 }
-.card .cardcontent  h2{
+.section1 .card .cardcontent  h2{
     font-family: 'Montserrat';
     font-weight: 400;
     font-size: 16pt;
     color: #9D9D9D;
 }
-.card .cardcontent p{
+.section1 .card .cardcontent p{
     font-family: 'Montserrat';
     font-weight: 500;
     font-size: 14pt;
     color: black;
 }
-.card .cardcontent button{
+.section1 .card .cardcontent button{
     height: 2em;
     margin-left: -4px;
     background-color: #2149A0;
@@ -58,8 +63,8 @@ body{
 }
 
 .card_popup .expediente_card{
-    height: 95%;
-    width: 70%;
+    max-height: 95%;
+    max-width: 70%;
     background: white;
     border-radius: 30px;
     margin-left: 4em;
@@ -91,7 +96,7 @@ body{
     background: #96D2CF;
     opacity: 30%;
 }
-  .consulta_card{
+  .section2 .consulta_card{
     height: auto;
     width: 90%;
     background: white;
@@ -100,24 +105,24 @@ body{
     margin-left: 2em;
     padding: 2em;
   }
-  .consulta_card h1{
+  .section2 .consulta_card h1{
     font-family: 'Montserrat';
     font-weight: 500;
     color: #2149A0;
   }
-  .consulta_card .consulta_content{
+  .section2 .consulta_card .consulta_content{
     display: flex;
     flex-direction: column;
     padding: 2em;
   }
-  .consulta_card .consulta_content label,textarea{
+  .section2 .consulta_card .consulta_content label,textarea{
     font-family: 'Montserrat';
     font-weight: 500;
     font-size: 14pt;
     padding-top: 1em;
     padding-bottom: 1em;
   }
-  .consulta_card .consulta_content textarea{
+  .section2 .consulta_card .consulta_content textarea{
     padding: 10px;
     max-width: 100%;
     border-radius: 30px;

@@ -9,42 +9,41 @@
     
 </head>
 <body>
-    <div class="card" id="info">
-        <div class="img">
-            <img src="../images/cuenta.png" alt="">
-        </div>
-        <div class="cardcontent">
-            <h2>Nombre del paciente: </h2>
-            <p id="nombre"></p>
-            <h2>Edad:</h2>
-            <p id="Edad"></p>
-            <h2>Fecha de nacimiento:</h2>
-            <p id="fechaNacimiento"></p>
-            <h2>Telefono:</h2>
-            <p id="telefono"></p>
-            <h2>Direccion:</h2>
-            <p id="direccion"></p>  
-            <button class="open-button" onclick="openForm()">
-                <i class="fa-solid fa-plus" style="color: white;"></i>
-                Crear expediente</button>
-        </div>
-    </div>
-    <div class="card_popup" id="myForm">
-        <div class="expediente_card">
-            <h1>Crear expediente</h1>
-            <div class="expediente_content">
-                <label for="ant_patologicos_1">Antecedentes patológicos:</label>
-                <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
-                <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
-                <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
+   <div class="section1">
+        <div class="card" id="info">
+            <div class="img">
+                <img src="../images/cuenta.png" alt="">
             </div>
-            <div class="buttons">
-                <button class="btn" id="guardarBtn1">Guardar</button>
-                <button class="btn_cancelar" onclick="closeForm()">Cancelar</button>
+            <div class="cardcontent">
+                <h2>Nombre del paciente: </h2>
+                <p id="nombre"></p>
+                <h2>Edad:</h2>
+                <p id="Edad"></p>
+                <h2>Fecha de nacimiento:</h2>
+                <p id="fechaNacimiento"></p>
+                <h2>Telefono:</h2>
+                <p id="telefono"></p>
+                <h2>Direccion:</h2>
+                <p id="direccion"></p>  
+                <button class="open-button" onclick="openForm()">
+                    <i class="fa-solid fa-plus" style="color: white;"></i>
+                    Crear expediente</button>
             </div>
         </div>
-    </div>
-    
+        <div class="card_tabla">
+         <div class="table">
+            <table id="table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Fecha de consulta</th>
+                        <th>Boton</th>
+                    </tr>
+                </thead>
+         </div>
+        </div>
+   </div>
+   <!---kakakakak-->
+   <div class="section2">
     <div class="consulta_card">
         <h1>Consulta médica</h1>
         <div class="consulta_content">
@@ -65,6 +64,23 @@
             <button class="btn_editar" id="editarBtn2" style="display: none;">Editar</button>
         </div>
     </div>
+   </div>
+    <div class="card_popup" id="myForm">
+        <div class="expediente_card">
+            <h1>Crear expediente</h1>
+            <div class="expediente_content">
+                <label for="ant_patologicos_1">Antecedentes patológicos:</label>
+                <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
+                <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
+                <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
+            </div>
+            <div class="buttons">
+                <button class="btn" id="guardarBtn1">Guardar</button>
+                <button class="btn_cancelar" onclick="closeForm()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
 </body>
 <script src="../js/config.js"></script>
 <script src="../js/cardpaciente.js"></script>
