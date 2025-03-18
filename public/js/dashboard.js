@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             if (data.success) {
-                populateTable(data.pacientes);
+                populateTable(data);
             } else {
                 console.error('La API no devolvió datos exitosamente');
             }
@@ -23,36 +23,81 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-    function populateTable(pacientes) {
-        const tbody = document.querySelector('#myTable tbody');
-        tbody.innerHTML = ''; // Limpiar el contenido previo
-
-        pacientes.forEach(paciente => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${paciente.nombres}</td>
-                <td>${paciente.apellidos}</td>
-                <td>${paciente.telefono}</td>
-                <td><button class="btn-editar" data-id="${paciente.id_pacientes}">  <i class="fa-solid fa-user-pen"></i> Editar </button></td>
-                <td> <button class="btn-redirigir" data-id="${paciente.id_pacientes}"> <i class="fa-solid fa-arrow-right"></i>Ir a ficha </button> </td>
-            `;
-            tbody.appendChild(row);
-        });
-        const botones = document.querySelectorAll('.btn-redirigir');
-        botones.forEach(boton => {
-            boton.addEventListener('click', () => {
-                const pacienteId = boton.getAttribute('data-id'); // Obtener el ID del paciente
-                localStorage.setItem('paciente_id', pacienteId); // Guardar el ID en localStorage
-                console.log('ID del paciente guardado:', pacienteId);
-                redirigir(pacienteId);
-            });
-        });
+    function calcularEdad(fechaNacimiento) {
+        const nacimiento = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--; // Ajusta si aún no ha cumplido años este año
+        }
+        
+        return edad;
     }
 
-    function redirigir(pacienteId) {
-        window.location.href = `cardpaciente.html`;
+    function populateTable(data) {
+        const transformedData = data.pacientes.map(paciente => [
+            paciente.nombres +''+ paciente.apellidos,
+            calcularEdad(paciente.fecha_nac),  // Nombre completo
+            paciente.telefono,  // Teléfono o cualquier otro campo
+            paciente.fecha_registro ? paciente.fecha_registro : 'No registrado',  // Fecha de registro, si está disponible
+            paciente.id_pacientes
+        ]);
+        console.log(transformedData);
+
+        // Asegurarse de que el número de columnas coincide con los datos
+        new DataTable('#myTable', {
+            responsive: true,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+            },
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-clipboard"></i>',
+                    titleAttr: 'Copiar',
+                    className: ''
+                },
+                {
+                    extend: 'pdf', 
+                    text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>', 
+                    orientation: 'landscape', 
+                    pageSize: 'A4',
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
+                    titleAttr: 'Excel',
+                    className: ''
+                },
+
+            ],
+            layout: {
+                topStart: 'buttons'
+            },
+            columns: [
+                { title: 'Nombre del paciente'},   
+                { title: 'Edad'},   
+                { title: 'Telefono'},   
+                { title: 'Fecha de registro'},   
+                { 
+                    title: 'Acciones',
+                    render: function(data, type, row) {
+                        return `<button class="btn-editar" data-id="${data}">Ver ficha</button>`;
+                    }
+                }
+            ],
+            data: transformedData,
+        });
     }
 
     fetchData();
+});
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('btn-editar')) {
+        const id = event.target.getAttribute('data-id');
+        alert(`ID seleccionado: ${id}`);
+    }
 });

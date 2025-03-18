@@ -89,7 +89,7 @@ body{
     cursor: pointer;
     transition: background-color .3s linear;
 }
-.card_popup{
+.card_popup_anterior{
     display: none;
     position: fixed;
     box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
@@ -104,40 +104,71 @@ body{
 
 }
 
-.card_popup .expediente_card{
-    max-height: 95%;
-    max-width: 70%;
-    background: white;
-    border-radius: 30px;
-    margin-left: 4em;
-    padding: 1em;
-   
+/* Modal */
+.card_popup {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el modal */
+    width: 70%;
+    max-height: 1%; /* Limita la altura */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea el contenido hacia la parte superior */
 }
-.card_popup .expediente_card h1{
+
+/* Contenedor del contenido */
+.expediente_card {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea los elementos hacia arriba */
+    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+    overflow: auto; /* Evita el desplazamiento */
+    background: white; /* Fondo blanco para el modal */
+    border-radius: 30px; /* Bordes redondeados */
+}
+
+/* Ajuste de las áreas de texto */
+.expediente_content {
+    flex: 1; /* Permite que el contenido se expanda */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* Distribuye mejor los elementos */
+}
+
+textarea {
+    min-height: 3vh; /* Establece una altura mínima más pequeña */
+    height: auto; /* Permite que el tamaño se ajuste de acuerdo al contenido */
+    resize: none; /* Evita el scroll manual */
+    background: #96D2CF !important; /* Color de fondo */
+    opacity: 30% !important; /* Opacidad */
+    border-radius: 30px; /* Bordes redondeados */
+    border: none; /* Elimina el borde */
+    padding: 1em; /* Relleno dentro del textarea */
+    margin-bottom: 1em; 
+}
+
+/* Eliminar padding top adicional */
+.card_popup .expediente_card h1 {
+    margin-top: 0;
     font-family: 'Montserrat';
     font-weight: 500;
     color: #2149A0;
 }
-.card_popup .expediente_card .expediente_content{
-    display: flex;
-    flex-direction: column;
- 
-}
-.card_popup .expediente_card .expediente_content label, textarea{
+
+.card_popup .expediente_card .expediente_content label,
+textarea {
     font-family: 'Montserrat';
     font-weight: 500;
     font-size: 14pt;
-    padding-top: 1em;
 }
-.card_popup .expediente_card .expediente_content textarea{
-    padding: 1em;
-    margin-bottom: 1em;
-    max-width: 100%;
-    border-radius: 30px;
-    border: none;
-    background: #96D2CF;
-    opacity: 30%;
-}
+
+
+
 
 .section2 {
     width: 100%; /* Asegura que ocupe todo el ancho */

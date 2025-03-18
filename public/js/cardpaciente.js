@@ -1,10 +1,13 @@
 function openForm() {
     document.getElementById("myForm").style.display = "block";
+    document.getElementById("expForm").style.display = "block";
 }
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
+    document.getElementById("expForm").style.display = "none";
+
 }// Función para inicializar un conjunto de campos editables
-function inicializarFormulario(guardarBtn, cancelarBtn, editarBtn, textareas) {
+function inicializarFormulario(guardarBtn, textareas) {
     // Habilitar los textarea al inicio
     textareas.forEach(textarea => {
         textarea.disabled = false;
@@ -12,47 +15,26 @@ function inicializarFormulario(guardarBtn, cancelarBtn, editarBtn, textareas) {
 
     // Configurar visibilidad inicial de botones
     guardarBtn.style.display = 'inline-block';
-    cancelarBtn.style.display = 'inline-block';
-    editarBtn.style.display = 'none';
 
     // Evento para "Guardar"
     guardarBtn.addEventListener('click', function () {
         textareas.forEach(textarea => textarea.disabled = true); // Deshabilitar campos
-        guardarBtn.style.display = 'none';
-        cancelarBtn.style.display = 'none';
-        editarBtn.style.display = 'inline-block';
-    });
-
-    // Evento para "Cancelar"
-    cancelarBtn.addEventListener('click', function () {
-        textareas.forEach(textarea => textarea.disabled = true); // Deshabilitar campos
-        guardarBtn.style.display = 'none';
-        cancelarBtn.style.display = 'none';
-        editarBtn.style.display = 'inline-block';
-    });
-
-    // Evento para "Editar"
-    editarBtn.addEventListener('click', function () {
-        textareas.forEach(textarea => textarea.disabled = false); // Habilitar campos
         guardarBtn.style.display = 'inline-block';
-        cancelarBtn.style.display = 'inline-block';
-        editarBtn.style.display = 'none';
+        cancelarBtn.style.display = 'none';
+        editarBtn.style.display = 'inline-block';
     });
+
 }
 
 // Obtener elementos del primer conjunto (Expediente)
 inicializarFormulario(
     document.getElementById('guardarBtn1'),
-    document.getElementById('cancelarBtn1'),
-    document.getElementById('editarBtn1'),
     document.querySelectorAll('.expediente_card textarea')
 );
 
 // Obtener elementos del segundo conjunto (Consulta médica)
 inicializarFormulario(
     document.getElementById('guardarBtn2'),
-    document.getElementById('cancelarBtn2'),
-    document.getElementById('editarBtn2'),
     document.querySelectorAll('.consulta_card textarea')
 );
 
@@ -99,7 +81,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 // Logica para guardar la informacion de expediente
 document.getElementById('guardarBtn1').addEventListener('click', async (event) => {
     event.preventDefault();
-
+    const medico_id = localStorage.getItem('medico_id');
+    const urlParams = new URLSearchParams(window.location.search);
+    const paciente_id = urlParams.get('id');
     const ant_pat = document.getElementById('ant_patologicos_1').value;
     const no_ant_pat = document.getElementById('ant_nopatologicos_1').value;
 
@@ -112,6 +96,8 @@ document.getElementById('guardarBtn1').addEventListener('click', async (event) =
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                id_paciente: paciente_id,
+                medico_id: medico_id,
                 ant_pat: ant_pat, 
                 no_pat: no_ant_pat
             })
@@ -119,6 +105,8 @@ document.getElementById('guardarBtn1').addEventListener('click', async (event) =
 
         const data = await response.json();
         if (data.success) {
+           document.getElementById('ant_patologicos_1').value = "";
+            document.getElementById('ant_nopatologicos_1').value = "";
             alert('Expediente agregado correctamente');
         } else {
             alert('Error al agregar expediente');
@@ -132,7 +120,9 @@ document.getElementById('guardarBtn1').addEventListener('click', async (event) =
 // Logica para guardar la informacion de consulta
 document.getElementById('guardarBtn2').addEventListener('click', async (event) => {
     event.preventDefault();
-
+    const medico_id = localStorage.getItem('medico_id');
+    const urlParams = new URLSearchParams(window.location.search);
+    const paciente_id = urlParams.get('id');
     const padecimiento_actual_2 = document.getElementById('padecimiento_actual_2').value;
     const exploracion_fisica_2 = document.getElementById('exploracion_fisica_2').value;
     const diagnostico_2 = document.getElementById('diagnostico_2').value;
@@ -148,6 +138,8 @@ document.getElementById('guardarBtn2').addEventListener('click', async (event) =
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                id_paciente: paciente_id,
+                medico_id: medico_id,
                 pad: padecimiento_actual_2, 
                 exp_fisica: exploracion_fisica_2, 
                 diag: diagnostico_2,
@@ -158,7 +150,13 @@ document.getElementById('guardarBtn2').addEventListener('click', async (event) =
 
         const data = await response.json();
         if (data.success) {
+            document.getElementById('padecimiento_actual_2').value = "";
+            document.getElementById('exploracion_fisica_2').value = "";
+            document.getElementById('diagnostico_2').value = "";
+            document.getElementById('tratamiento_2').value = "";
+            document.getElementById('estudios_complementarios_2').value = "";
             alert('Consulta médica agregada correctamente');
+            
         } else {
             alert('Error al agregar cita');
         }

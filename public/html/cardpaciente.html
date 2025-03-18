@@ -76,14 +76,12 @@
              <textarea name="estudios_complementarios_2" id="estudios_complementarios_2" rows="10" cols="33"></textarea>
           </div>
           <div class="buttons">
-             <button class="btn" id="guardarBtn2">Guardar</button>
-             <button class="btn_cancelar" id="cancelarBtn2">Cancelar</button>
-             <button class="btn_editar" id="editarBtn2" style="display: none;">Editar</button>
+             <button class="btn" id="guardarBtn2">Crear consulta</button>
           </div>
        </div>
     </section>
     <div class="card_popup" id="myForm">
-        <div class="expediente_card">
+        <div class="expediente_card" id="expForm">
             <h1>Crear expediente</h1>
             <div class="expediente_content">
                 <label for="ant_patologicos_1">Antecedentes patológicos:</label>
@@ -92,10 +90,11 @@
                 <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
             </div>
             <div class="buttons">
-                <button class="btn" id="guardarBtn1">Guardar</button>
-                <button class="btn_cancelar" id="cancelarBtn1" onclick="closeForm()">Cancelar</button>
+               <button class="btn_cancelar" onclick="closeForm()">Cerrar</button>
+               <button class="btn" id="guardarBtn1">Crear expediente</button>
             </div>
         </div>
+    </div>
  </body>
 <script src="../js/config.js"></script>
 <script src="../js/cardpaciente.js"></script>
