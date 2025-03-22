@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const medico_id = localStorage.getItem('medico_id');
 
     const apiUrl = `${API_URL}medico/pacientes/${medico_id}/${id_paciente}`;
-    const apiUrlExpedientes = `${API_URL}medico/get/expedientes/${medico_id}/${id_paciente}`;
+    const apiUrlExpedientes = `${API_URL}medico/get/expedientes`;
     const apiUrlConsulta = `${API_URL}medico/get/consulta_medica`;
 
     //OBTENER INFORMACION PERSONAL DE PACIENTE
@@ -43,6 +43,35 @@ document.addEventListener('DOMContentLoaded', async function () {
             url.search = new URLSearchParams(params).toString();
     
             const response = await fetch(url, {
+                method: 'GET', 
+
+            });
+            console.log(url)
+    
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+    
+            const data = await response.json();  // Suponiendo que la respuesta es JSON
+            const consulta = data.consulta[0];
+            document.getElementById('pad').innerHTML = consulta.padecimiento;
+            document.getElementById('exp_fisica').innerHTML = consulta.exploracion_fisica;
+            document.getElementById('diag').innerHTML = consulta.diagnostico;
+            document.getElementById('trat').innerHTML = consulta.tratamiento;
+            document.getElementById('est_comp').innerHTML = consulta.estudios_comp;
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    async function fetchDataExpendiente() {
+        try {
+            // Crear la URL con los parámetros query
+            const url = new URL(apiUrlExpedientes);
+            const params = { id_paciente, medico_id, id_consulta };
+            url.search = new URLSearchParams(params).toString();
+    
+            const response = await fetch(url, {
                 method: 'GET',  // Mantenemos el método GET
 
             });
@@ -53,8 +82,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
     
             const data = await response.json();  // Suponiendo que la respuesta es JSON
-            console.log(data);  // Maneja los datos aquí
-    
+            const consulta = data.expedientes[0];
+            document.getElementById('pat').innerHTML = consulta.antecedentes_pat;
+            document.getElementById('no_pat').innerHTML = consulta.no_patologicos;
+
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -63,4 +95,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     fetchDataPaciente();
     fetchDataConsulta();
+    fetchDataExpendiente();
+
 })
