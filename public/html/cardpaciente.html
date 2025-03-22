@@ -6,6 +6,7 @@
     <title>Card</title>
     <link rel="stylesheet" href="../css/styles5.css">
     <script src="https://kit.fontawesome.com/f48f7e0849.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.2.2/b-3.2.2/b-html5-3.2.2/b-print-3.2.2/r-3.0.4/datatables.min.css" rel="stylesheet" integrity="sha384-nnQHSaCGgRs/cOTNLD4j1IBt/azvbtT85NPCu3RUEJX8lAtGdi72+cXJ9+swu94b" crossorigin="anonymous">
     
 </head>
 <body>
@@ -35,27 +36,16 @@
  
        <!-- Card tabla para mostrar consultas -->
        <div class="card_tabla">
-          <div class="table_content">
-             <table>
-                <thead>
-                   <tr>
-                      <th>Fecha de consulta</th>
-                      <th>Boton</th>
-                   </tr>
-                </thead>
-                <tbody>
-                   <!-- Aquí puedes agregar filas dinámicas de la tabla si es necesario -->
-                   <tr>
-                      <td>01/01/2025</td>
-                      <td><button><i class="fa-solid fa-eye" style="color: white;"></i>Ver expediente</button></td>
-                   </tr>
-                   <tr>
-                    <td>01/01/2025</td>
-                    <td><button><i class="fa-solid fa-eye" style="color: white;"></i>Ver expediente</button></td>
-                 </tr>
-                </tbody>
-             </table>
-          </div>
+           <!-- Tabla de citas médicas -->
+           <div class="tabla">
+            <div class="table_content">
+               <h1>Citas medicas</h1>
+                <table id="citas_medicas">
+                    <tbody>
+                     
+                    </tbody>
+                </table>
+            </div>
        </div>
     </section>
  
@@ -96,6 +86,10 @@
         </div>
     </div>
  </body>
+ <script type="module" src="../js/cardpaciente.js"></script>
 <script src="../js/config.js"></script>
-<script src="../js/cardpaciente.js"></script>
+<script src="../lib/jquery/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.2.2/b-3.2.2/b-html5-3.2.2/b-print-3.2.2/r-3.0.4/datatables.min.js" integrity="sha384-h74voV8seZenDgspYCzjwHl59Xn8b6l2bRqO2JIUTd1ed0UuP3ZAi1OUPttl6Ayl" crossorigin="anonymous"></script>
 </html>

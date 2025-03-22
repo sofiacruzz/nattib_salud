@@ -5,8 +5,6 @@ body{
     padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
 }
 
-
-
 .sidenav {
     height: 90%; /* Full-height: remove this if you want "auto" height */
     width: 260px; /* Set the width of the sidebar */
@@ -20,6 +18,7 @@ body{
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
   }
+
   .sidenav h1{
     font-family: 'Montserrat';
     padding: 10px;
@@ -30,7 +29,12 @@ body{
     padding-bottom: 80px;
 
   }
-  
+  caption {
+    caption-side: top;
+    text-align: left;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
   /* The navigation menu links */
   .sidenav a {
     padding: 6px 8px 6px 16px;
@@ -61,46 +65,60 @@ body{
   }
 
 
-.section1 {
+  .section1 {
     display: flex;
-    flex-direction: row;  
-    align-items: flex-start;  
-    gap: 1rem;
-    flex-wrap: nowrap; /* Evita que los elementos se bajen */
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    flex-direction: row;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: flex-start; /* Alinea los elementos al inicio */
+    gap: 20px; /* Espaciado entre los elementos */
+    flex-wrap: wrap; /* Permite que los elementos se acomoden en varias líneas si no hay espacio */
+    width: 100%;
+    padding: 20px;
+}
+#info {
+    width: 40%; /* Ajusta el tamaño de la tarjeta de información */
+    max-width: 400px;
+    background-color: white;
+    border: none; /* Elimina bordes predeterminados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
 }
 .section1 .card {
     background-color: white;
     height: auto;
     width: 68%; /* Se ajusta para que la tabla tenga espacio */
-    border-radius: 30px;
+    border-radius: 8px;
     margin-left: 2em;
     margin-top: 2em;
     display: flex;
 }
-
-.section1 .card_tabla {
-    background-color: rgb(255, 255, 255);
-    max-height: 40%;
-    height: 28rem;
-    width: 50%;    
-    margin-top: 2em;
-    border-radius: 30px;
+.container-tables {
     display: flex;
+    margin-top: 4em;
+    flex-direction: column; /* Acomoda las tablas en columna */
+    gap: 40px; /* Aumenta el espacio entre las tablas */
+    width: 30%; /* Ajusta el ancho del contenedor de tablas */
 }
-.section1 .tabla{
+.section1 .card_tabla {
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    width: 100%; /* Ocupa todo el ancho disponible en su contenedor */
+}
+.section1 .table_content{
     padding: 1em;
     text-align: left;
     font-family: 'Montserrat';
     width: 100%;
 }
-.section1 .tabla table {
+.section1 .table_content table{
     border-collapse: collapse;
-    margin: 0 0 0 0;
+    margin: 0 0 1em 0;
     width: 100%;
 }
 .section1 .table_content th,td{
-    border-bottom: 1px solid #ddd;
     padding: .5em;
 }
 .section1 .table_content th{
@@ -108,7 +126,6 @@ body{
 }
 .section1 .table_content button{
     background-color: #2149A0;
-    border-radius: 10px;
     color: #FFFFFF;
 
 }
@@ -146,7 +163,7 @@ body{
 .card_popup_anterior{
     display: none;
     position: fixed;
-    box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     top: 0;
     left: 0;
     width: 100%;

@@ -92,12 +92,15 @@ document.addEventListener('DOMContentLoaded', function () {
             data: transformedData,
         });
     }
-
+    window.verFicha = function(pacienteId) {
+        window.location.href = `cardinfo.html?id=${pacienteId}`;
+    };
+    
     fetchData();
 });
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('btn-editar')) {
         const id = event.target.getAttribute('data-id');
-        alert(`ID seleccionado: ${id}`);
+        window.location.href = `cardpaciente.html?id=${id}`;
     }
 });

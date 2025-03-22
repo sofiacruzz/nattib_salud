@@ -266,34 +266,68 @@ router.put('/update/consulta_medica', (req, res)=>{
 
 
 //Obtener consultas medicas de paciente por su id y por el id medico
-router.get('/get/consultas_medicas', (req, res)=>{
-    const { id_paciente, medico_id} = req.body;
-    const queryCita = `
-    UPDATE consulta_ficha SET padecimiento = ?, exploracion_fisica = ?, diagnostico = ?, tratamiento = ?
-    , estudios_comp = ? WHERE id_consulta = ? `;
-    connection.query(queryCita,[pad,exp_fisica,diag,trat,est_comp, id_consulta], (err)=>{
-        if(err){
-            console.error('Error en la consulta', err.stack);
-            return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+router.get('/get/consultas_medicas', (req, res) => {
+    const { id_paciente, medico_id } = req.query; // Cambiado de req.body a req.query
+
+    if (!id_paciente || !medico_id) {
+        return res.status(400).json({ success: false, message: 'Faltan parámetros' });
+    }
+
+    const query = `
+        SELECT * FROM consulta_ficha WHERE id_paciente = ? AND medico_id = ?
+    `;
+
+    connection.query(query, [id_paciente, medico_id], (err, results) => {
+        if (err) {
+            console.error('Error en la consulta:', err.stack);
+            return res.status(500).json({ success: false, message: 'ERROR EN EL SERVIDOR' });
         }
-        res.status(200).json({success: true});
-    })
+        res.status(200).json({ success: true, consultas: results });
+    });
+});
+
+//Obtener consulta medica de paciente por su id y por el id medico y por el id de consulta
+router.get('/get/consulta_medica', (req, res) => {
+    const { id_paciente, medico_id, id_consulta } = req.query; // Cambiado de req.body a req.query
+
+    if (!id_paciente || !medico_id || !id_consulta) {
+        return res.status(400).json({ success: false, message: 'Faltan parámetros' });
+    }
+
+    const query = `
+        SELECT * FROM consulta_ficha WHERE id_paciente = ? AND medico_id = ? AND id_consulta = ?
+    `;
+
+    connection.query(query, [id_paciente, medico_id, id_consulta], (err, results) => {
+        if (err) {
+            console.error('Error en la consulta:', err.stack);
+            return res.status(500).json({ success: false, message: 'ERROR EN EL SERVIDOR' });
+        }
+        res.status(200).json({ success: true, consulta: results });
+    });
 });
 
 //Obtener expedientes de paciente por su id y por el id medico
-router.get('/get/expedientes', (req, res)=>{
-    const { pad, exp_fisica, diag, trat, est_comp, id_consulta } = req.body;
-    const queryCita = `
-    UPDATE consulta_ficha SET padecimiento = ?, exploracion_fisica = ?, diagnostico = ?, tratamiento = ?
-    , estudios_comp = ? WHERE id_consulta = ? `;
-    connection.query(queryCita,[pad,exp_fisica,diag,trat,est_comp, id_consulta], (err)=>{
-        if(err){
-            console.error('Error en la consulta', err.stack);
-            return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+router.get('/get/expedientes', (req, res) => {
+    const { id_paciente, medico_id } = req.query; // Cambiado de req.body a req.query
+
+    if (!id_paciente || !medico_id) {
+        return res.status(400).json({ success: false, message: 'Faltan parámetros' });
+    }
+
+    const query = `
+        SELECT * FROM expediente_info WHERE id_paciente = ? AND medico_id = ?
+    `;
+
+    connection.query(query, [id_paciente, medico_id], (err, results) => {
+        if (err) {
+            console.error('Error en la consulta:', err.stack);
+            return res.status(500).json({ success: false, message: 'ERROR EN EL SERVIDOR' });
         }
-        res.status(200).json({success: true});
-    })
+        res.status(200).json({ success: true, expedientes: results });
+    });
 });
+
 
 
 module.exports = router;

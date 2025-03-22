@@ -52,6 +52,70 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.log('Medico ID:', medico_id); // Paso 2
     console.log('Paciente ID:', paciente_id); // Paso 3
 
+
+    //CONSULTA PARA LA TABLA
+    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas?id_paciente=${paciente_id}&medico_id=${medico_id}`;
+    async function fetchDataCitas() {
+        try {
+            const response = await fetch(apiUrlCitas);
+            if (!response.ok) throw new Error('Error al obtener los datos');
+
+            const data = await response.json();
+            if (data.success) {
+                consultasTable(data.consultas);
+            } else {
+                console.error('La API no devolvió datos exitosamente');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+  //Generador de tabla consultas
+  function consultasTable(consultas) {
+    var fecha_format_cons = "";
+    const transformedDataConsultas = consultas.map(consulta => [
+        fecha_format_cons = consulta.fecha_registro.split("T")[0], 
+        `<button class="btn-ver-consulta" data-id="${consulta.id_consulta}">Ver</button>`
+    ]);
+
+    new DataTable('#citas_medicas', {
+        searching: true,
+        ordering:  false,
+        responsive: false,
+        layout: {
+            topStart: null,
+            bottomEnd: {
+                paging: {
+                    numbers: false,
+                    previousNext: false,
+                    firstLast: false
+
+
+                }
+            }
+        },
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+        },
+        columns: [
+            { title: 'Fecha', className: "dt-head-center dt-body-center"},
+            { title: 'Acciones', orderable: false, className: "dt-head-center dt-body-center" }
+        ],
+        data: transformedDataConsultas,
+    });
+    
+}
+    // Delegación de eventos para manejar los clics en los botones "Ver"
+    document.querySelector("#citas_medicas").addEventListener("click", function (event) {
+        if (event.target.classList.contains("btn-ver-consulta")) {
+            const consultaId = event.target.getAttribute("data-id");
+            window.location.href = `fichacita.html?id_consulta=${consultaId}&id_paciente=${paciente_id}`; // Redirigir con el ID en la URL
+        }
+    });
+
+
+
+
     const apiUrl = `${API_URL}medico/pacientes/${medico_id}/${paciente_id}`;
     console.log('URL de la API:', apiUrl); // Paso 4
 
@@ -68,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data.success) {
             const paciente = data.pacientes[0];
             document.getElementById('nombre').innerHTML = paciente.nombres;
-            document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac;
+            document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
             document.getElementById('telefono').innerHTML = paciente.telefono;
             document.getElementById('direccion').innerHTML = paciente.direccion;
         } else {
@@ -165,5 +229,8 @@ document.getElementById('guardarBtn2').addEventListener('click', async (event) =
         console.log("Error: ", error);
     }
 });
+
+
+    fetchDataCitas();
 
 });
