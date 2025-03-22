@@ -1,12 +1,4 @@
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
-    document.getElementById("expForm").style.display = "block";
-}
-function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-    document.getElementById("expForm").style.display = "none";
-
-}// Función para inicializar un conjunto de campos editables
+// Función para inicializar un conjunto de campos editables
 function inicializarFormulario(guardarBtn, textareas) {
     // Habilitar los textarea al inicio
     textareas.forEach(textarea => {
