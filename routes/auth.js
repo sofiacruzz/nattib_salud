@@ -5,7 +5,7 @@ const CryptoJS = require('crypto-js');
 const axios = require('axios');
 const FormData = require('form-data');
 const router = express.Router();
-
+const jwt = require('jsonwebtoken')
 
 // Endpoint para login del médico
 router.post('/login', (req, res) => {
@@ -29,9 +29,19 @@ router.post('/login', (req, res) => {
         const clave = process.env.SECRET_KEY;
         const pass_decrypted = CryptoJS.AES.decrypt(user.contrasena, clave).toString(CryptoJS.enc.Utf8);
         if(password == pass_decrypted){
+
           return res.status(200).json({success: true, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}
-            
+
+          /*
+          const accessToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn:'30s'
           });
+          const refreshToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn:'1d'
+          });
+          res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 *1000})
+          res.json({accessToken}); */
+        });
         } else{
           return res.status(401).json({success: false, message: 'correo o contraseña incorrectos'});
         }
