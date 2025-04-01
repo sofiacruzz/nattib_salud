@@ -8,6 +8,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const router = express.Router();
 const { validarCampo, buscarCedula, crearVerificacion } = require('../utils/helpers.js');
+const verifyJWT = require('../middleware/verifyJWT.js');
 
 // Endpoint de registro de Médicos
 router.post('/registro', async (req, res) => {
@@ -114,8 +115,8 @@ router.post('/registrar-paciente', (req, res) => {
         }
     
         const queryPaciente = `
-            INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO pacientes (nombres, apellidos, fecha_nac, telefono, direccion, medico_id, fecha_registro)
+            VALUES (?, ?, ?, ?, ?, ?, CURDATE())
         `;
         const valuesPaciente = [nombres, apellidos, fecha_nac, telefono, direccion, medico_id];
     
