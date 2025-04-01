@@ -90,6 +90,19 @@ router.get('/pacientes/:medico_id', (req, res) => {
     })
 });
 
+router.get('/info/:medico_id', (req, res) => {
+    const medico_id = req.params.medico_id;
+
+    const query = 'SELECT id, nombres, apellidos, curp, fecha_nac, universidad, cedula, email, telefono, domicilio FROM medicos WHERE id = ?';
+    connection.query(query, [medico_id], (err, results) => {
+      if(err){
+        console.error('Error en la consulta', err.stack);
+        return res.status(500).json({success: false, message: 'ERROR EN EL SERVIDOR'});
+      }
+      res.status(200).json({ success: true, informacion: results });
+    })
+});
+
 
 //REGISTRO PACIENTES 
 router.post('/registrar-paciente', (req, res) => {
