@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    background: #E2ECF9; /* Este es el color que quieres aplicar */
+    margin: 0; /* Asegúrate de que no haya márgenes que afecten el fondo */
+    padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
+}
+
+.section1 {
+    display: flex;
+    flex-direction: row;  
+    align-items: flex-start;  
+    gap: 1rem;
+    flex-wrap: nowrap; /* Evita que los elementos se bajen */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+.section1 .card {
+    background-color: white;
+    height: auto;
+    width: 68%; /* Se ajusta para que la tabla tenga espacio */
+    border-radius: 30px;
+    margin-left: 2em;
+    margin-top: 2em;
+    display: flex;
+}
+.section1 .card .img{
+    margin-top: 2em;
+    margin-left: 2em;
+}
+.section1 .card .cardcontent{
+    padding: 2em;
+}
+.section1 .card .cardcontent  h2{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16pt;
+    color: #9D9D9D;
+}
+.section1 .card .cardcontent p{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 14pt;
+    color: black;
+}
+
+.section2 .expedientecontent{
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-start;  
+    gap: 1rem;
+    flex-wrap: nowrap; /* Evita que los elementos se bajen */
+    background-color: white;
+    height: auto;
+    width: 90%; /* Se ajusta para que la tabla tenga espacio */
+    border-radius: 30px;
+    margin-left: 2em;
+    margin-top: 2em;
+    display: flex;
+
+}
+.section2 .expedientecontent .content{
+    padding: 2em;
+}
+.section2 .expedientecontent h1{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16pt;
+    color: #9D9D9D;
+}
+.section2 .expedientecontent p{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 12pt;
+    color: black;
+}
+.section3 .cardconsulta{
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-start;  
+    gap: 1rem;
+    flex-wrap: nowrap; /* Evita que los elementos se bajen */
+    background-color: white;
+    height: auto;
+    width: 90%; /* Se ajusta para que la tabla tenga espacio */
+    border-radius: 30px;
+    margin-left: 2em;
+    margin-top: 2em;
+    display: flex;
+}
+.section3 .cardconsulta .consulta_content{
+    padding: 2em;
+}
+.section3 .cardconsulta .consulta_content h1{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 16pt;
+    color: #9D9D9D;
+}
+.section3 .cardconsulta .consulta_content p{
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-size: 12pt;
+    color: black;
+}

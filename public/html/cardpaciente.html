@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card</title>
+    <link rel="stylesheet" href="../css/styles5.css">
+    <script src="https://kit.fontawesome.com/f48f7e0849.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.2.2/b-3.2.2/b-html5-3.2.2/b-print-3.2.2/r-3.0.4/datatables.min.css" rel="stylesheet" integrity="sha384-nnQHSaCGgRs/cOTNLD4j1IBt/azvbtT85NPCu3RUEJX8lAtGdi72+cXJ9+swu94b" crossorigin="anonymous">
+    
+</head>
+<body>
+    <section class="section1">
+       <!-- Card con la información del paciente -->
+       <div class="card" id="info">
+          <div class="img">
+             <img src="../images/cuenta.png" alt="">
+          </div>
+          <div class="cardcontent">
+             <h2>Nombre del paciente: </h2>
+             <p id="nombre"></p>
+             <h2>Edad:</h2>
+             <p id="Edad"></p>
+             <h2>Fecha de nacimiento:</h2>
+             <p id="fechaNacimiento"></p>
+             <h2>Telefono:</h2>
+             <p id="telefono"></p>
+             <h2>Direccion:</h2>
+             <p id="direccion"></p>  
+             <button class="open-button" onclick="openForm()">
+                 <i class="fa-solid fa-plus" style="color: white;"></i>
+                 Crear expediente
+             </button>
+          </div>
+       </div>
+ 
+       <!-- Card tabla para mostrar consultas -->
+       <div class="card_tabla">
+           <!-- Tabla de citas médicas -->
+           <div class="tabla">
+            <div class="table_content">
+               <h1>Citas medicas</h1>
+                <table id="citas_medicas">
+                    <tbody>
+                     
+                    </tbody>
+                </table>
+            </div>
+       </div>
+    </section>
+ 
+    <!-- Segunda sección de consulta médica -->
+    <section class="section2">
+       <div class="consulta_card">
+          <h1>Consulta médica</h1>
+          <div class="consulta_content">
+             <label for="padecimiento_actual_2">Padecimiento actual:</label>
+             <textarea name="padecimiento_actual_2" id="padecimiento_actual_2" rows="10" cols="33"></textarea>
+             <label for="exploracion_fisica_2">Exploración física:</label>
+             <textarea name="exploracion_fisica_2" id="exploracion_fisica_2" rows="10" cols="33"></textarea>
+             <label for="diagnostico_2">Diagnóstico:</label>
+             <textarea name="diagnostico_2" id="diagnostico_2" rows="10" cols="33"></textarea>
+             <label for="tratamiento_2">Tratamiento:</label>
+             <textarea name="tratamiento_2" id="tratamiento_2" rows="10" cols="33"></textarea>
+             <label for="estudios_complementarios_2">Estudios complementarios:</label>
+             <textarea name="estudios_complementarios_2" id="estudios_complementarios_2" rows="10" cols="33"></textarea>
+          </div>
+          <div class="buttons">
+             <button class="btn" id="guardarBtn2">Crear consulta</button>
+          </div>
+       </div>
+    </section>
+    <div class="card_popup" id="myForm">
+        <div class="expediente_card" id="expForm">
+            <h1>Crear expediente</h1>
+            <div class="expediente_content">
+                <label for="ant_patologicos_1">Antecedentes patológicos:</label>
+                <textarea name="ant_patologicos_1" id="ant_patologicos_1" rows="10" cols="33"></textarea>
+                <label for="ant_nopatologicos_1">Antecedentes NO patológicos:</label>
+                <textarea name="ant_nopatologicos_1" id="ant_nopatologicos_1" rows="10" cols="33"></textarea>
+            </div>
+            <div class="buttons">
+               <button class="btn_cancelar" onclick="closeForm()">Cerrar</button>
+               <button class="btn" id="guardarBtn1">Crear expediente</button>
+            </div>
+        </div>
+    </div>
+ </body>
+ <script>
+   function openForm() {
+    document.getElementById("myForm").style.display = "block";
+    document.getElementById("expForm").style.display = "block";
+   }
+   function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+      document.getElementById("expForm").style.display = "none";
+
+   }
+ </script>
+ <script type="module" src="../js/cardpaciente.js"></script>
+<script src="../js/config.js"></script>
+<script src="../lib/jquery/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.2.2/b-3.2.2/b-html5-3.2.2/b-print-3.2.2/r-3.0.4/datatables.min.js" integrity="sha384-h74voV8seZenDgspYCzjwHl59Xn8b6l2bRqO2JIUTd1ed0UuP3ZAi1OUPttl6Ayl" crossorigin="anonymous"></script>
+</html>

@@ -1,6 +1,8 @@
 // db.js
 const mysql = require('mysql');
 const fs = require('fs');
+const env = require('dotenv').config();
+
 const connection = mysql.createConnection({
   /*host: 'localhost',
   user: 'root', // Cambia esto por tu usuario de MySQL

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-  "start": "node server",
-  "dev": "nodemon server"
+    "start": "node server",
+    "dev": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "datatables.net": "^2.2.2",
@@ -19,8 +20,12 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "gridjs-jquery": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "momento": "^0.2.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.12.0"
+    "mysql2": "^3.12.0",
+    "pdfmake": "^0.2.18"
   },
   "description": "",
   "devDependencies": {
