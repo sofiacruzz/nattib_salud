@@ -32,15 +32,15 @@ router.post('/login', (req, res) => {
 
           return res.status(200).json({success: true, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}
 
-          /*
-          const accessToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
+          /*const accessToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn:'30s'
           });
-          const refreshToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
+          const refreshToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn:'1d'
           });
           res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 *1000})
           res.json({accessToken}); */
+
         });
         } else{
           return res.status(401).json({success: false, message: 'correo o contraseña incorrectos'});
