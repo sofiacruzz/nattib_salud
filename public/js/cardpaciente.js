@@ -35,21 +35,25 @@ inicializarFormulario(
 
 document.addEventListener('DOMContentLoaded', async function () {
     console.log('DOM completamente cargado'); // Paso 1
-    const medico_id = localStorage.getItem('medico_id');
+    const token = localStorage.getItem('token');
     const urlParams = new URLSearchParams(window.location.search);
     const paciente_id = urlParams.get('id');
     /*const cita_id = urlParams.get('citId');
     const expediente_id = urlParams.get('expId');*/
 
-    console.log('Medico ID:', medico_id); // Paso 2
     console.log('Paciente ID:', paciente_id); // Paso 3
 
 
     //CONSULTA PARA LA TABLA
-    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas?id_paciente=${paciente_id}&medico_id=${medico_id}`;
+    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas`;
     async function fetchDataCitas() {
         try {
-            const response = await fetch(apiUrlCitas);
+            const response = await fetch(apiUrlCitas, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+        }
+    });
             if (!response.ok) throw new Error('Error al obtener los datos');
 
             const data = await response.json();
@@ -108,12 +112,17 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 
-    const apiUrl = `${API_URL}medico/pacientes/${medico_id}/${paciente_id}`;
+    const apiUrl = `${API_URL}medico/pacientes/:medico_id/:paciente_id`;
     console.log('URL de la API:', apiUrl); // Paso 4
 
     try {
         console.log('Realizando solicitud...'); // Paso 5
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+            }
+        });
         console.log('Respuesta de la API:', response); // Paso 6
 
         if (!response.ok) throw new Error('Error al obtener los datos');
@@ -149,11 +158,12 @@ document.getElementById('guardarBtn1').addEventListener('click', async (event) =
         const response = await fetch(apiUrl, {
             method: 'POST',  
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+
             },
             body: JSON.stringify({ 
-                id_paciente: paciente_id,
-                medico_id: medico_id,
+                id: paciente_id,
                 ant_pat: ant_pat, 
                 no_pat: no_ant_pat
             })
@@ -191,11 +201,12 @@ document.getElementById('guardarBtn2').addEventListener('click', async (event) =
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+
             },
             body: JSON.stringify({ 
-                id_paciente: paciente_id,
-                medico_id: medico_id,
+                id: paciente_id,
                 pad: padecimiento_actual_2, 
                 exp_fisica: exploracion_fisica_2, 
                 diag: diagnostico_2,

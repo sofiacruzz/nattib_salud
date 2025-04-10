@@ -13,10 +13,9 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
       const telefono = document.getElementById('telefono').value;
       const direccion = document.getElementById('direccion').value;
 
-      const medico_id = localStorage.getItem('medico_id');
-      console.log("id", medico_id);
+      const token = localStorage.getItem('token');
 
-      if(!medico_id){
+      if(!token){
           alert('No se encontro el id del medico');
           return;
       }
@@ -28,9 +27,10 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
       const response = await fetch(API_URL + 'medico/registrar-paciente', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}` 
           },
-          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id, fecha_registro: fechaformateada})
+          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, fecha_registro: fechaformateada})
           });
       
       const data = await response.json();

@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = "index.html"; // Redirige si no hay sesión iniciada
         return;
     }
-    const apiUrlPaciente = `${API_URL}medico/pacientes/${medico_id}/${paciente_id}`;
-    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas?id_paciente=${paciente_id}&medico_id=${medico_id}`;
-    const apiUrlExpedientes = `${API_URL}medico/get/expedientes?id_paciente=${paciente_id}&medico_id=${medico_id}`;
+    const apiUrlPaciente = `${API_URL}medico/pacientes/${paciente_id}`;
+    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas?id_paciente=${paciente_id}`;
+    const apiUrlExpedientes = `${API_URL}medico/get/expedientes?id_paciente=${paciente_id}`;
     
     async function fetchDataPaciente() {
         try {
@@ -50,7 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     async function fetchDataCitas() {
         try {
-            const response = await fetch(apiUrlCitas);
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+                }
+            });
             if (!response.ok) throw new Error('Error al obtener los datos');
 
             const data = await response.json();
@@ -65,7 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     async function fetchDataExpedientes() {
         try {
-            const response = await fetch(apiUrlExpedientes);
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+                }
+            });
             if (!response.ok) throw new Error('Error al obtener los datos');
 
             const data = await response.json();

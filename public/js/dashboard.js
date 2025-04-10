@@ -1,25 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const medico_id = localStorage.getItem('medico_id');
-    if (!medico_id) {
+    const token = localStorage.getItem('token');
+    
+    // Si no existe el token, redirige a la página de login
+    if (!token) {
         window.location.href = "index.html"; // Redirige si no hay sesión iniciada
         return;
     }
 
-    const apiUrl = `${API_URL}medico/pacientes/${medico_id}`;
+    // La URL de la API (ajustada para incluir el token en los encabezados)
+    const apiUrl = `${API_URL}medico/pacientes`;
 
     async function fetchData() {
         try {
-            const response = await fetch(apiUrl);
+            // Hacer la solicitud con el token en el encabezado Authorization
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+                }
+            });
+
+            // Verificar si la respuesta es exitosa
             if (!response.ok) throw new Error('Error al obtener los datos');
 
+            // Parsear la respuesta JSON
             const data = await response.json();
             if (data.success) {
-                populateTable(data);
+                populateTable(data);  // Llenar la tabla con los datos obtenidos
             } else {
                 console.error('La API no devolvió datos exitosamente');
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error);  // Manejo de errores en la solicitud
         }
     }
 
@@ -43,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             calcularEdad(paciente.fecha_nac),  // Nombre completo
             paciente.telefono,  // Teléfono o cualquier otro campo
             paciente.fecha_registro ? paciente.fecha_registro : 'No registrado',  // Fecha de registro, si está disponible
-            paciente.id_pacientes
+            paciente.id
         ]);
         console.log(transformedData);
 
