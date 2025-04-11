@@ -4,6 +4,11 @@ function formatearFecha(date) {
     const anio = date.getFullYear(); // Obtiene el año
     return `${anio}-${mes}-${dia}`; // Retorna la fecha en formato YYYY-MM-DD
 }
+function cerrarSesion() {
+    localStorage.removeItem('token'); // o sessionStorage.removeItem('token')
+    window.location.href = '/index.html'; // redirige al login
+  }
+  
 document.getElementById('registrarPacienteForm').addEventListener('submit', async (event) =>{
       event.preventDefault();
 

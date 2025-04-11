@@ -54,7 +54,18 @@ export default class MedicoModel {
         });
       });
     }
-
+    static async info({medico_id}) {
+      return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM medicos WHERE id = ? ';
+        connection.query(query, [medico_id], (err, results) => {
+          if(err){
+            console.error('Error en la consulta', err.stack);
+            return reject(new Error('Hubo un error'))
+          }
+          resolve({ success: true, informacion: results});
+        })
+      });
+    }
     static async pacientes({ medico_id }) {
       return new Promise((resolve, reject) => {
         console.log("model", medico_id)
@@ -81,26 +92,23 @@ export default class MedicoModel {
             console.error('Error en la consulta', err.stack);
             return reject(new Error('Hubo un error'))
           }
-          resolve({success: true
+          resolve({success: true,  paciente_id: id
         });
         })
       });
     }
 
 
-    static async getPacienteByIdAndMedicoId({  medico_id, id }) {
+    static async getPacienteByIdAndMedicoId({ paciente_id, medico_id }) {
       return new Promise((resolve, reject) => {
-
-        const query = `SELECT * FROM pacientes WHERE medico_id =? AND id =?`;
-        connection.query(query, [medico_id, id], (err, results) => {
-          if(err){
-            console.error('Error en la consulta', err.stack);
-            return reject(new Error('Hubo un error'))
-          }
-          resolve(results);
-        })
+        const query = 'SELECT * FROM pacientes WHERE id = ? AND medico_id = ?';
+        connection.query(query, [paciente_id, medico_id], (err, results) => {
+          if (err) return reject(err);
+          resolve(results[0]); // o { success: true, paciente: results[0] }
+        });
       });
     }
+    
 
     static async createExpediente({ medico_id, id_paciente, ant_pat, no_pat }) {
       return new Promise((resolve, reject) => {
@@ -148,32 +156,40 @@ export default class MedicoModel {
         });
       });
     }
-  
     static async obtenerConsultas({ id_paciente, medico_id }) {
       return new Promise((resolve, reject) => {
-        const query = `
-          SELECT * FROM consulta_ficha 
-          WHERE id_paciente = ? AND medico_id = ?`;
-  
-        connection.query(query, [id_paciente, medico_id], (err, results) => {
-          if (err) return reject(err);
-          resolve({success: true, consultas:results});
-        });
+          const query = `
+              SELECT * 
+              FROM consulta_ficha 
+              WHERE id_paciente = ? AND medico_id = ?
+          `;
+          connection.query(query, [id_paciente, medico_id], (err, results) => {
+              if (err) {
+                  console.error('Error en la consulta:', err);
+                  return reject(new Error('Hubo un error al obtener las consultas'));
+              }
+              resolve(results);
+          });
       });
-    }
+  }
   
-    static async obtenerConsultaPorId({ id_paciente, medico_id, id }) {
-      return new Promise((resolve, reject) => {
+  
+  static async obtenerConsultaPorId({ id_paciente, medico_id, id }) {
+    return new Promise((resolve, reject) => {
         const query = `
-          SELECT * FROM consulta_ficha 
-          WHERE id_paciente = ? AND medico_id = ? AND id = ?`;
-  
+            SELECT * FROM consulta_ficha
+            WHERE id_paciente = ? AND medico_id = ? AND id = ?
+        `;
         connection.query(query, [id_paciente, medico_id, id], (err, results) => {
-          if (err) return reject(err);
-          resolve(results);
+            if (err) {
+                console.error('Error en la consulta:', err);
+                return reject(new Error('Error al obtener la consulta'));
+            }
+            resolve(results);
         });
-      });
-    }
+    });
+}
+
   
     static async updateExpediente({ ant_pat, no_pat, id_expediente }) {
       return new Promise((resolve, reject) => {

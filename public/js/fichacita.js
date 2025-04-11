@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const id_consulta = urlParams.get('id_consulta');
     const id_paciente = urlParams.get('id_paciente');
     const medico_id = localStorage.getItem('medico_id');
+    const token = localStorage.getItem('token');
 
-    const apiUrl = `${API_URL}medico/pacientes/${medico_id}/${id_paciente}`;
+    const apiUrl = `${API_URL}medico/pacientes/${id_paciente}`;
     const apiUrlExpedientes = `${API_URL}medico/get/expedientes`;
     const apiUrlConsulta = `${API_URL}medico/get/consulta_medica`;
 
@@ -12,7 +13,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     async function fetchDataPaciente() {
         try {
             console.log('Realizando solicitud...'); // Paso 5
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+                }
+            }); 
             console.log('Respuesta de la API:', response); // Paso 6
 
             if (!response.ok) throw new Error('Error al obtener los datos');
@@ -21,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.log('Datos de la API:', data); // Paso 7
 
             if (data.success) {
-                const paciente = data.pacientes[0];
+                const paciente = data.paciente;
                 document.getElementById('nombre').innerHTML = paciente.nombres;
                 document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
                 document.getElementById('telefono').innerHTML = paciente.telefono;
@@ -35,35 +41,48 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     //OBTENER LA CONSULTA POR ID DE PACIENTE, ID MEDICO, ID CONSULTAS
+
     async function fetchDataConsulta() {
         try {
-            // Crear la URL con los parámetros query
-            const url = new URL(apiUrlConsulta);
-            const params = { id_paciente, medico_id, id_consulta };
-            url.search = new URLSearchParams(params).toString();
+            // Asegúrate de que estas variables están definidas
+            const params = new URLSearchParams({
+                id_paciente,
+                id: id_consulta  // <-- se llama "id" en el backend
+            });
+    
+            const url = `${apiUrlConsulta}?${params.toString()}`;
     
             const response = await fetch(url, {
-                method: 'GET', 
-
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
-            console.log(url)
+    
+            console.log("URL final:", url);
     
             if (!response.ok) {
                 throw new Error('Error en la solicitud');
             }
     
-            const data = await response.json();  // Suponiendo que la respuesta es JSON
+            const data = await response.json();
+    
+            if (!data.consulta || data.consulta.length === 0) {
+                throw new Error('Consulta no encontrada');
+            }
+    
             const consulta = data.consulta[0];
             document.getElementById('pad').innerHTML = consulta.padecimiento;
             document.getElementById('exp_fisica').innerHTML = consulta.exploracion_fisica;
             document.getElementById('diag').innerHTML = consulta.diagnostico;
             document.getElementById('trat').innerHTML = consulta.tratamiento;
             document.getElementById('est_comp').innerHTML = consulta.estudios_comp;
-
+    
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
+    
     async function fetchDataExpendiente() {
         try {
             // Crear la URL con los parámetros query
@@ -72,8 +91,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             url.search = new URLSearchParams(params).toString();
     
             const response = await fetch(url, {
-                method: 'GET',  // Mantenemos el método GET
-
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
             console.log(url)
     

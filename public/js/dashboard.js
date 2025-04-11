@@ -48,13 +48,18 @@ document.addEventListener('DOMContentLoaded', function () {
         
         return edad;
     }
-
+    function convertirFecha(fechatoConvert){
+        fechatoConvert = new Date(fechatoConvert)
+        const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
+        const fechaLegible = fechatoConvert.toLocaleDateString('es-MX', opciones);
+        return fechaLegible;
+    }
     function populateTable(data) {
         const transformedData = data.pacientes.map(paciente => [
             paciente.nombres +''+ paciente.apellidos,
             calcularEdad(paciente.fecha_nac),  // Nombre completo
             paciente.telefono,  // Teléfono o cualquier otro campo
-            paciente.fecha_registro ? paciente.fecha_registro : 'No registrado',  // Fecha de registro, si está disponible
+            convertirFecha(paciente.fecha_registro),
             paciente.id
         ]);
         console.log(transformedData);
@@ -110,6 +115,11 @@ document.addEventListener('DOMContentLoaded', function () {
     
     fetchData();
 });
+function cerrarSesion() {
+    localStorage.removeItem('token'); // o sessionStorage.removeItem('token')
+    window.location.href = '/index.html'; // redirige al login
+  }
+  
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('btn-editar')) {
         const id = event.target.getAttribute('data-id');

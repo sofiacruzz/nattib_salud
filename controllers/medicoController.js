@@ -88,6 +88,22 @@ dotenv.config();
     }
 }
 
+
+const info= async(req, res) => {
+    try {
+        const { medico_id } = req;
+        console.log("controller", medico_id)
+        const info = await MedicoModel.info({medico_id})
+        return res.json(info)
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            ok: false,
+            msg: 'Error server'
+        })
+    }
+}
 //lista pacientes por medico
 const pacientes= async(req, res) => {
     try {
@@ -121,27 +137,29 @@ const registrarPacientes= async(req, res) => {
         })
     }
 }
-const getPacienteByIdAndMedicoId = async(req, res) => {
+const getPacienteByIdAndMedicoId = async (req, res) => {
     try {
-        const id = req.params.paciente_id;
-        const { medico_id } = req;
-        const paciente = await MedicoModel.getPacienteByIdAndMedicoId({ medico_id, id });
-        return res.json({ paciente });
+        const { paciente_id } = req.params;
+        const { medico_id } = req; // Este viene del token (middleware)
+
+        const resultado = await MedicoModel.getPacienteByIdAndMedicoId({ paciente_id, medico_id });
+        return res.json({ success: true, paciente: resultado });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             ok: false,
-            msg: 'Error server'
+            msg: 'Error en el servidor'
         });
     }
-}
+};
+
 
 const crearConsulta = async(req, res) => {
     try {
         const { id_paciente, pad, exp_fisica, diag, trat, est_comp } = req.body;
         const { medico_id } = req;
         const result = await MedicoModel.crearConsulta({ id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp });
-        return res.json({ result });
+        return res.json(result);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -156,7 +174,7 @@ const createExpediente = async(req, res) => {
         const { id_paciente, ant_pat, no_pat } = req.body;
         const { medico_id } = req;
         const result = await MedicoModel.createExpediente({ medico_id, id_paciente, ant_pat, no_pat });
-        return res.json({ result });
+        return res.json(result);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -170,7 +188,7 @@ const actualizarConsulta = async(req, res) => {
     try {
         const { pad, exp_fisica, diag, trat, est_comp, id_consulta } = req.body;
         const result = await MedicoModel.actualizarConsulta({ pad, exp_fisica, diag, trat, est_comp, id_consulta });
-        return res.json({ result });
+        return res.json(result);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -180,26 +198,30 @@ const actualizarConsulta = async(req, res) => {
     }
 }
 
-const obtenerConsultas = async(req, res) => {
+const obtenerConsultas = async (req, res) => {
     try {
         const { id_paciente } = req.query;
-        const { medico_id } = req;
+        const { medico_id } = req; // del token
+
         const consultas = await MedicoModel.obtenerConsultas({ id_paciente, medico_id });
-        return res.json(consultas);
+        return res.json({ success: true, consultas });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            ok: false,
+            success: false,
             msg: 'Error server'
         });
     }
-}
+};
+
 
 const obtenerConsultaPorId = async(req, res) => {
     try {
-        const { id_paciente, id } = req.query;
-        const { medico_id } = req;
+        const { id_paciente, id } = req.query; // id es id_consulta
+        const { medico_id } = req; // llega desde el token
+
         const consulta = await MedicoModel.obtenerConsultaPorId({ id_paciente, medico_id, id });
+
         return res.json({ consulta });
     } catch (error) {
         console.log(error);
@@ -214,7 +236,7 @@ const updateExpediente = async(req, res) => {
     try {
         const { ant_pat, no_pat, id_expediente } = req.body;
         const result = await MedicoModel.updateExpediente({ ant_pat, no_pat, id_expediente });
-        return res.json({ result });
+        return res.json(result);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -229,7 +251,7 @@ const getExpedientesByPacienteAndMedico = async(req, res) => {
         const { id_paciente } = req.query;
         const { medico_id } = req;
         const expedientes = await MedicoModel.getExpedientesByPacienteAndMedico({ id_paciente, medico_id });
-        return res.json({ expedientes });
+        return res.json(expedientes);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -248,6 +270,7 @@ class Validation {
   
 export const MedicoController ={
     login,
+    info,
     registro,
     pacientes,
     registrarPacientes,

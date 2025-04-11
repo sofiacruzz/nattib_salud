@@ -12,27 +12,35 @@ function inicializarFormulario(guardarBtn, textareas) {
     guardarBtn.addEventListener('click', function () {
         textareas.forEach(textarea => textarea.disabled = true); // Deshabilitar campos
         guardarBtn.style.display = 'inline-block';
-        cancelarBtn.style.display = 'none';
-        editarBtn.style.display = 'inline-block';
     });
 
 }
 
 async function generarPDFConsulta(consultaId, pacienteId) {
-    const medico_id = localStorage.getItem('medico_id');
-    const apiUrlPaciente = `${API_URL}medico/pacientes/${medico_id}/${pacienteId}`;
-    const apiUrlConsulta = `${API_URL}medico/get/consulta_medica?id_paciente=${pacienteId}&medico_id=${medico_id}&id_consulta=${consultaId}`;
-    const apiUrlMedico = `${API_URL}medico/info/${medico_id}`; // Tu endpoint para información del médico
+    const token = localStorage.getItem('token');
+    const apiUrlPaciente = `${API_URL}medico/pacientes/${pacienteId}`;
+    const apiUrlConsulta = `${API_URL}medico/get/consulta_medica?id_paciente=${pacienteId}&id=${consultaId}`;
+    const apiUrlMedico = `${API_URL}medico/info`; // Tu endpoint para información del médico
 
     try {
         // Obtener datos del paciente
-        const responsePaciente = await fetch(apiUrlPaciente);
+        const responsePaciente = await fetch(apiUrlPaciente, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+            }
+        });
         if (!responsePaciente.ok) throw new Error('Error al obtener datos del paciente');
         const dataPaciente = await responsePaciente.json();
-        const paciente = dataPaciente.pacientes[0];
+        const paciente = dataPaciente.paciente;
 
         // Obtener datos de la consulta
-        const responseConsulta = await fetch(apiUrlConsulta);
+        const responseConsulta = await fetch(apiUrlConsulta, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+            }
+        });
         if (!responseConsulta.ok) throw new Error('Error al obtener datos de la consulta');
         const dataConsulta = await responseConsulta.json();
         
@@ -43,7 +51,12 @@ async function generarPDFConsulta(consultaId, pacienteId) {
         const consulta = dataConsulta.consulta[0];
 
         // Obtener datos del médico desde tu endpoint
-        const responseMedico = await fetch(apiUrlMedico);
+        const responseMedico = await fetch(apiUrlMedico, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`  // Enviar el token como parte del encabezado Authorization
+            }
+        });
         if (!responseMedico.ok) throw new Error('Error al obtener datos del médico');
         const dataMedico = await responseMedico.json();
         
@@ -59,8 +72,8 @@ async function generarPDFConsulta(consultaId, pacienteId) {
         // Asumiendo que tienes el domicilio en otra tabla o campo
         const medicoDomicilio = medico.domicilio || 'Consultorio no especificado'; 
 
-        // Calcular edad del paciente
-        const fechaNac = new Date(paciente.fecha_nac.split("T")[0]);
+        // Calcular edad
+        const fechaNac = new Date(medico.fecha_nac.split("T")[0]);
         const hoy = new Date();
         let edad = hoy.getFullYear() - fechaNac.getFullYear();
         const m = hoy.getMonth() - fechaNac.getMonth();
@@ -397,8 +410,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     //CONSULTA PARA LA TABLA
-    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas`;
-    async function fetchDataCitas() {
+    const apiUrlCitas = `${API_URL}medico/get/consultas_medicas?id_paciente=${paciente_id}`;   
+     async function fetchDataCitas() {
         try {
             const response = await fetch(apiUrlCitas, {
                 method: 'GET',
@@ -423,7 +436,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   function consultasTable(consultas) {
     const transformedDataConsultas = consultas.map(consulta => {
         const fecha = consulta.fecha_registro?.split("T")[0] || 'Fecha no disponible';
-        const idConsulta = consulta.id_consulta ?? '';
+        const idConsulta = consulta.id ?? '';
         
         // Aquí está la corrección clave - usando template string correctamente
         const botones = `
@@ -478,7 +491,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 
-    const apiUrl = `${API_URL}medico/pacientes/:medico_id/:paciente_id`;
+    const apiUrl = `${API_URL}medico/pacientes/${paciente_id}`;
     console.log('URL de la API:', apiUrl); // Paso 4
 
     try {
@@ -497,7 +510,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log('Datos de la API:', data); // Paso 7
 
         if (data.success) {
-            const paciente = data.pacientes[0];
+            const paciente = data.paciente;
             document.getElementById('nombre').innerHTML = paciente.nombres;
             document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
             document.getElementById('telefono').innerHTML = paciente.telefono;
@@ -512,7 +525,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 // Logica para guardar la informacion de expediente
 document.getElementById('guardarBtn1').addEventListener('click', async (event) => {
     event.preventDefault();
-    const medico_id = localStorage.getItem('medico_id');
     const urlParams = new URLSearchParams(window.location.search);
     const paciente_id = urlParams.get('id');
     const ant_pat = document.getElementById('ant_patologicos_1').value;
@@ -529,7 +541,7 @@ document.getElementById('guardarBtn1').addEventListener('click', async (event) =
 
             },
             body: JSON.stringify({ 
-                id: paciente_id,
+                id_paciente: paciente_id,
                 ant_pat: ant_pat, 
                 no_pat: no_ant_pat
             })
@@ -572,7 +584,7 @@ document.getElementById('guardarBtn2').addEventListener('click', async (event) =
 
             },
             body: JSON.stringify({ 
-                id: paciente_id,
+                id_paciente: paciente_id,
                 pad: padecimiento_actual_2, 
                 exp_fisica: exploracion_fisica_2, 
                 diag: diagnostico_2,
