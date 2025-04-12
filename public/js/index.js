@@ -16,7 +16,9 @@ async function registrarMedico() {
     try {
         const response = await fetch(API_URL + 'medico/registro', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` 
+             },
             body: JSON.stringify(data)
         });
 
@@ -44,16 +46,16 @@ async function login(event) {
     const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch(API_URL + 'auth/login', {
+        const response = await fetch(API_URL + 'medico/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario, password })
+            body: JSON.stringify({ email:usuario, contrasena:password })
         });
 
         const data = await response.json();
 
         if (data.success) {
-            localStorage.setItem('medico_id', data.user.id);
+            localStorage.setItem('token', data.token);
             window.location.href = 'dashboard.html';
         } else {
             alert("Ups, parece que algo está mal");
