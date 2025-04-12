@@ -61,7 +61,7 @@ export async function crearVerificacion() {
         },
         data: {
             validations: ["INE"],
-            redirect_url: "http://127.0.0.1:3000"
+            redirect_url: "https://nattib-salud.azurewebsites.net/"
         }
     };
 
