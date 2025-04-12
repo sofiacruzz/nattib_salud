@@ -5,61 +5,45 @@ body{
     padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
 }
 
+.titulos{
+    display: flex;
+    flex-direction: row;  
+    align-items: flex-start;  
+    gap: 1rem;
+    flex-wrap: nowrap; /* Evita que los elementos se bajen */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    gap: 5em;
 
-
-.sidenav {
-    height: 90%; /* Full-height: remove this if you want "auto" height */
-    width: 260px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 20px; /* Stay at the top */
-    left: 20px;
-    background: rgb(150,210,207);
-    background: linear-gradient(184deg, rgba(150,210,207,1) 0%, rgba(127,206,222,1) 50%, rgba(33,73,160,1) 71%);
-    border-radius: 30px;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-  }
-  .sidenav h1{
+}
+.titulos .titulo1{
     font-family: 'Montserrat';
-    padding: 10px;
-    color: white;
-    font-size: 30px;
-    text-align: center;
-    font-weight: bolder;
-    padding-bottom: 80px;
+    margin-top: 30px;
+    font-size: 14px;
+    margin-left: 3em;
+    padding-left: 1em;
+    width: 35em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
+}
+.titulos .titulo1 h1{
+    font-weight: 400;
+}
 
-  }
-  
-  /* The navigation menu links */
-  .sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 20px;
+.titulos .titulo2{
     font-family: 'Montserrat';
-    font-weight: 500px;
-    color: white;
-    display: block;
-    padding-top: 20px;
-  }
-  
-  /* When you mouse over the navigation links, change their color */
-  .sidenav a:hover {
-    color: #f1f1f1;
-  }
-  
-  /* Style page content */
-  .main {
-    margin-left: 290px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
-  }
-  
-  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
-
+    margin-top: 30px;
+    font-size: 14px;
+    margin-left: 18em;
+    padding-left: 1em;
+    width: 20em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
+}
+.titulos .titulo2 h1{
+    font-weight: 400;
+}
 
 .section1 {
     display: flex;
@@ -75,7 +59,7 @@ body{
     width: 68%; /* Se ajusta para que la tabla tenga espacio */
     border-radius: 30px;
     margin-left: 2em;
-    margin-top: 2em;
+    margin-top: -1em;
     display: flex;
 }
 
@@ -84,7 +68,7 @@ body{
     max-height: 40%;
     height: 28rem;
     width: 50%;    
-    margin-top: 2em;
+    margin-top: -.5em;
     border-radius: 30px;
     display: flex;
 }
@@ -230,13 +214,26 @@ textarea {
     display:block; 
     justify-content: center; /* Centra el contenido */
 }
+.section2 h2{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 28px;
+    margin-left: 1.5em;
+    padding: 1em;
+    width: 12em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
+
+    
+}
 
 .section2 .consulta_card{
     height: auto;
     width: 90%;
     background: white;
     border-radius: 30px;
-    margin-top: 2em;
+    margin-top: -2em;
     margin-left: 2em;
     padding: 2em;
 }

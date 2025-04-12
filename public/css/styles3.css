@@ -6,23 +6,22 @@
 
 }
 .sidenav {
-    height: 90%; /* Full-height: remove this if you want "auto" height */
-    width: 260px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 20px; /* Stay at the top */
-    left: 20px;
-    background: rgb(150,210,207);
-    background: linear-gradient(184deg, rgba(150,210,207,1) 0%, rgba(127,206,222,1) 50%, rgba(33,73,160,1) 71%);
-    border-radius: 30px;
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+  height: 90%; /* Full-height: remove this if you want "auto" height */
+  width: 260px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 20px; /* Stay at the top */
+  left: 20px;
+  background-color: #2149A0;
+  border-radius: 30px;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
   }
   .sidenav h1{
     font-family: 'Montserrat';
     padding: 10px;
     color: white;
-    font-size: 30px;
+    font-size: 24px;
     text-align: center;
     font-weight: bolder;
     padding-bottom: 80px;
@@ -39,13 +38,29 @@
     color: white;
     display: block;
     padding-top: 20px;
+    position: relative;
+  }
+  .sidenav a::before {
+    background: #96D2CF;
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease-in-out;
+    z-index: -1;
+  }
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
   }
   
   /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
-    color: #f1f1f1;
+    color: #2149A0;
+    font-weight: 500pt;
   }
-  
   /* Style page content */
   .main {
     margin-left: 290px; /* Same as the width of the sidebar */

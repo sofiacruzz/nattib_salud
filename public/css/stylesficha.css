@@ -5,13 +5,23 @@ body{
     padding: 0; /* Asegúrate de que no haya relleno que afecte el fondo */
 }
 
-.section1 {
-    display: flex;
-    flex-direction: row;  
+.section1 { 
     align-items: flex-start;  
     gap: 1rem;
     flex-wrap: nowrap; /* Evita que los elementos se bajen */
     width: 100%; /* Asegura que ocupe todo el ancho */
+}
+.section1 h1{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    margin-top: 30px;
+    font-size: 24px;
+    margin-left: 50px;
+    padding: .5em 1em 1em 1em;
+    width: 17em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
 }
 .section1 .card {
     background-color: white;
@@ -19,7 +29,7 @@ body{
     width: 68%; /* Se ajusta para que la tabla tenga espacio */
     border-radius: 30px;
     margin-left: 2em;
-    margin-top: 2em;
+    margin-top: -2em;
     display: flex;
 }
 .section1 .card .img{
@@ -41,6 +51,18 @@ body{
     font-size: 14pt;
     color: black;
 }
+.section2 h1{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    margin-top: 30px;
+    font-size: 24px;
+    margin-left: 50px;
+    padding: .5em 1em 1em 1em;
+    width: 17em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
+}
 
 .section2 .expedientecontent{
     display: flex;
@@ -53,14 +75,14 @@ body{
     width: 90%; /* Se ajusta para que la tabla tenga espacio */
     border-radius: 30px;
     margin-left: 2em;
-    margin-top: 2em;
+    margin-top: -2em;
     display: flex;
 
 }
 .section2 .expedientecontent .content{
     padding: 2em;
 }
-.section2 .expedientecontent h1{
+.section2 .expedientecontent h2{
     font-family: 'Montserrat';
     font-weight: 400;
     font-size: 16pt;
@@ -72,6 +94,18 @@ body{
     font-size: 12pt;
     color: black;
 }
+.section3 h2{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 24px;
+    margin-left: 50px;
+    padding: .5em 1em 1em 1em;
+    width: 17em;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #F7F7F7;
+}
+
 .section3 .cardconsulta{
     display: flex;
     flex-direction: column;  
@@ -83,7 +117,7 @@ body{
     width: 90%; /* Se ajusta para que la tabla tenga espacio */
     border-radius: 30px;
     margin-left: 2em;
-    margin-top: 2em;
+    margin-top: -2em;
     display: flex;
 }
 .section3 .cardconsulta .consulta_content{
