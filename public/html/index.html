@@ -26,7 +26,7 @@
             <img src="../images/img1.avif" alt="">
         </div>
         <div class="login" id="loginForm">
-            <h1>Iniciar sesion</h1>
+            <h1>Inicio de Sesion</h1>
             <form id="loginForm">
                 <input type="text" placeholder="Correo" name="usuario" id="usuario" required>
                 <input type="password" placeholder="Contraseña" name="contrasena" id="password" required>
@@ -42,6 +42,7 @@
     <div class="form-popup" id="myForm">
         <form  class="form-container" method="POST">
             <h1 style="color: #2149A0;">Registro</h1>
+            
             <div class="scroll">
                 <label for="nombres">Nombres: </label>    
                 <input type="text" id="nombres" placeholder="Nombres" name="nombres" required>
@@ -69,6 +70,7 @@
 
                 <input type="checkbox" id="terms" name="terms" value="terms">
                  <label for="terms">Aceptar terminos y condiciones de registro</label>
+                 <div id="error-messages" style="color: red; margin-bottom: 10px;"></div>
                 <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
                  <button type="button" class="cancelbtn" onclick="closeForm()">Cerrar</button>
             </div>

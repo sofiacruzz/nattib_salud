@@ -8,10 +8,9 @@ function closeForm() {
 
 // Inicializa Pikaday
 const picker = new Pikaday({
-    field: document.getElementById('fecha_nac'), // Asocia Pikaday al input
-    format: 'YYYY-MM-DD', // Formato de fecha
+    field: document.getElementById('fecha_nac'),
+    format: 'YYYY-MM-DD',
     toString(date, format) {
-        // Personaliza cómo se muestra la fecha en el input
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
@@ -29,5 +28,8 @@ const picker = new Pikaday({
             'Jueves', 'Viernes', 'Sábado'
         ],
         weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
-    }
+    },
+    minDate: new Date(1900, 0, 1),
+    maxDate: new Date(),
+    yearRange: [1900, new Date().getFullYear()]
 });

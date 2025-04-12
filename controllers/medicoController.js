@@ -2,51 +2,61 @@ import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import MedicoModel from '../models/medicoModel.js'
+import { validarCampo, regex, crearVerificacion } from '../services/medicoService.js';
+
 dotenv.config();
 
- const registro = async(req, res) => {
+const registro = async (req, res) => {
     try {
-        const { nombres, apellidos, curp, fecha_nac, universidad, 
-            cedula, email, contrasena, id_verificamex, 
-            telefono, domicilio } = req.body;
-            if (!nombres || !apellidos || !curp || !universidad || !cedula || !email || !fecha_nac || !contrasena)
-                return res.status(400).json('Los campos no pueden estar vacíos');
-            
-            const medicoExist = await MedicoModel.findOneByEmail(email);
-            if(medicoExist){
-                return res.status(409).json({msg:"Email existente"})
-            }
+        const { nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, telefono, domicilio } = req.body;
 
-            Validation.email(email)
-            const clave = process.env.SECRET_KEY;
-            const iv = CryptoJS.lib.WordArray.random(16);
-            const pass_cifrada = CryptoJS.AES.encrypt(contrasena, clave, { iv }).toString();
-            
-            const newMedico = await MedicoModel.create({ nombres, apellidos, 
-                curp, fecha_nac, universidad, cedula, email, pass_cifrada, 
-                id_verificamex, telefono, domicilio })
-            
-            const token = jwt.sign({
-                id: newMedico,
-                nombres:nombres,
-                email: email
-        
+        if (!nombres || !apellidos || !curp || !universidad || !cedula || !email || !fecha_nac || !contrasena) {
+            return res.status(400).json({ msg: 'Todos los campos son requeridos' });
+        }
 
-            },
-            process.env.SECRET_KEY,{
-                expiresIn: "1h"
-            }
-        )
+        const errores = [];
+        errores.push(validarCampo(nombres, regex.nombres, 'nombres'));
+        errores.push(validarCampo(apellidos, regex.apellidos, 'apellidos'));
+        errores.push(validarCampo(curp, regex.curp, 'CURP'));
+        errores.push(validarCampo(fecha_nac, regex.fecha_nac, 'fecha de nacimiento'));
+        errores.push(validarCampo(universidad, regex.universidad, 'universidad'));
+        errores.push(validarCampo(cedula, regex.cedula, 'cédula'));
+        errores.push(validarCampo(email, regex.email, 'email'));
+        errores.push(validarCampo(contrasena, regex.contrasena, 'contraseña'));
 
-            return res.status(201).json({ uuid: newMedico,  token: token});
+        const mensajesError = errores.filter(e => e !== null);
+        if (mensajesError.length > 0) {
+            return res.status(400).json({ errores: mensajesError });
+        }
+
+        const medicoExist = await MedicoModel.findOneByEmail(email);
+        if (medicoExist) {
+            return res.status(409).json({ msg: "Email existente" });
+        }
+
+        /*const cedulaValida = await buscarCedula(cedula, nombres, universidad);
+        if (!cedulaValida) {
+            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos' });
+        }*/
+
+        const id_verificamex = await crearVerificacion();
+        const url_verificamex = "https://app.verificamex.com/verification/" + id_verificamex;
+        const clave = process.env.SECRET_KEY;
+        const iv = CryptoJS.lib.WordArray.random(16);
+        const pass_cifrada = CryptoJS.AES.encrypt(contrasena, clave, { iv }).toString();
+
+        const newMedico = await MedicoModel.create({
+            nombres, apellidos, curp, fecha_nac, universidad,
+            cedula, email, pass_cifrada, id_verificamex, telefono, domicilio
+        });
+
+
+        return res.status(201).json({ success: true, uuid: newMedico, url: url_verificamex});
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            ok: false,
-            msg: 'Error server'
-        })
+        console.error(error);
+        return res.status(500).json({ msg: 'Error del servidor' });
     }
-}
+};
  const login = async(req, res) => {
     try {
         const { email, contrasena } = req.body;
