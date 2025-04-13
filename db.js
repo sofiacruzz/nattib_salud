@@ -4,13 +4,18 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 
 dotenv.config();
+const serverCa = [fs.readFileSync("DigiCertGlobalRootCA.crt.pem", "utf8")];
 
-const connection = mysql.createConnection({
+var connection = mysql.createConnection({
   host: process.env.AZURE_MYSQL_HOST,
   user: process.env.AZURE_MYSQL_USER,
   password: process.env.AZURE_MYSQL_PASSWORD,
   database: 'nattib_salud_db',
-  port: 3306
+  port: 3306,
+  ssl: {
+    ca: serverCa,
+    rejectUnauthorized: true
+  }
 });
 
 connection.connect((err) => {
