@@ -1,8 +1,8 @@
 import connection from "../db.js";
 import CryptoJS from "crypto-js";
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 
-dotenv.config();
+//dotenv.config();
 
 export default class MedicoModel {
 

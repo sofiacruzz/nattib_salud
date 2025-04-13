@@ -1,10 +1,10 @@
 import CryptoJS from "crypto-js";
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import MedicoModel from '../models/medicoModel.js'
 import { validarCampo, regex, crearVerificacion } from '../services/medicoService.js';
 
-dotenv.config();
+//dotenv.config();
 
 const registro = async (req, res) => {
     try {
