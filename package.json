@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch index.js",
-    "test": "nodemon index"
+    "test": "node index"
   },
   "keywords": [],
   "author": "",

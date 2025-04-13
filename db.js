@@ -10,11 +10,7 @@ const connection = mysql.createConnection({
   user: process.env.AZURE_MYSQL_USER,
   password: process.env.AZURE_MYSQL_PASSWORD,
   database: 'nattib_salud_db',
-  port: 3306,
-  ssl: {
-    ca: fs.readFileSync(new URL('DigiCertGlobalRootCA.crt.pem', import.meta.url)),
-    rejectUnauthorized: false
-  }
+  port: 3306
 });
 
 connection.connect((err) => {
