@@ -1,9 +1,9 @@
 // db.js
 import mysql from 'mysql';
 import fs from 'fs';
-//import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-//dotenv.config();
+dotenv.config();
 
 const connection = mysql.createConnection({
   host: process.env.AZURE_MYSQL_HOST,
