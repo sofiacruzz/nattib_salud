@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
   port: 3306,
   ssl: {
     ca: serverCa,
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   }
 });
 

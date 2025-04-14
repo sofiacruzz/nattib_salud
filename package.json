@@ -1,11 +1,11 @@
 {
   "name": "nattib_salud",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch index.js",
-    "test": "node index"
+    "dev": "node --watch server.js",
+    "test": "node server"
   },
   "keywords": [],
   "author": "",

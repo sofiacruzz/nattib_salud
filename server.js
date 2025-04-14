@@ -1,27 +1,22 @@
-require('dotenv').config();
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+import express from 'express'
+import medicoRouter from './routes/medicoRoute.js'
+import fs from 'fs'
+import path from 'path';
+import url from 'url';  
 
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express()
 
-// Middleware para parsear JSON
-app.use(express.json());
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
-// Rutas de la API
-app.use('/auth', (req, res, next) => {
-    console.log('Ruta /auth alcanzada');
-    next();
-}, require('./routes/auth'));
-
-app.use('/medico', (req, res, next) => {
-    console.log('Ruta /medico alcanzada');
-    next();
-}, require('./routes/medico'));
+app.use('/medico', medicoRouter)
 
 // Servir archivos estáticos desde /public
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 // Abre directamente al index.html
 app.get('/', (req, res) => {
@@ -50,7 +45,9 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Error interno del servidor' });
 });
+const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+
+app.listen(PORT, () =>{
+    console.log(`Server running on port ${PORT}`)
+})
