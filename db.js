@@ -13,9 +13,7 @@ var connection = mysql.createConnection({
   database: 'nattib-salud-database',
   port: 3306,
   ssl: {
-    ca: serverCa,
-    rejectUnauthorized: false
-  }
+    ca: serverCa  }
 });
 
 connection.connect((err) => {
