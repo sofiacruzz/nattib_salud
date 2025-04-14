@@ -29,7 +29,7 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
       console.log('addfecha' ,fechaformateada);
 
 
-      const response = await fetch(`${API_URL} +medico/registrar-paciente`, {
+      const response = await fetch(`${API_URL}medico/registrar-paciente`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
