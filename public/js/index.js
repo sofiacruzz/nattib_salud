@@ -28,7 +28,7 @@ async function registrarMedico() {
     console.log('Datos a enviar:', data);
 
     try {
-        const response = await fetch(`${API_URL} + 'medico/registro`, {
+        const response = await fetch(`${API_URL}'medico/registro`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
