@@ -62,7 +62,7 @@ async function registrarMedico() {
 // Función para manejar el login - index.html
 async function login(event) {
     event.preventDefault();
-
+    const errorMessage = document.getElementById('errorMessage');
     const usuario = document.getElementById('usuario').value;
     const password = document.getElementById('password').value;
 
@@ -79,7 +79,7 @@ async function login(event) {
             localStorage.setItem('token', data.token);
             window.location.href = 'dashboard.html';
         } else {
-            alert("Ups, parece que algo está mal");
+            errorMessage.textContent = data.msg || 'Error al iniciar sesión';
         }
     } catch (error) {
         console.error('Error:', error);
@@ -88,6 +88,7 @@ async function login(event) {
 
 // Asignar eventos a los botones del index.html
 document.addEventListener('DOMContentLoaded', function () {
+    
     if (document.getElementById('registrarBtn')) {
         document.getElementById('registrarBtn').addEventListener('click', registrarMedico);
     }

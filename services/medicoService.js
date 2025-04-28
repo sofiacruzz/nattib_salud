@@ -61,10 +61,26 @@ export async function crearVerificacion() {
         },
         data: {
             validations: ["INE"],
-            redirect_url: "http://inherasalud-hpbmcud0ffe2hcdh.eastus2-01.azurewebsites.net/"
+            redirect_url: "https://inherasalud.com/"
         }
     };
 
     const response = await axios(config);
     return response.data.data.id;
 }
+
+export async function check_verificamex(id) {
+    const config = {
+        method: 'get',
+        url: 'https://api.verificamex.com/v2/identity/sessions/'+id,
+        headers: {
+            authorization: 'Bearer '+ process.env.TOKEN_VERIFICAMEX
+        }
+    };
+
+    const response = await axios(config);
+    //console.log(response)
+    return {
+        status: response.data.data.status,
+        result: response.data.data.result 
+    };}

@@ -29,10 +29,14 @@ export default class MedicoModel {
           const query = 'SELECT * FROM medicos WHERE email = ?';
           connection.query(query, [email], (err, results) => {
             if (err) return reject(err);
+            if (results.length === 0) {
+              return resolve(null); // <<< Aquí! Si no hay resultados, regreso null
+            }
             resolve(results[0]);
           });
         });
       }
+      
       
     static async login({ email, contrasena }) {
       return new Promise((resolve, reject) => {
@@ -54,6 +58,21 @@ export default class MedicoModel {
         });
       });
     }
+
+    static async cambiar_status_cuenta({id}) {
+      return new Promise((resolve, reject) => {
+        const query = `
+          UPDATE medicos 
+          SET id_estado = ?
+          WHERE id = ?`;
+  
+        connection.query(query, [3, id], (err) => {
+          if (err) return reject(err);
+          resolve({ success: true });
+        });
+      });
+    }
+
     static async info({medico_id}) {
       return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM medicos WHERE id = ? ';

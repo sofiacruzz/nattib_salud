@@ -2,7 +2,7 @@ import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import MedicoModel from '../models/medicoModel.js'
-import { validarCampo, regex, crearVerificacion } from '../services/medicoService.js';
+import { validarCampo, regex, crearVerificacion, check_verificamex } from '../services/medicoService.js';
 
 dotenv.config();
 
@@ -68,27 +68,66 @@ const registro = async (req, res) => {
         }
 
         const medicoExist = await MedicoModel.findOneByEmail(email);
-        if(!medicoExist){
-            return res.status(409).json({msg:"Email no registrado"})
+        if (!medicoExist) {
+            return res.status(409).json({ msg: "Email no registrado" });
+        }
+        
+        // Primero, revisar el status
+        if (medicoExist.id_estado === 1) {
+            const { status, result} = await check_verificamex(medicoExist.id_verificamex);
+            if(status == "OPEN"){
+                console.log("open", status)
+                window.location.href = 'https://app.verificamex.com/verification/'+ medicoExist.id_verificamex;
+            }else if(status == "FAILED"){
+                return res.status(401).json({ msg: "Lo sentimos no pudimos verificar tu identidad." });
+            }else if(status == "FINISHED" && result > 98){
+                console.log("finished", status)
+                try {
+                    const result = await MedicoModel.cambiar_status_cuenta({ id: medicoExist.id });
+                    const clave = process.env.SECRET_KEY;
+                    const pass_decrypted = CryptoJS.AES.decrypt(medicoExist.contrasena, clave).toString(CryptoJS.enc.Utf8);
+                    
+                    if (contrasena === pass_decrypted) {
+                        const token = jwt.sign(
+                            {
+                                medico_id: medicoExist.id,
+                                email: email
+                            },
+                            process.env.SECRET_KEY,
+                            { expiresIn: "1h" }
+                        );
+                        return res.status(200).json({ success: true, token: token });
+                    } else {
+                        return res.status(401).json({ success: false, msg: 'Credenciales incorrectas' });
+                    }                    
+                } catch (error) {
+                    console.error("Error updating status:", error);
+                }                
+                
+            }
+            return res.status(401).json({ msg: "Registro en validacion, intente mas tarde." });
+        }
+        
+        if (medicoExist.id_estado !== 3) {
+            return res.status(403).json({ msg: "Acceso denegado. Contacta al administrador." });
         }
         const clave = process.env.SECRET_KEY;
         const pass_decrypted = CryptoJS.AES.decrypt(medicoExist.contrasena, clave).toString(CryptoJS.enc.Utf8);
-        if(contrasena === pass_decrypted){
-            const token = jwt.sign({
-                medico_id: medicoExist.id,
-                email: email
         
-
-            },
-            process.env.SECRET_KEY,{
-                expiresIn: "1h"
-            })
-            return res.status(200).json({success: true, token: token})
-        }else{
-            return res.status(401).json({success: false, msg: 'Credenciales incorrectas'})
+        if (contrasena === pass_decrypted) {
+            const token = jwt.sign(
+                {
+                    medico_id: medicoExist.id,
+                    email: email
+                },
+                process.env.SECRET_KEY,
+                { expiresIn: "1h" }
+            );
+            return res.status(200).json({ success: true, token: token });
+        } else {
+            return res.status(401).json({ success: false, msg: 'Credenciales incorrectas' });
         }
 
-        res.send({ medico });      
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -97,7 +136,6 @@ const registro = async (req, res) => {
         })
     }
 }
-
 
 const info= async(req, res) => {
     try {

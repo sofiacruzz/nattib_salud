@@ -29,8 +29,14 @@ router.post('/login', (req, res) => {
         const clave = process.env.SECRET_KEY;
         const pass_decrypted = CryptoJS.AES.decrypt(user.contrasena, clave).toString(CryptoJS.enc.Utf8);
         if(password == pass_decrypted){
+          if(user.id_estado == 1){
+            validar_estado_verificamex()
+            return res.status(401).json({success: pendiente, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}})
+          }else if(user.id_estado ==3){
+            return res.status(200).json({success: true, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}})
+          }
+          
 
-          return res.status(200).json({success: true, message: 'Login exitoso', user:{ id: user.id, nombres: user.nombres, email: user.email}
 
           /*const accessToken = jwt.sign({"id":user.id, "nombres":user.nombres, "email":user.email}, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn:'30s'
@@ -41,7 +47,7 @@ router.post('/login', (req, res) => {
           res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 *1000})
           res.json({accessToken}); */
 
-        });
+
         } else{
           return res.status(401).json({success: false, message: 'correo o contraseña incorrectos'});
         }
