@@ -38,9 +38,11 @@ async function buscarCedula(cedula, nombres, universidad) {
         console.log('Respuesta recibida:', response.data.items[0]);
 
         const json_response = response.data.items[0];
+        const universidadResponse = json_response.universidad.toUpperCase().replace(/'/g, '');
         if (json_response) {
             if (cedula.toString().toLowerCase() === json_response.idCedula.toString().toLowerCase() && 
-                nombres.toLowerCase() === json_response.nombre.toLowerCase()) {
+                nombres.toLowerCase() === json_response.nombre.toLowerCase() && 
+                universidad.toLowerCase() === universidadResponse) {
                 console.log("La cédula y los nombres coinciden.");
                 return true;
             } else {

@@ -2,13 +2,15 @@ import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import MedicoModel from '../models/medicoModel.js'
-import { validarCampo, regex, crearVerificacion, check_verificamex } from '../services/medicoService.js';
+import { validarCampo, regex, crearVerificacion, buscarCedula, check_verificamex } from '../services/medicoService.js';
 
 dotenv.config();
 
 const registro = async (req, res) => {
     try {
-        const { nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, telefono, domicilio } = req.body;
+        let { nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, telefono, domicilio } = req.body;
+        nombres = nombres.toUpperCase().replace(/'/g, '');
+        apellidos = apellidos.toUpperCase().replace(/'/g, '');
 
         if (!nombres || !apellidos || !curp || !universidad || !cedula || !email || !fecha_nac || !contrasena) {
             return res.status(400).json({ msg: 'Todos los campos son requeridos' });
@@ -34,10 +36,10 @@ const registro = async (req, res) => {
             return res.status(409).json({ msg: "Email existente" });
         }
 
-        /*const cedulaValida = await buscarCedula(cedula, nombres, universidad);
+        const cedulaValida = await buscarCedula(cedula, nombres, universidad);
         if (!cedulaValida) {
-            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos' });
-        }*/
+            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
+        }
 
         const id_verificamex = await crearVerificacion();
         const url_verificamex = "https://app.verificamex.com/verification/" + id_verificamex;

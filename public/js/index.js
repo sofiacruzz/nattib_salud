@@ -46,10 +46,10 @@ async function registrarMedico() {
                     p.textContent = err;
                     errorContainer.appendChild(p);
                 });
-            } else if (responseData.message) {
-                errorContainer.innerHTML = `<p>${responseData.message}</p>`;
+            } else if (responseData.msg) {
+                errorContainer.innerHTML = `<p>${responseData.msg}</p>`;
             } else {
-                errorContainer.innerHTML = '<p>Ha ocurrido un error desconocido.</p>';
+                errorContainer.innerHTML = `<p>${responseData.msg}</p>`;
             }
         }
     } catch (error) {

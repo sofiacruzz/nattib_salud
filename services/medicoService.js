@@ -1,5 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
+import iconv from 'iconv-lite';
 
 export const regex = {
     nombres: /^[a-zA-Z\s]{2,50}$/,
@@ -19,9 +20,9 @@ export function validarCampo(valor, regex, campo) {
     return null;
 }
 
-/*export async function buscarCedula(cedula, nombres, universidad) {
+export async function buscarCedula(cedula, nombres, universidad) {
     try {
-        const data = new FormData();
+        let data = new FormData();
         data.append('json', JSON.stringify({
             maxResult: "1000",
             nombre: "",
@@ -31,25 +32,65 @@ export function validarCampo(valor, regex, campo) {
             idCedula: cedula
         }));
 
-        const config = {
+        let config = {
             method: 'post',
             url: 'https://www.cedulaprofesional.sep.gob.mx/cedula/buscaCedulaJson.action',
-            headers: { ...data.getHeaders() },
-            data
+            headers: {
+                ...data.getHeaders()
+            },
+            responseType: 'arraybuffer', // ← importante
+            data: data
         };
 
         const response = await axios(config);
-        const json_response = response.data.items[0];
 
-        return json_response &&
-            cedula.toLowerCase() === json_response.idCedula.toLowerCase().trim() &&
-            nombres.toLowerCase() === json_response.nombre.toLowerCase().trim();
+        // Decodificar correctamente usando Latin-1
+        const decoded = iconv.decode(response.data, 'latin1');
+        const json = JSON.parse(decoded);
 
+        // Función para limpiar y normalizar texto
+        const limpiarTexto = (texto) => {
+            if (!texto || typeof texto !== 'string') return '';
+            return texto
+                .toUpperCase()
+                .replace(/'/g, '') // eliminar apóstrofes
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, ''); // quitar acentos
+        };
+
+        const json_response = json.items[0];
+
+        if (json_response) {
+            const cedulaJson = limpiarTexto(json_response.idCedula);
+            const nombreJson = limpiarTexto(json_response.nombre);
+            const universidadJson = limpiarTexto(json_response.desins);
+
+            const cedulaInput = limpiarTexto(cedula.toString());
+            const nombresInput = limpiarTexto(nombres);
+            const universidadInput = limpiarTexto(universidad);
+
+            if (
+                cedulaInput === cedulaJson &&
+                nombresInput === nombreJson &&
+                universidadInput === universidadJson
+            ) {
+                console.log("✔ La cédula, nombre y universidad coinciden.");
+                return true;
+            } else {
+                console.log("INFOO", `"${cedulaInput}"`, `"${nombresInput}"`, `"${universidadInput}"`);
+                console.log("INFOO2", `"${cedulaJson}"`, `"${nombreJson}"`, `"${universidadJson}"`);
+                console.log("✖ La cédula, el nombre o la universidad no coinciden.");
+                return false;
+            }
+        } else {
+            console.log("✖ Cédula no encontrada: el array 'items' está vacío.");
+            return false;
+        }
     } catch (error) {
-        console.error('Error al buscar la cédula:', error);
+        console.error('❌ Error al buscar la cédula:', error.message);
         return false;
     }
-}*/
+}
 
 export async function crearVerificacion() {
     const config = {
