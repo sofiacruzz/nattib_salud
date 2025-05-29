@@ -75,10 +75,12 @@ async function login(event) {
 
         const data = await response.json();
 
-        if (data.success) {
+        if (data.success == true) {
             localStorage.setItem('token', data.token);
             window.location.href = 'dashboard.html';
-        } else {
+        } else if(data.success == 'pending'){
+            window.location.assign(data.msg);
+        }else{
             errorMessage.textContent = data.msg || 'Error al iniciar sesión';
         }
     } catch (error) {

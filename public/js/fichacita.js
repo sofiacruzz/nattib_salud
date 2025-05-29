@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.getElementById('nombre').innerHTML = paciente.nombres;
                 document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
                 document.getElementById('telefono').innerHTML = paciente.telefono;
+                document.getElementById('Edad').innerHTML = calcularEdad(paciente.fecha_nac);
                 document.getElementById('direccion').innerHTML = paciente.direccion;
             } else {
                 console.error('La API no devolvió datos exitosamente');
@@ -39,7 +40,19 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error('Error:', error);
         }
     }
-
+    function calcularEdad(fechaNacimiento) {
+        const nacimiento = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--; // Ajusta si aún no ha cumplido años este año
+        }
+        
+        return edad;
+        }
     //OBTENER LA CONSULTA POR ID DE PACIENTE, ID MEDICO, ID CONSULTAS
 
     async function fetchDataConsulta() {

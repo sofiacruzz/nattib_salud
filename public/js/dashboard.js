@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function populateTable(data) {
         const transformedData = data.pacientes.map(paciente => [
-            paciente.nombres +''+ paciente.apellidos,
+            paciente.nombres +' '+ paciente.apellidos,
             calcularEdad(paciente.fecha_nac),  // Nombre completo
             paciente.telefono,  // Teléfono o cualquier otro campo
             convertirFecha(paciente.fecha_registro),

@@ -16,7 +16,7 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
       const apellidos = document.getElementById('apellidos').value;
       const fecha_nac = document.getElementById('fecha_nac').value;
       const telefono = document.getElementById('telefono').value;
-      const direccion = document.getElementById('direccion').value;
+      const curp = document.getElementById('curp').value;
 
       const token = localStorage.getItem('token');
 
@@ -35,7 +35,7 @@ document.getElementById('registrarPacienteForm').addEventListener('submit', asyn
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}` 
           },
-          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, direccion, fecha_registro: fechaformateada})
+          body: JSON.stringify({ nombres, apellidos, fecha_nac, telefono, curp, fecha_registro: fechaformateada})
           });
       
       const data = await response.json();

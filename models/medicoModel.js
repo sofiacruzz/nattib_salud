@@ -99,14 +99,14 @@ export default class MedicoModel {
       });
     }
 
-    static async registrarPaciente({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id }) {
+    static async registrarPaciente({ nombres, apellidos, fecha_nac, telefono, curp, medico_id }) {
       return new Promise((resolve, reject) => {
         const id = crypto.randomUUID();
         console.log("model:",  nombres);
         const query = `INSERT INTO pacientes (id, nombres, apellidos, 
-        fecha_nac, telefono, direccion, medico_id, fecha_registro) VALUES 
+        fecha_nac, telefono, curp, medico_id, fecha_registro) VALUES 
         (?, ?, ?, ?, ?, ?, ?, CURDATE())`;
-        connection.query(query, [id, nombres, apellidos, fecha_nac, telefono, direccion, medico_id], (err, results) => {
+        connection.query(query, [id, nombres, apellidos, fecha_nac, telefono, curp, medico_id], (err, results) => {
           if(err){
             console.error('Error en la consulta', err.stack);
             return reject(new Error('Hubo un error'))
@@ -123,7 +123,7 @@ export default class MedicoModel {
         const query = 'SELECT * FROM pacientes WHERE id = ? AND medico_id = ?';
         connection.query(query, [paciente_id, medico_id], (err, results) => {
           if (err) return reject(err);
-          resolve(results[0]); // o { success: true, paciente: results[0] }
+          resolve({ success: true, paciente: results[0] });
         });
       });
     }
@@ -147,20 +147,24 @@ export default class MedicoModel {
       });
     }
 
-    static async crearConsulta({ id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp }) {
-      return new Promise((resolve, reject) => {
-        const id = crypto.randomUUID();
-        const query = `
-          INSERT INTO consulta_ficha 
-          (id, id_paciente, medico_id, padecimiento, exploracion_fisica, diagnostico, tratamiento, estudios_comp, fecha_registro) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURDATE())`;
-  
-        connection.query(query, [id, id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp], (err) => {
-          if (err) return reject(err);
-          resolve({ success: true });
-        });
-      });
-    }
+static async crearConsulta({ id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp }) {
+  return new Promise((resolve, reject) => {
+    const id = crypto.randomUUID();
+    const query = `
+      INSERT INTO consulta_ficha 
+      (id, id_paciente, medico_id, padecimiento, exploracion_fisica, diagnostico, tratamiento, estudios_comp, fecha_registro) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURDATE())`;
+
+    connection.query(query, [id, id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp], (err) => {
+      if (err) {
+        return reject(err);
+      } else {
+        resolve({ success: true, id_consulta: id });
+      }
+    });
+  });
+}
+
   
     static async actualizarConsulta({ pad, exp_fisica, diag, trat, est_comp, id_consulta }) {
       return new Promise((resolve, reject) => {

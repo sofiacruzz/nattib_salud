@@ -3,8 +3,17 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import MedicoModel from '../models/medicoModel.js'
 import { validarCampo, regex, crearVerificacion, buscarCedula, check_verificamex } from '../services/medicoService.js';
+import { generarDefinicionPDF } from '../utils/pdf/generador.js';
+import { calcularEdad } from '../utils/helpers.js';
+import pdfMake from 'pdfmake/build/pdfmake.js';
+import pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import { BlobServiceClient } from '@azure/storage-blob';
 
 dotenv.config();
+
+
+const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const containerName = 'nana';
 
 const registro = async (req, res) => {
     try {
@@ -79,7 +88,8 @@ const registro = async (req, res) => {
             const { status, result} = await check_verificamex(medicoExist.id_verificamex);
             if(status == "OPEN"){
                 console.log("open", status)
-                window.location.href = 'https://app.verificamex.com/verification/'+ medicoExist.id_verificamex;
+                const link = 'https://app.verificamex.com/verification/'+ medicoExist.id_verificamex;
+                return res.status(401).json({ success: 'pending', msg:  link});
             }else if(status == "FAILED"){
                 return res.status(401).json({ msg: "Lo sentimos no pudimos verificar tu identidad." });
             }else if(status == "FINISHED" && result > 98){
@@ -108,27 +118,24 @@ const registro = async (req, res) => {
                 
             }
             return res.status(401).json({ msg: "Registro en validacion, intente mas tarde." });
-        }
-        
-        if (medicoExist.id_estado !== 3) {
-            return res.status(403).json({ msg: "Acceso denegado. Contacta al administrador." });
-        }
-        const clave = process.env.SECRET_KEY;
-        const pass_decrypted = CryptoJS.AES.decrypt(medicoExist.contrasena, clave).toString(CryptoJS.enc.Utf8);
-        
-        if (contrasena === pass_decrypted) {
-            const token = jwt.sign(
-                {
-                    medico_id: medicoExist.id,
-                    email: email
-                },
-                process.env.SECRET_KEY,
-                { expiresIn: "1h" }
-            );
-            return res.status(200).json({ success: true, token: token });
-        } else {
-            return res.status(401).json({ success: false, msg: 'Credenciales incorrectas' });
-        }
+        }else if (medicoExist.id_estado == 3) {
+                    const clave = process.env.SECRET_KEY;
+                    const pass_decrypted = CryptoJS.AES.decrypt(medicoExist.contrasena, clave).toString(CryptoJS.enc.Utf8);
+                    
+                    if (contrasena === pass_decrypted) {
+                        const token = jwt.sign(
+                            {
+                                medico_id: medicoExist.id,
+                                email: email
+                            },
+                            process.env.SECRET_KEY,
+                            { expiresIn: "1h" }
+                        );
+                        return res.status(200).json({ success: true, token: token });
+                    } else {
+                        return res.status(401).json({ success: false, msg: 'Credenciales incorrectas' });
+                    }                    
+            }
 
     } catch (error) {
         console.log(error)
@@ -172,11 +179,11 @@ const pacientes= async(req, res) => {
 }
 const registrarPacientes= async(req, res) => {
     try {
-        const { nombres, apellidos, fecha_nac, telefono, direccion } = req.body;
+        const { nombres, apellidos, fecha_nac, telefono, curp } = req.body;
         const { medico_id } = req;
         console.log(nombres)
         console.log(medico_id)
-        const result = await MedicoModel.registrarPaciente({ nombres, apellidos, fecha_nac, telefono, direccion, medico_id })
+        const result = await MedicoModel.registrarPaciente({ nombres, apellidos, fecha_nac, telefono, curp, medico_id })
         return res.json(result)
         
     } catch (error) {
@@ -206,17 +213,51 @@ const getPacienteByIdAndMedicoId = async (req, res) => {
 
 const crearConsulta = async(req, res) => {
     try {
-        const { id_paciente, pad, exp_fisica, diag, trat, est_comp } = req.body;
-        const { medico_id } = req;
-        const result = await MedicoModel.crearConsulta({ id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp });
-        return res.json(result);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            ok: false,
-            msg: 'Error server'
-        });
-    }
+    const { id_paciente, pad, exp_fisica, diag, trat, est_comp } = req.body;
+    const { medico_id } = req;
+    const result = await MedicoModel.crearConsulta({ id_paciente, medico_id, pad, exp_fisica, diag, trat, est_comp });
+    const consultaId = result.id_consulta; 
+    console.log(consultaId)
+    // 2. Obtener info de paciente y médico
+    const paciente = await MedicoModel.getPacienteByIdAndMedicoId(id_paciente, medico_id); // crea esta función
+    
+    const medico = await MedicoModel.info(medico_id); // crea esta función
+    const edad = calcularEdad(paciente.fecha_nac); // función auxiliar
+
+    const consulta = { pad, exp_fisica, diag, tratamiento: trat, estudios_comp: est_comp };
+
+    // 3. Generar definición PDF
+    const docDefinition = generarDefinicionPDF({ paciente, consulta, medico, edad });
+
+    // 4. Crear buffer del PDF
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    const pdfBuffer = await new Promise((resolve, reject) => {
+      pdfDocGenerator.getBuffer(buffer => resolve(buffer));
+    });
+
+    // 5. Subir a Azure
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    await containerClient.createIfNotExists();
+
+    const blobName = `${consultaId}.pdf`;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    await blockBlobClient.uploadData(pdfBuffer, {
+      blobHTTPHeaders: { blobContentType: "application/pdf" }
+    });
+
+    // 6. Enviar respuesta
+    return res.json({
+      success: true,
+      id: consultaId,
+      pdfUrl: blockBlobClient.url
+    });
+
+  } catch (error) {
+    console.error('Error al crear receta:', error);
+    return res.status(500).json({ success: false, msg: 'Error en el servidor' });
+  }
 }
 
 const createExpediente = async(req, res) => {

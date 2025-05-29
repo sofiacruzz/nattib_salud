@@ -33,7 +33,7 @@ async function generarPDFConsulta(consultaId, pacienteId) {
         if (!responsePaciente.ok) throw new Error('Error al obtener datos del paciente');
         const dataPaciente = await responsePaciente.json();
         const paciente = dataPaciente.paciente;
-
+        const edad = calcularEdad(paciente.fecha_nac)
         // Obtener datos de la consulta
         const responseConsulta = await fetch(apiUrlConsulta, {
             method: 'GET',
@@ -69,16 +69,21 @@ async function generarPDFConsulta(consultaId, pacienteId) {
         const medicoCedula = medico.cedula;
         const medicoInstitucion = medico.universidad;
         const medicoTelefono = medico.telefono;
-        // Asumiendo que tienes el domicilio en otra tabla o campo
         const medicoDomicilio = medico.domicilio || 'Consultorio no especificado'; 
 
         // Calcular edad
-        const fechaNac = new Date(medico.fecha_nac.split("T")[0]);
+        function calcularEdad(fechaNacimiento) {
+        const nacimiento = new Date(fechaNacimiento);
         const hoy = new Date();
-        let edad = hoy.getFullYear() - fechaNac.getFullYear();
-        const m = hoy.getMonth() - fechaNac.getMonth();
-        if (m < 0 || (m === 0 && hoy.getDate() < fechaNac.getDate())) {
-            edad--;
+        
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--; // Ajusta si aún no ha cumplido años este año
+        }
+        
+        return edad;
         }
 
         // Definición del documento PDF en formato horizontal
@@ -515,12 +520,27 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
             document.getElementById('telefono').innerHTML = paciente.telefono;
             document.getElementById('direccion').innerHTML = paciente.direccion;
+            document.getElementById('Edad').innerHTML = calcularEdad(paciente.fecha_nac);
+
         } else {
             console.error('La API no devolvió datos exitosamente');
         }
     } catch (error) {
         console.error('Error:', error);
     }
+    function calcularEdad(fechaNacimiento) {
+        const nacimiento = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+            edad--; // Ajusta si aún no ha cumplido años este año
+        }
+        
+        return edad;
+        }
 
 // Logica para guardar la informacion de expediente
 document.getElementById('guardarBtn1').addEventListener('click', async (event) => {
