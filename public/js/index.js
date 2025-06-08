@@ -2,6 +2,7 @@ async function registrarMedico() {
     const errorContainer = document.getElementById('error-messages');
     errorContainer.innerHTML = ''; // Limpiar errores previos
 
+    
     const data = {
         nombres: document.querySelector('input[name="nombres"]').value,
         apellidos: document.querySelector('input[name="apellidos"]').value,
@@ -93,9 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (document.getElementById('registrarBtn')) {
         document.getElementById('registrarBtn').addEventListener('click', registrarMedico);
+    
     }
 
     if (document.getElementById('loginForm')) {
         document.getElementById('loginForm').addEventListener('submit', login);
     }
+
+
 });

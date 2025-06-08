@@ -30,7 +30,7 @@
             <form id="loginForm">
                 <input type="text" placeholder="Correo" name="usuario" id="usuario" required>
                 <input type="password" placeholder="Contraseña" name="contrasena" id="password" required>
-                <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div> <!-- Aquí se mostrarán los errores -->
+                <div id="errorMessage" style="color: red; margin-bottom: 10px; text-align: center;"></div> <!-- Aquí se mostrarán los errores -->
                 <button type="submit" class="inisesion"> Iniciar Sesion</button>
             </form>
     
@@ -42,7 +42,7 @@
     </div>
     <div class="form-popup" id="myForm">
         <form  class="form-container" method="POST">
-            <h1 style="color: #2149A0;">Registro</h1>
+            <h1 style="color: #2149A0; text-align: center;">Registro de informacion</h1>
             
             <div class="scroll">
                 <label for="nombres">Nombres: </label>    
@@ -71,7 +71,7 @@
 
                 <input type="checkbox" id="terms" name="terms" value="terms">
                  <label for="terms">Aceptar terminos y condiciones de registro</label>
-                 <div id="error-messages" style="color: red; margin-bottom: 10px;"></div>
+                 <div id="error-messages" style="color: red; margin-bottom: 10px; text-align: center;"></div>
                 <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
                  <button type="button" class="cancelbtn" onclick="closeForm()">Cerrar</button>
             </div>

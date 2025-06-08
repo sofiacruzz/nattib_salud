@@ -103,8 +103,6 @@ header li a {
   font-size: 16px;
   line-height: normal;
   outline: none;
-  padding: 16px 24px;
-  margin-left: 20%;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
@@ -113,6 +111,10 @@ header li a {
   touch-action: manipulation;
   width: 200px;
   will-change: transform;
+  display: flex;
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center;    /* Centra horizontalmente */
+  justify-content: center;
 }
 
 .container .login button:disabled {
@@ -153,141 +155,177 @@ header li a {
     height: auto; /* Mantiene la proporción de la imagen */
   }
 }
-.form-popup{
-  display: none;
+
+.form-popup {
+  display: flex;
   position: fixed;
-  box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
+  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  justify-content: center;  /* Centra horizontalmente */
+  align-items: center;      /* Centra verticalmente */
+  z-index: 1000;
 }
-.form-container{
-  margin-left: 20rem;
-  margin-top: 3rem;
-  max-width: 50%; /* Ajusta el ancho máximo */
-  max-height: 80%;
+.form-popup.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+.form-container {
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
   background-color: white;
   border-radius: 30px;
   padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.form-container h1 {
+  color: #2149A0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.scroll label {
+  width: 100%;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #2149A0;
+}
+
+.scroll input[type="text"],
+.scroll input[type="password"],
+.scroll input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1.5px solid #2149A0;
+  background-color: #f1f1f1;
   text-align: center;
-  overflow-y: auto; /* Habilita el scroll vertical */
+  font-size: 1rem;
+  box-sizing: border-box;
 }
-.form-container .scroll{
-    display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: center;    /* Centra horizontalmente */
-    justify-content: center; /* Centra verticalmente */
-    max-height: 450px; /* Altura máxima antes de que aparezca el scroll */
-    overflow-y: auto;  /* Habilita el scroll vertical */
-    padding-top: 15em;
+
+.scroll input:focus {
+  background-color: #e8f7f6;
+  outline: none;
+}
+
+.scroll input[type="checkbox"] {
+  width: auto;
+  margin-top: 10px;
+}
+
+#terms + label {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: #444;
+  text-align: center;
+}
+
+.inisesion,
+.cancelbtn {
+  width: 80%;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.inisesion {
+  background-color: #2149A0;
+  color: white;
+}
+
+.cancelbtn {
+  background-color: red;
+  color: white;
+}
+
+/* Efecto hover */
+.inisesion:hover {
+  background-color: #1a3a85;
+}
+
+.cancelbtn:hover {
+  background-color: #b30000;
+}
+
+/* MEDIA QUERIES para móviles */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 15px;
+  }
+
+  .scroll label {
+    font-size: 0.85rem;
+  }
+
+  .scroll input[type="text"],
+  .scroll input[type="password"],
+  .scroll input[type="date"] {
+    font-size: 0.9rem;
+  }
+
+  .inisesion,
+  .cancelbtn {
     width: 100%;
-
-  
   }
-  
-  /* Full-width input fields */
-  .form-container .scroll input[type=text], .form-container input[type=password] {
-    width: 70%;
-    border-radius: 30px;
-    text-align: center;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
+}
+
+
+@keyframes fadeZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  
-  /* When the inputs get focus, do something */
-  .form-container .scroll input[type=text]:focus, .form-container input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-  .form-container .scroll input[type=date] {
-    background: #f1f1f1;
-    border: none;
-    border-radius: 20px;
-    width: 70%;
-    height: 30px;
-    text-align: center;
-    padding: 5px 10px; /* Añade un poco de padding para mejor legibilidad */
-    font-family: Arial, sans-serif; /* Usa una fuente común */
-    font-size: 14px; /* Tamaño de fuente estándar */
-    color: #333; /* Color de texto */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el input */
-    outline: none; /* Elimina el borde al hacer focus */
-    -webkit-appearance: none;    appearance: none;
-}
-
-
-/* Estilo cuando el input está enfocado */
-.form-container .scroll input[type=date]:focus {
-    background: #e1e1e1; /* Cambia el color de fondo al enfocar */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Añade una sombra sutil */
-}
-
-/* Estilo para navegadores WebKit (Chrome, Safari) */
-.form-container .scroll input[type=date]::-webkit-datetime-edit {
-    color: #333; /* Color del texto */
-}
-
-.form-container .scroll input[type=date]::-webkit-calendar-picker-indicator {
-    background-color: #2149A0; /* Color del ícono del calendario */
-    border-radius: 50%; /* Hace que el ícono sea redondo */
-    padding: 5px; /* Añade espacio alrededor del ícono */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
-}
-
-/* Estilo para navegadores Firefox */
-.form-container .scroll input[type=date]::-moz-focus-inner {
-    border: none; /* Elimina el borde interno en Firefox */
-}
-
-.form-container .scroll input[type=date]::-moz-calendar-picker-indicator {
-    background-color: #2149A0; /* Color del ícono del calendario */
-    border-radius: 50%; /
-}
-  
-  /* Add a red background color to the cancel button */
-  .form-container .scroll .cancelbtn{
-    background-color: red;
-    width: 5rem;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    color: white;
-
-  }
-  
-  /* Add some hover effects to buttons */
-  .form-container .btn:hover, .open-button:hover {
+  100% {
     opacity: 1;
+    transform: scale(1);
   }
-  @media (max-width: 768px) {
-    .form-container {
-      margin-top: 10%; /* Ajusta el margen superior */
-      padding: 10px; /* Reduce el padding */
-      max-height: 90%;
-    }
-    .form-container .scroll{
-      margin-top: -6em;
-    }
-  
-    .form-container .scroll input[type=text],
-    .form-container .scroll input[type=password],
-    .form-container .scroll input[type=date] {
-      width: 90%; 
-      height: 25px;
-      line-height: 15px; /* Asegura que el texto se alinee bien */
-      padding: 2px; /* Reduce el padding interno */
-      box-sizing: border-box;
-    }
-  
-    .form-container .scroll .cancelbtn {
-      width: 50%; /* Aumenta el ancho del botón */
-    }
-  }
+}
+
+.form-popup {
+  animation: fadeZoomIn 0.3s ease-out;
+}
+
+.form-container {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+.form-container:hover {
+  transform: translateY(-5px);
+}
+.form-popup {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+}
+.inisesion,
+.cancelbtn {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.inisesion:hover,
+.cancelbtn:hover {
+  transform: scale(1.05);
+}

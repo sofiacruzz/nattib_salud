@@ -1,9 +1,15 @@
 function openForm() {
-    document.getElementById("myForm").style.display = "block";
+    const modal = document.getElementById("myForm");
+    modal.classList.add("show");
+      document.body.style.overflow = 'hidden';
+
 }
 
 function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+    const modal = document.getElementById("myForm");
+    modal.classList.remove("show");
+      document.body.style.overflow = '';
+
 }
 
 // Inicializa Pikaday
