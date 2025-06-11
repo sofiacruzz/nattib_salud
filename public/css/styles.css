@@ -329,3 +329,145 @@ header li a {
 .cancelbtn:hover {
   transform: scale(1.05);
 }
+
+/* Contenedor principal - CRUCIAL */
+.password-container {
+    position: relative;
+    display: inline-block; /* Mantiene el ancho del input */
+    width: auto; /* No fuerza un ancho específico */
+    margin: 5px 0 22px 0; /* Igual que tu input de correo */
+}
+
+/* Input - debe coincidir EXACTAMENTE con el de correo */
+.password-container input {
+    width: 335px !important;
+    padding: 15px 35px 15px 15px !important; /* Derecho aumentado para el ícono */
+    border-radius: 30px !important;
+    border: 2px solid #2149A0 !important;
+    text-align: center;
+    box-sizing: border-box !important; /* Esto es ESSENCIAL */
+    background-color: white !important;
+    margin: 0 !important; /* Resetamos márgenes */
+}
+
+/* Ícono del ojo - Posicionamiento perfecto */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #2149A0;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cambios de estado */
+.toggle-password:hover {
+    color: #96D2CF;
+}
+
+/* Para Font Awesome */
+.toggle-password i {
+    font-size: 16px;
+}
+/* Los inputs de contraseña en el registro mantienen estilo original */
+#myForm input[type="password"] {
+    width: 300px;
+    padding: 15px !important; /* Padding uniforme como antes */
+    margin: 5px 0 22px 0;
+    border-radius: 30px;
+    border: 2px solid #2149A0;
+    text-align: center;
+    /* Sin ícono, sin padding extra */
+}
+/* CSS específico para estos casos */
+.with-toggle {
+    position: relative;
+    display: inline-block;
+}
+
+/* Contenedor que mantiene el tamaño original */
+.password-wrapper.original-size {
+    position: relative;
+    display: inline-block;
+    width: auto; /* No fuerza ancho */
+}
+
+/* Inputs con tamaño original IDÉNTICO al anterior */
+.password-wrapper.original-size input[type="password"] {
+    width: 300px !important;
+    padding: 15px 35px 15px 15px !important;
+    margin: 5px 0 22px 0 !important;
+    border-radius: 30px !important;
+    border: 2px solid #2149A0 !important;
+    text-align: center;
+    box-sizing: border-box !important;
+    background-color: white !important;
+    height: auto !important;
+    font-size: inherit !important;
+}
+
+/* Ícono posicionado SIN afectar dimensiones */
+.password-wrapper.original-size .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #2149A0;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Efecto hover del ícono */
+.password-wrapper.original-size .toggle-password:hover {
+    color: #96D2CF;
+}
+/* Contenedor (no afecta dimensiones) */
+.password-field {
+    position: relative;
+    display: inline-block;
+    width: auto; /* Respeta ancho natural */
+}
+
+/* Estilo ORIGINAL preservado (copiado de tu CSS inicial) */
+.original-input {
+    width: 300px !important;
+    padding: 15px !important; /* Padding original */
+    margin: 5px 0 22px 0 !important;
+    border-radius: 30px !important;
+    border: 2px solid #2149A0 !important;
+    text-align: center !important;
+    background-color: white !important;
+    box-sizing: border-box !important;
+}
+
+/* Ícono (posicionamiento absoluto sin afectar layout) */
+.toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #2149A0;
+    font-size: 16px;
+    background: none;
+    border: none;
+    padding: 0 8px;
+    z-index: 2;
+}
+
+/* Efecto hover sutil */
+.toggle-icon:hover {
+    opacity: 0.8;
+}
