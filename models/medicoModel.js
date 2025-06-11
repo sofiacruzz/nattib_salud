@@ -123,7 +123,7 @@ export default class MedicoModel {
         const query = 'SELECT * FROM pacientes WHERE id = ? AND medico_id = ?';
         connection.query(query, [paciente_id, medico_id], (err, results) => {
           if (err) return reject(err);
-          resolve({ success: true, paciente: results[0] });
+          resolve({ success: true, pacientes: results[0] });
         });
       });
     }

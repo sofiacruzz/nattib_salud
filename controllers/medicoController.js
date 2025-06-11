@@ -200,7 +200,7 @@ const getPacienteByIdAndMedicoId = async (req, res) => {
         const { medico_id } = req; // Este viene del token (middleware)
 
         const resultado = await MedicoModel.getPacienteByIdAndMedicoId({ paciente_id, medico_id });
-        return res.json({   resultado });
+        return res.json(resultado);
     } catch (error) {
         console.log(error);
         return res.status(500).json({
