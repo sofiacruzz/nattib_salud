@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('edad').innerHTML =ed;
                 document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
                 document.getElementById('telefono').innerHTML = paciente.telefono;
-                document.getElementById('direccion').innerHTML = paciente.direccion ? paciente.direccion : 'Sin dato';
+                document.getElementById('curp').innerHTML = paciente.curp ? paciente.curp : 'Sin dato';
             } else {
                 console.error('La API no devolvió datos exitosamente');
             }

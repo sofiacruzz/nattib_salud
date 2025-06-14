@@ -456,12 +456,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         searching: true,
         ordering: false,
         responsive: false,
+        pageLength: 5,
         layout: {
             topStart: null,
             bottomEnd: {
                 paging: {
                     numbers: false,
-                    previousNext: false,
+                    previousNext: true,
                     firstLast: false
                 }
             }
@@ -519,7 +520,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.getElementById('nombre').innerHTML = paciente.nombres;
             document.getElementById('fechaNacimiento').innerHTML = paciente.fecha_nac.split("T")[0];
             document.getElementById('telefono').innerHTML = paciente.telefono;
-            document.getElementById('direccion').innerHTML = paciente.direccion;
+            document.getElementById('curp').innerHTML = paciente.curp;
             document.getElementById('Edad').innerHTML = calcularEdad(paciente.fecha_nac);
 
         } else {
