@@ -20,16 +20,17 @@ export function validarCampo(valor, regex, campo) {
     return null;
 }
 
-export async function buscarCedula(cedula, nombres, universidad) {
+export async function buscarCedula(cedula, nombres, apellidos, universidad) {
     try {
         let data = new FormData();
+        const [apellidoPaterno, apellidoMaterno] = apellidos.split(' ');
         data.append('json', JSON.stringify({
             maxResult: "1000",
-            nombre: "",
-            paterno: "",
-            materno: "",
+            nombre: nombres,
+            paterno: apellidoPaterno,
+            materno: apellidoMaterno,
             desins: "",
-            idCedula: cedula
+            idCedula: ""
         }));
 
         let config = {
@@ -102,7 +103,7 @@ export async function crearVerificacion() {
         },
         data: {
             validations: ["INE"],
-            redirect_url: "https://inherasalud.com/"
+            redirect_url: "https://inherasalud-hpbmcud0ffe2hcdh.eastus2-01.azurewebsites.net"
         }
     };
 

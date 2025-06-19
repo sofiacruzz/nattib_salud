@@ -45,7 +45,7 @@ const registro = async (req, res) => {
             return res.status(409).json({ msg: "Email existente" });
         }
 
-        const cedulaValida = await buscarCedula(cedula, nombres, universidad);
+        const cedulaValida = await buscarCedula(cedula, nombres, apellidos, universidad);
         if (!cedulaValida) {
             return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
         }
