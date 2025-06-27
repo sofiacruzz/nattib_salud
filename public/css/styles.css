@@ -231,6 +231,12 @@ header li a {
   width: auto;
   margin-top: 10px;
 }
+.scroll p{
+   font-size: 0.85rem;
+   margin-top: -35px;
+  color: #706e6e;
+  text-align: center;
+}
 
 #terms + label {
   font-size: 0.85rem;

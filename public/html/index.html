@@ -58,14 +58,17 @@
                 <input type="text" id="apellidos" placeholder="Apellidos" name="apellidos" required>
                 <label for="curp">CURP:</label>
                 <input type="text" id="curp" placeholder="CURP" name="curp" required>
+                <p>No te sabes tu curp? Consultala aqui</p> <a href="https://www.gob.mx/curp/">CURP</a>
 
                 <label for="fecha_nac">Fecha de nacimiento: </label>
                 <input type="text" id="fecha_nac" name="fechanac" required>
                 
                 <label for="universidad">Universidad de egreso: </label>
                 <input type="text" id="universidad" name="universidad" placeholder="Universidad de egreso" required>
+                <p>Poner el nombre de la universidad sin abreviaciones.</p>
                 <label for="cedula">Cedula: </label>
                 <input type="text" id="cedula" name="cedula" placeholder="Cédula" required>
+                <p>Agregar tu cedula sin guiones y sin espacios</p>
                 
                 <label for="email">Email:</label>
                 <input type="text" id="email" name="email" placeholder="Email" required>
@@ -96,7 +99,7 @@
                 <input type="checkbox" id="terms" name="terms" value="terms">
                  <label for="terms">Aceptar terminos y condiciones de registro</label>
                  <div id="error-messages" style="color: red; margin-bottom: 10px; text-align: center;"></div>
-                <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
+                 <button type="button" class="inisesion" id="registrarBtn">Registrarse</button>
                  <button type="button" class="cancelbtn" onclick="closeForm()">Cerrar</button>
             </div>
         </form>

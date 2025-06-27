@@ -4,11 +4,11 @@ async function registrarMedico() {
 
     
     const data = {
-        nombres: document.querySelector('input[name="nombres"]').value,
-        apellidos: document.querySelector('input[name="apellidos"]').value,
+        nombres: document.querySelector('input[name="nombres"]').value.toUpperCase(),
+        apellidos: document.querySelector('input[name="apellidos"]').value.toUpperCase(),
         curp: document.querySelector('input[name="curp"]').value,
         fecha_nac: document.querySelector('input[name="fechanac"]').value,
-        universidad: document.querySelector('input[name="universidad"]').value,
+        universidad: document.querySelector('input[name="universidad"]').value.toUpperCase(),
         cedula: document.querySelector('input[name="cedula"]').value,
         email: document.querySelector('input[name="email"]').value,
         contrasena: document.querySelector('input[name="pswd"]').value,
