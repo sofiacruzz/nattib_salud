@@ -15,6 +15,42 @@ dotenv.config();
 const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
 const containerName = 'nana';
 
+
+const prevalidacion = async (req, res) => {
+    try {
+        let { nombres, apellidos, curp, universidad, cedula} = req.body;
+        //nombres = nombres.toUpperCase().replace(/'/g, '');
+        //apellidos = apellidos.toUpperCase().replace(/'/g, '');
+
+        if (!nombres || !apellidos || !curp || !universidad || !cedula) {
+            return res.status(400).json({ msg: 'Todos los campos son requeridos' });
+        }
+
+        const errores = [];
+        errores.push(validarCampo(nombres, regex.nombres, 'nombres'));
+        errores.push(validarCampo(apellidos, regex.apellidos, 'apellidos'));
+        errores.push(validarCampo(curp, regex.curp, 'CURP'));
+        errores.push(validarCampo(universidad, regex.universidad, 'universidad'));
+        errores.push(validarCampo(cedula, regex.cedula, 'cédula'));
+
+        const mensajesError = errores.filter(e => e !== null);
+        if (mensajesError.length > 0) {
+            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
+        }
+
+
+        const cedulaValida = await buscarCedula(cedula, nombres, apellidos, universidad);
+        if (!cedulaValida) {
+            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
+        }
+
+        return res.status(201).json({ msg: 'Datos validos'});
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: 'Error del servidor' });
+    }
+};
+
 const registro = async (req, res) => {
     try {
         let { nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, telefono, domicilio } = req.body;
@@ -360,6 +396,7 @@ class Validation {
   }
   
 export const MedicoController ={
+    prevalidacion,
     login,
     info,
     registro,

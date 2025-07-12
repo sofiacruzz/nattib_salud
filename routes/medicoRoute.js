@@ -19,4 +19,6 @@ router.put('/update/consulta_medica', verifyToken, MedicoController.actualizarCo
 router.get('/get/consultas_medicas', verifyToken, MedicoController.obtenerConsultas);
 router.get('/get/consulta_medica', verifyToken, MedicoController.obtenerConsultaPorId)
 router.get('/get/expedientes', verifyToken, MedicoController.getExpedientesByPacienteAndMedico)
+router.post('/prevalidacion', MedicoController.prevalidacion)
+
 export default router;
