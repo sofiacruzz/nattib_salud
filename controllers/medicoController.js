@@ -83,19 +83,19 @@ const registro = async (req, res) => {
         }
 
         const cedulaValida = await buscarCedula(cedula, nombres, apellidos, universidad);
-        if (!cedulaValida) {
-            return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
-        }
+        //if (!cedulaValida) {
+           // return res.status(400).json({ msg: 'La cédula es incorrecta o no coinciden los datos a registrar' });
+        //}
 
         const id_verificamex = await crearVerificacion();
         const url_verificamex = "https://app.verificamex.com/verification/" + id_verificamex;
         const clave = process.env.SECRET_KEY;
         const iv = CryptoJS.lib.WordArray.random(16);
         const pass_cifrada = CryptoJS.AES.encrypt(contrasena, clave, { iv }).toString();
-
+        console.log(cedulaValida)
         const newMedico = await MedicoModel.create({
             nombres, apellidos, curp, fecha_nac, universidad,
-            cedula, email, pass_cifrada, id_verificamex, telefono, domicilio
+            cedula, email, pass_cifrada, id_verificamex, telefono, domicilio, cedulaValida
         });
 
 
@@ -121,7 +121,7 @@ const registro = async (req, res) => {
         }
         
         // Primero, revisar el status
-        if (medicoExist.id_estado === 1) {
+        /*if (medicoExist.id_estado === 1) {
             const { status, result} = await check_verificamex(medicoExist.id_verificamex);
             if(status == "OPEN"){
                 console.log("open", status)
@@ -155,7 +155,8 @@ const registro = async (req, res) => {
                 
             }
             return res.status(401).json({ msg: "Registro en validacion, intente mas tarde." });
-        }else if (medicoExist.id_estado == 3) {
+        }else */
+        /*if (medicoExist.id_estado == 3) {*/
                     const clave = process.env.SECRET_KEY;
                     const pass_decrypted = CryptoJS.AES.decrypt(medicoExist.contrasena, clave).toString(CryptoJS.enc.Utf8);
                     
@@ -172,7 +173,7 @@ const registro = async (req, res) => {
                     } else {
                         return res.status(401).json({ success: false, msg: 'Credenciales incorrectas' });
                     }                    
-            }
+            /*}*/
 
     } catch (error) {
         console.log(error)

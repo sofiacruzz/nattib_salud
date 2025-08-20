@@ -39,7 +39,7 @@ async function registrarMedico() {
         console.log('Respuesta del servidor:', responseData);
 
         if (response.ok && responseData.success) {
-            errorContainer.innerHTML = `<p>Registro Exitoso. Inicia sesion para continuar.</p>`;
+            errorContainer.innerHTML = `<br><p style="color: green;">✅ Registro Exitoso. Inicia sesion para continuar.</p>`;
             //window.location.href = responseData.url;
         } else {
             if (Array.isArray(responseData.errores)) {

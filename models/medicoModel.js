@@ -6,16 +6,16 @@ dotenv.config();
 
 export default class MedicoModel {
 
-    static async create({nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada, id_verificamex, telefono, domicilio }) {
-       
+    static async create({nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada, id_verificamex, telefono, domicilio, cedulaValida }) {
+       console.log(cedulaValida)
         return new Promise((resolve, reject) => {
             const id = crypto.randomUUID();
             const insertQuery = `
-              INSERT INTO medicos (id, nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, id_verificamex, telefono, domicilio)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              INSERT INTO medicos (id, nombres, apellidos, curp, fecha_nac, universidad, cedula, email, contrasena, id_verificamex, telefono, domicilio, verificado)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
       
-            const values = [id, nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada, id_verificamex, telefono, domicilio];
+            const values = [id, nombres, apellidos, curp, fecha_nac, universidad, cedula, email, pass_cifrada, id_verificamex, telefono, domicilio, cedulaValida];
       
             connection.query(insertQuery, values, (err) => {
               if (err) return reject(err);
